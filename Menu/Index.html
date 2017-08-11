@@ -1,0 +1,97 @@
+<html lang="en">
+
+<head>
+    <script type="text/javascript" src="JavaScript/carbon.js"></script>
+    <script type="text/javascript" src="JavaScript/hex.js"></script>
+    <script type="text/javascript" src="JavaScript/xml-parsing.js"></script>
+    <script type="text/javascript" src="JavaScript/menu.js"></script>
+    <script type="text/javascript" src="JavaScript/LevelStruct.js"></script>
+    <script type="text/javascript" src="JavaScript/SokoPiece.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" type="text/css" href="style/game.css">
+
+
+    <style>
+        td {
+            text-align: center;
+            /*outline-style: solid;*/
+            cursor: pointer;
+            padding: 20px;
+            background-color: #DDDDDD;
+        }
+
+        [obj-id] {
+            /*font-family: "Sokoban";
+            white-space: pre;
+            display: inline-block;
+            line-height: 0;
+            padding: 0.5em 0;*/
+            /* font-size: 0.5em;
+            padding: 0.5em 0; */
+        }
+
+        body {
+            /*margin-left: 50px;
+            margin-right: 50px;
+            margin-top: 50px;
+            background-color: #333333*/
+            overflow: scroll;
+        }
+        /*.levelName {
+
+        }*/
+    </style>
+</head>
+
+<body id='body' class=unselectable onresize="windowDidResize()">
+
+    <script>
+        LoadMenuLevels('Original Levels')
+    </script>
+    <!-- <ul>
+        <li onClick='loadSubMenu("Original Levels")'> Original Levels </li>
+        <li onClick='loadSubMenu("Boxxle")'> Boxxle </li>
+        <li onClick='loadSubMenu("Dimitri & Yorick")'> Dimitri & Yorick </li>
+        <li onClick='loadSubMenu("Extra")'> Extra </li>
+        <li onClick='loadSubMenu("IQ Carrier")'> IQ Carrier </li>
+        <li onClick='loadSubMenu("Simple Sokoban")'> Simple Sokoban </li>
+        <li onClick='loadSubMenu("Still More")'> Still More </a>
+        </li>
+    </ul> -->
+
+    <div class="topnav" id="myTopnav">
+        <div class="navButton" onClick='loadSubMenu("Original Levels")'> Original Levels </div>
+        <div class="navButton" onClick='loadSubMenu("Boxxle")'> Boxxle </div>
+        <div class="navButton" onClick='loadSubMenu("Dimitri & Yorick")'> Dimitri & Yorick </div>
+        <div class="navButton" onClick='loadSubMenu("Extra")'> Extra </div>
+        <div class="navButton" onClick='loadSubMenu("IQ Carrier")'> IQ Carrier </div>
+        <div class="navButton" onClick='loadSubMenu("Simple Sokoban")'> Simple Sokoban </div>
+        <div class="navButton" onClick='loadSubMenu("Still More")'> Still More </div>
+        <div class="navButton icon" onclick="toggleResponse(this)">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+    </div>
+
+    <script>
+        /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+        function toggleResponse(e) {
+            console.log("click")
+            e.classList.toggle("change");
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
+
+    <table id="levels" align="center" cellspacing="20">
+
+    </table>
+</body>
+
+</html>
