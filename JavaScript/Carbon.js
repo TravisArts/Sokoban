@@ -96,7 +96,7 @@ function LoadAllLevels() {
     var xmlhttp = new XMLHttpRequest()
     xmlhttp.overrideMimeType("application/json");
 
-    xmlhttp.open("GET", "Levels.json", true)
+    xmlhttp.open("GET", "./Levels.json", true)
     xmlhttp.send()
 
     xmlhttp.onreadystatechange = function () {
