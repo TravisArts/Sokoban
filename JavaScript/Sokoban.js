@@ -716,7 +716,7 @@ function nextLevel() {
 
     }
 
-    history.pushState(0, "" + levelNumber, "index.html?level=" + levelNumber)
+    history.pushState(0, "" + levelNumber, "level?level=" + levelNumber)
 
     // setCookie("level", levelNumber)
 
