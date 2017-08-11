@@ -36,7 +36,7 @@ function XmlHandle(e) {
 }
 
 function parseXML(level) {
-
+    console.log(level)
     // var arr = Base64ToDec(GetResource('MAPR', level));
     var arr = Base64ToDec(LoadLevelData(level));
 
