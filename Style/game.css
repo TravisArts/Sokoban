@@ -8,31 +8,48 @@ body {
 }
 
 
+.list {
+    
+    width: 25%;
+    text-align: center;
+    display : inline-block;  
+    text-align: center;    
+    /* display: inline-flex;  */
+    padding: 20;
+}
 
 .soko-room {
-    float: center;
+    /* float: center; */
+    /* text-align: center;     */
     display : inline-block;
     /*padding : 1px;*/
     /*line-height : 1;*/
-    cursor: crosshair;
+    /* cursor: crosshair; */
     /*line-height: 106%;*/
 
-     min-width: 100%; 
+    /* min-width: 100%;  */
     /* height: auto; */
 
     /* left: 0;
     right: 0;  */
+    /* padding: 1; */
+
+    line-height: 0;
+    width: fit-content;
+    /* border-color: #000000;
+    border-style: solid; */
+    overflow: visible;
+    white-space:nowrap;
     padding: 0;
-
-    line-height: 1em;
-
-    border-color: #000000;
-    border-style: solid;
-
-
-    
 }
 
+.levels {
+    margin-top: 40;
+    margin-left: 50;
+    margin-right: 50;
+    display: inline-block;
+    /* white-space: pre-wrap; */
+}
 
 
 [piece] {
@@ -45,14 +62,20 @@ body {
     text-align: left;
 
     /* line-height: 0.1em; */
-    /* display: inline-block; /* So we can set its width */
-    white-space: pre;      /* Turn newlines into actual newlines */
-    line-height: 0;        /* Overlap icons vertically */
-    /*padding: 0.0em 0;      /* Compensate for zero line height */
-    width: 1em;            /* Compensate for negative letter spacing */
 
 
     
+}
+.soko-room [piece] {
+    white-space: pre;      /* Turn newlines into actual newlines */    
+    display: inline-block; /* So we can set its width */
+    /*line-height: 0.01em;   /* Overlap icons vertically */ 
+    /*line-height: 1em;      /* Compensate for zero line height */
+    width: 0em;            /* Compensate for negative letter spacing */
+    line-height: 0;
+    font-size: 1vw;
+    padding: 0.5vw;
+   
 }
 
 

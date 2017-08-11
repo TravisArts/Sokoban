@@ -70,13 +70,13 @@ function loadSubMenu(type) {
 
     var str = "" 
     for( var i = startNum; i <= endNum; i++ ){
-        if (xIndex == tableWidth) {
-            str += "</tr>\n<tr>"
-            xIndex = 0
-        }
+        // if (xIndex == tableWidth) {
+        //     str += "</>\n<tr>"
+        //     xIndex = 0
+        // }
 
         // str += "<td onClick=prepareForLevel(" + i +")>"
-        str += "<td onmouseover='mouseOver(this)' onmouseout='mouseOut(this)'> <a href= 'index.html?level=" + i + "'>"
+        str += "<div class=list onmouseover='mouseOver(this)' onmouseout='mouseOut(this)'> <a href= '..?level=" + i + "'>"
         str += "<span class='soko-room'>"
         str += getString(i)
         str += "</span>"
@@ -95,7 +95,7 @@ function loadSubMenu(type) {
         str += "</a>"
         str += "</input>"
 
-        str += "</td>"
+        str += "</div>"
 
         xIndex++
     }
@@ -166,7 +166,11 @@ function getString(i) {
 
     for (var y = 0; y < theLevel.rows; y++) {
         for ( var x = 0; x < theLevel.columns; x++) {
-            var value = theLevel.itemAt(x, y).value
+            var item = theLevel.itemAt(x, y)
+            var value = " "
+            if (item != null) {
+                value = item.value
+            }
             if (value != null) {
 
                 text += formatChar(value);            
@@ -195,9 +199,9 @@ function formatChar(s) {
         }
     }
     if (isWall == true){
-        r += '<span class="wall" obj-id=' + s + '>' + s + '</span>';
+        r += '<span class="wall" piece=' + s + '>' + s + '</span>';
     } else {
-        r += '<span obj-id=' + s + '>' + s + '</span>'; 
+        r += '<span piece=' + s + '>' + s + '</span>'; 
     }
     return r;
 }

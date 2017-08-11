@@ -151,8 +151,8 @@ function LoadLevelData(ID) {
     //         }
     //     }
     // }
-
-    return allLevels[ID].data
+    
+    return allLevels[ID] ? allLevels[ID].data : null
 
     // result = result.trim();
     // result = result.replace(/(\r\n|\n|\r)/gm,"");
@@ -164,7 +164,7 @@ function LoadLevelData(ID) {
 
 function LoadLevelName(ID) {
 
-    return allLevels[ID].name
+    return allLevels[ID] ? allLevels[ID].name : null
 
 
     // var result
