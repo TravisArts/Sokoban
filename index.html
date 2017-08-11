@@ -5,9 +5,134 @@
     <meta charset=utf-8 name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 
 
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" type="text/css" href="style/game.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="mask-icon" href="website_icon.svg" color="red">
-  </head>
-  <body>
-<h1>Hello!</h1>
-  </body>
+        
+    <!--#include file="Sokoban.xml" -->
+    <script type="text/javascript" src="JavaScript/ion.sound.js"></script>
+    <script type="text/javascript" src="JavaScript/hex.js"></script>
+    <script type="text/javascript" src="JavaScript/xml-Parsing.js"></script>
+    <script type="text/javascript" src="JavaScript/Carbon.js"></script>
+    <script type="text/javascript" src="JavaScript/Sokoban.js"></script>
+    <script type="text/javascript" src="JavaScript/Cookies.js"></script>
+    <script type="text/javascript" src="JavaScript/keyboard.js"></script>
+    <script type="text/javascript" src="JavaScript/application.js"></script>
+    <script type="text/javascript" src="JavaScript/HTMLActuator.js"></script>
+    <script type="text/javascript" src="JavaScript/StorageManager.js"></script>
+    <script type="text/javascript" src="JavaScript/bind_polyfill.js"></script>
+    <script type="text/javascript" src="JavaScript/LevelStruct.js"></script>
+    <script type="text/javascript" src="JavaScript/SokoPiece.js"></script>
+
+
+
+    <title>Sokoban: Microban levels</title>
+    <style>
+        td {
+            text-align: center;
+            /*outline-style: solid;*/
+            cursor: pointer;
+            padding: 20px;
+            background-color: #DDDDDD
+        }
+    </style>
+
+</head>
+
+<!-- <body onkeydown="keyhandler(event)" onload="startGame()">   -->
+
+<body>
+
+    <script type='text/javascript'>
+        LoadAllLevels();
+    </script>
+
+
+    <div class="topnav" id="myTopnav">
+        <div id="navTitle"></div>
+        <div class="navButton" onClick='loadMenu("Original Levels")'> Original Levels </div>
+        <div class="navButton" onClick='loadMenu("Boxxle")'> Boxxle </div>
+        <div class="navButton" onClick='loadMenu("Dimitri & Yorick")'> Dimitri & Yorick </div>
+        <div class="navButton" onClick='loadMenu("Extra")'> Extra </div>
+        <div class="navButton" onClick='loadMenu("IQ Carrier")'> IQ Carrier </div>
+        <div class="navButton" onClick='loadMenu("Simple Sokoban")'> Simple Sokoban </div>
+        <div class="navButton" onClick='loadMenu("Still More")'> Still More </div>
+        <div class="navButton icon" onclick="toggleResponse(this)">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+    </div>
+
+    <script>
+        /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+        function toggleResponse(e) {
+            console.log("click")
+            e.classList.toggle("change");
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+
+        function loadMenu(type) {
+            window.location.href = "menu.html?collection=" + type
+        }
+    </script>
+
+    <!-- <ul>
+        <li><a href='menu.html?collection=Original Levels'> Original Levels </a></li>
+        <li><a href='menu.html?collection=Boxxle'> Boxxle </a></li>
+        <li><a href='menu.html?collection=Dimitri and Yorick'> Dimitri & Yorick </a></li>
+        <li><a href='menu.html?collection=Extra'> Extra </a></li>
+        <li><a href='menu.html?collection=IQ Carrier'> IQ Carrier </a></li>
+        <li><a href='menu.html?collection=Simple Sokoban'> Simple Sokoban </a></li>
+        <li><a href='menu.html?collection=Still More'> Still More </a></li>
+    </ul>  -->
+
+    <!--style="overflow: hidden;max-width: 3ch;overflow-wrap: break-word;"-->
+    <!--<p id="demo">the solution goes here</p>-->
+    <div class=gameArea>
+
+        <a class="restart-button"> Restart </a>
+
+        <div class=GameBoard>
+            <p id="GameBoard">
+            </p>
+            <div class="GameSpace"></div>
+            <div class="WallSpace"></div>
+        </div>
+        <div class="stats">
+            <div class="block1">
+                moves:
+                <div id="moves">0</div>
+                pushes:
+                <div id="pushes">0</div>
+                saved:
+                <div id="saved">0</div>
+            </div>
+            <div class="block2">
+                Best:
+                <div id="best-moves">0</div> moves,
+                <div id="best-pushes">0</div> pushes
+            </div>
+        </div>
+    </div>
+
+    <div class=previousContainer>
+        <!-- <button> -->
+        <input id="back" type="image" src="Buttons/back2.png" onclick="previousLevel()" />
+        <!-- </button> -->
+    </div>
+    <div class=nextContainer>
+        <!-- <button> -->
+        <input id="forward" type="image" src="Buttons/forward2.png" onclick="nextLevel()" />
+        <!-- </button> -->
+    </div>
+    <p id="stats"></p>
+</body>
+
+</html>
