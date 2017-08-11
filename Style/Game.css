@@ -1,0 +1,267 @@
+
+
+body {
+    overflow: hidden;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+.soko-room {
+    float: center;
+    display : inline-block;
+    /*padding : 1px;*/
+    /*line-height : 1;*/
+    cursor: crosshair;
+    /*line-height: 106%;*/
+
+     min-width: 100%; 
+    /* height: auto; */
+
+    /* left: 0;
+    right: 0;  */
+    padding: 0;
+
+    line-height: 1em;
+
+    border-color: #000000;
+    border-style: solid;
+
+
+    
+}
+
+
+
+[piece] {
+
+    /* font-size: 2em; */
+    font-family: "mid"; /* See @font-face declarations at bottom */
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-align: left;
+
+    /* line-height: 0.1em; */
+    /* display: inline-block; /* So we can set its width */
+    white-space: pre;      /* Turn newlines into actual newlines */
+    line-height: 0;        /* Overlap icons vertically */
+    /*padding: 0.0em 0;      /* Compensate for zero line height */
+    width: 1em;            /* Compensate for negative letter spacing */
+
+
+    
+}
+
+
+[piece]::before {
+    content: attr(piece)"\a";
+    font-family: "back";
+}
+
+[piece]::after {
+    content: "\a"attr(piece);
+    font-family: "fore";
+}
+
+[piece="@"] {
+    color: #000000;
+}
+[piece="@"]::before {
+    color: #DD0000;
+}
+[piece="@"]::after {
+    color: #770000;
+}
+
+[piece="+"] {
+    color: #000000;
+}
+[piece="+"]::before {
+    color: #DD0000;
+}
+[piece="+"]::after {
+    color: #770000;
+}
+
+
+[piece="$"] {
+    color: #999933;
+}
+[piece="*"] {
+    color: #000000;
+}
+[piece="*"]::after {
+    color: #999933;
+}
+
+/* [piece="#"]::before {
+    color: #FFFFFF;
+}
+[piece="#"] {
+    color: #CCCCFF;
+}
+[piece="#"]::after {
+    color: #3333CC;
+} */
+
+
+
+/*[piece='━']::before {
+    color: #FFFFFF;
+}
+
+[piece='━']::after {
+    color: #3333CC;
+}*/
+
+.wall::before {
+    color: #FFFFFF;
+}
+
+.wall {
+    color: #CCCCFF;
+}
+
+.wall::after {
+    color: #3333CC;
+}
+
+
+
+/*[piece="#"]::before {
+    color: #CCCCFF;
+}
+[piece="#"]::after {
+    color: #CCCCFF;
+}*/
+
+.GameBoard {
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    margin-top: 40px;
+    padding: 15px;
+
+    border-color: #000000;
+    border-style: solid;
+
+}
+
+.gameArea {
+    border-color: #000000;
+    border-style: solid;
+
+    white-space: nowrap;
+    position: absolute;
+    padding: 20px;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%,-50%);
+
+    height: 100%;
+
+    width: 500px;
+    margin: 0 auto;
+    /* padding-bottom: 0; */
+
+
+    /* width: 75%;
+    height: 75%;   */
+}
+
+/* .stats>div {
+     display: inline; 
+} */
+
+.block1>div {
+    display: inline;
+} 
+.block2>div {
+    display: inline;
+}
+
+
+.stats {
+    white-space: nowrap;
+    /*position: absolute;*/
+    /*padding: 20px;*/
+    /*left: 50%;
+    top: 50%;*/
+    /*transform: translate(-50%,-50%);*/
+
+    /*width: 75%;
+    height: 75%;*/
+    text-align: center;
+    /*float: left;*/
+}
+
+
+.restart-button {
+    display: inline-block;
+    background: #3333CC;
+    border-radius: 3px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #CCCCFF;
+    height: 40px;
+    line-height: 42px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    float: right; 
+}
+
+
+
+@media screen and (max-width: 520px) {
+  
+    .gameArea {
+        width: 280px;
+        margin: 0 auto;
+    }
+
+    .GameBoard {
+        margin-top: 17px;
+        padding: 10px;
+    }
+}
+
+.piece,
+.wall {
+    -webkit-transition: 100ms ease-in-out;
+    -moz-transition: 100ms ease-in-out;
+    transition: 100ms ease-in-out;
+}
+
+.GameSpace,
+.WallSpace {
+    position: absolute;
+    font-size: fit-width-precise; 
+    /* font-size: 2em; */
+    font-family: "mid"; /* See @font-face declarations at bottom */
+    speak: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-align: left;
+
+    /* line-height: 0.1em; */
+    display: inline-block; /* So we can set its width */
+    white-space: pre;      /* Turn newlines into actual newlines */
+    line-height: 0;        /* Overlap icons vertically */
+    /*padding: 0.0em 0;      /* Compensate for zero line height */
+    width: 1em;            /* Compensate for negative letter spacing */
+    /*overflow: hidden;*/
+    /* Remove rest of the actual word, leaving the first letter */
+        
+    padding: 0;
+    /* -webkit-transition: 100ms ease-in-out;
+    -moz-transition: 100ms ease-in-out;
+    transition: 100ms ease-in-out; */
+}
+
+

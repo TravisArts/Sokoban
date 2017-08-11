@@ -1,0 +1,342 @@
+
+body {
+    margin: 0;
+    background-color: #DDDDDD;
+    /*font-family: "Sokoban";*/
+    font-family: Helvetica;
+     overflow: scroll; 
+    
+}
+
+p {
+    margin: 0;
+    text-align: center;
+    font-size: 1.5vw;
+    /*font-family: monospace;*/
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #3333CC;
+    text-align: center;
+}
+li {
+    color: #CCCCFF;
+    text-align: center;
+    padding: 16px;
+    display: inline-block;
+}
+li:hover {
+    background-color: #111111
+}
+
+/* li a {
+    color: inherit;
+    text-decoration: none;
+} */
+
+*.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/*@font-face {
+    font-family: Sokoban;
+    src: url(Sokoban.ttf);
+}*/
+
+@font-face {
+    /*font-family: "fore";*/
+    font-family: "mid";
+    /*font-family: "back";*/
+    src: url(../Fonts/SokobanColor-Black.ttf);
+    font-style: normal;
+}
+
+@font-face {
+    /*font-family: "fore";*/
+    /*font-family: "mid";*/
+    font-family: "back";
+    src: url(../Fonts/SokobanColor-Red.ttf);
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "fore";
+    /*font-family: "mid";
+    font-family: "back";*/
+    src: url(../Fonts/SokobanColor-DarkRed.ttf);
+    font-style: normal;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+button {
+    background: none;
+    border: 0;
+    box-sizing: content-box;
+    color: inherit;
+    cursor: crosshair;
+    font: inherit;
+    line-height: inherit;
+    overflow: visible;
+    vertical-align: inherit
+}
+
+button:disabled {
+    cursor: default
+}
+
+:focus {
+    outline: 3px solid #c1e0fe;
+    outline: 3px solid rgba(131, 192, 253, 0.5);
+    outline-offset: 1px
+}
+
+:focus[data-focus-method="mouse"]:not(input):not(textarea):not(select),
+:focus[data-focus-method="touch"]:not(input):not(textarea):not(select) {
+    outline: none
+}
+
+::-moz-focus-inner {
+    border: 0;
+    padding: 0
+}
+
+
+/* .nextContainer {
+    margin-top: -45px;
+    top: 50%;
+    z-index: 1;
+    right: 18px;
+
+    font-family: "SF Pro Icons";
+    color: inherit;
+    display: inline-block;
+    font-style: normal;
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: 1;
+    text-decoration: underline;
+    position: relative;
+    z-index: 1;
+    alt: '';
+    margin-right: -.056em
+} */
+
+.nextContainer {
+    position: absolute;
+    height: 100%;
+    padding-top: 0;
+    width: 20%;
+    right: 0
+}
+
+.previousContainer {
+    position: absolute;
+    height: 100%;
+    padding-top: 0;
+    width: 20%;
+    left: 0
+}
+
+
+
+
+
+#back{
+    height: 10%;
+    width: auto;
+	overflow: auto;
+	margin: auto;
+	position: fixed;
+	top: 50%;
+	left: 5%;
+    margin-top: -45px;
+    z-index: 10;
+}
+
+#forward {
+	height: 10%;
+	width: auto;
+	overflow: auto;
+	margin: auto;
+	position: fixed;
+	top: 50%;
+    right: 5%;
+    margin-top: -45px;
+    z-index: 10;
+
+}
+
+
+
+
+
+
+.topnav {
+    float: center;
+    display: block;
+    overflow: hidden;
+    background-color: #3333CC;
+    text-align: center;
+    z-index: 500;
+
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+     -webkit-transition: all .7s ease-in-out; 
+
+
+}
+
+.topnav .navButton {
+    display: inline-block;
+    color: #CCCCFF;
+    text-align: center;
+    padding: 8px;
+}
+
+.topnav .navButton:hover {
+    background-color: #111111
+}
+
+.topnav .icon {
+    display: none;
+}
+
+.topnav #navTitle {
+    display: none;
+    color: #CCCCFF;
+
+}
+
+
+@media screen and (max-width: 800px) {
+    .topnav .navButton:not(:first-child) {
+        display: none;
+    }
+    .topnav .navButton {
+        /* float: none;
+        text-align: left; */
+        padding: 16px;
+ 
+        float: left;
+        display: inline;
+        text-align: left; 
+    }
+    .topnav .navButton.icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+        float: right;
+        display: block;
+    }
+
+    .topnav #navTitle {
+        float: left;
+        padding: 16px;
+        display: block;
+        text-align: left;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .topnav.responsive {
+        position: relative;
+    }
+    .topnav.responsive .navButton.icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .topnav.responsive .navButton {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+
+    .topnav #navTitle {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+
+    
+}
+
+.barContainer {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+    width: 16px;
+    height: 2px;
+    background-color: #DDD;
+    margin: 2px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-2.828px, 2.828px);
+    transform: rotate(-45deg) translate(-2.828px, 2.828px);
+}
+
+.change .bar2 {
+    opacity: 0;
+}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-2.828px, -2.828px);
+    transform: rotate(45deg) translate(-2.828px, -2.828px);
+}
+
+
+@-webkit-keyframes ac-gn-list-searchshow {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        -webkit-animation-timing-function: cubic-bezier(1, 0, 0, 1);
+        animation-timing-function: cubic-bezier(1, 0, 0, 1)
+    }
+
+    100% {
+        -webkit-transform: translateY(-100%) translateY(108px);
+        transform: translateY(-100%) translateY(108px)
+    }
+}
+
+@keyframes ac-gn-list-searchshow {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        -webkit-animation-timing-function: cubic-bezier(1, 0, 0, 1);
+        animation-timing-function: cubic-bezier(1, 0, 0, 1)
+    }
+
+    100% {
+        -webkit-transform: translateY(-100%) translateY(108px);
+        transform: translateY(-100%) translateY(108px)
+    }
+}
