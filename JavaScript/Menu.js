@@ -76,7 +76,7 @@ function loadSubMenu(type) {
         // }
 
         // str += "<td onClick=prepareForLevel(" + i +")>"
-        str += "<div class=list onmouseover='mouseOver(this)' onmouseout='mouseOut(this)'> <a href= '..?level=" + i + "'>"
+        str += "<div class=list> <a href= '..?level=" + i + "'>"
         str += "<span class='soko-room'>"
         str += getString(i)
         str += "</span>"

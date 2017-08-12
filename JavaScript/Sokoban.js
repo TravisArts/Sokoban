@@ -77,11 +77,13 @@ SokobanManager.prototype.setup = function () {
     var width = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns + 1)
 
     style.innerText += '.GameBoard {'
-    style.innerText += 'font-size:' + width + 'px'
+    style.innerText += 'font-size:' + width + 'px;'
+    style.innerText += 'height:' + width * theLevel.rows + 'px;'
     style.innerText += '}'
 
-    document.getElementsByClassName("GameBoard")[0].clientHeight = width * theLevel.rows
-    
+    // document.getElementsByClassName("GameBoard")[0].clientHeight
+
+    // document.getElementsByClassName("GameBoard")[0].style.height = width * theLevel.rows
 
     for (var x = 0; x < theLevel.columns; x++) {
         for (var y = 0; y < theLevel.rows; y++) {
@@ -92,14 +94,6 @@ SokobanManager.prototype.setup = function () {
             style.innerText += selector + '{'
             style.innerText += 'transform: translate(' + value1 + 'px, ' + value2 + 'px)'
             style.innerText += '}'
-
-            // try {
-            //     // stylesheet.insertRule(selector + ' {-webkit-transform: translate(' + value1 + 'px, ' + value2 + 'px)}', stylesheet.cssRules.length);
-            //     // stylesheet.insertRule(selector + ' {-moz-transform: translate(' + value1 + 'px, ' + value2 + 'px)}', stylesheet.cssRules.length);
-            //     // stylesheet.insertRule(selector + ' {-ms-transform: translate(' + value1 + 'px, ' + value2 + 'px)}', stylesheet.cssRules.length);
-            //     stylesheet.insertRule(selector + ' {transform: translate(' + value1 + 'px, ' + value2 + 'px)}', stylesheet.cssRules.length);
-            // } catch (err) { }
-
         }
     }
 
@@ -123,15 +117,20 @@ SokobanManager.prototype.move = function (direction) {
 
     // var player
 
-    // theLevel.eachCell(function (x, y, piece) {
-    //     // console.log(piece)
-    //     if (piece != null && (piece.value == "@" || piece.value == "+")) {
-    //         player = piece
-    //     }
-    //     // if (piece) {
-    //     //     piece.savePosition()
-    //     // }
-    // })
+    theLevel.eachCell(function (x, y, piece) {
+        // console.log(piece)
+        var pieceArr = ['$', '@', '+', '*', '?']
+
+
+        if (piece != null) {
+            // if (pieceArr.includes(piece.value)) {
+            piece.savePosition()
+            // }
+        }
+        // if (piece) {
+        //     piece.savePosition()
+        // }
+    })
 
 
 
@@ -139,13 +138,13 @@ SokobanManager.prototype.move = function (direction) {
 
     var player = theLevel.player
 
-    player.savePosition()
+
     var nextPosition = { x: player.x + vector.x, y: player.y + vector.y }
     var playerPosition = { x: player.x, y: player.y }
 
     var item = theLevel.itemAt(nextPosition)
     // console.log(player)
-    // console.log(item)
+    console.log(item)
     // var position = {x:x, y:y}
     // tile.updatePosition(nextPosition);
     // theLevel.addItem(tile)
@@ -156,113 +155,34 @@ SokobanManager.prototype.move = function (direction) {
     // move(vector.y, vector.x)
 
     var isWall = false
+    var isTreasure = false
     if (item != null) {
         var pieceArr = ['$', '.', '@', '+', '*', '?']
+        var treasures = ['$', '*']
         isWall = !pieceArr.includes(item.value)
+        isTreasure = treasures.includes(item.value)
+
     }
 
-    if (isWall == false) {
-        player.updatePosition(nextPosition)
+    if (isWall == true) {
+        return;
     }
+    var nextItem
+    if (isTreasure) {
+        var otherPosition = { x: nextPosition.x + vector.x, y: nextPosition.y + vector.y }
+        nextItem = theLevel.itemAt(otherPosition)
 
-    // if (item == null) {
-    //     player.updatePosition(nextPosition)
-    //     // theLevel.addItem(player)
+        if (nextItem == null || nextItem.value == '.') {
+            this.movePiece(item, otherPosition)
+            this.movePiece(player, nextPosition)
+            theLevel.moves++
+            theLevel.pushes++
+        }
 
-    //     if (player.value == '@') {
-    //         theLevel.changeItem(playerPosition, null)        
-    //     } else if (player.value == '+') {
-    //         theLevel.changeItem(playerPosition, '.')
-    //         player.value = '@'            
-    //     }
-    //     // player.updatePosition(nextPosition)
-    //     // theLevel.addItem(player)
-
-    //     // ion.sound.play("walk")
-    //     // didMove = true
-    // } else if (item.value == '.') {
-    //     if (player.value == '@') {
-    //         theLevel.objArr[player.x][player.y] = null;    
-    //         player.value = '+'            
-    //     } else if (player.value == '+') {
-    //         theLevel.objArr[player.x][player.y].value = '.'
-    //     }
-    //     player.updatePosition(nextPosition)
-    //     theLevel.addItem(player)
-    // } else {
-    //     this.movePiece(player, nextPosition)        
-    // }
-
-    /* goal */
-    // if (item == '.') {
-    //     theLevel.addItem(xPos, yPos, '+');
-    //     if (oldItem == '@' /* player */) {
-    //         theLevel.addItem(PlayerH, PlayerV, ' '); /* empty */
-    //     } else if (oldItem == '+' /* player on goal */) {
-    //         theLevel.addItem(PlayerH, PlayerV, '.'); /* goal */
-    //     }
-
-    //     ion.sound.play("walk")
-
-    //     didMove = true
-
-
-    // }
-
-    // /*treasure*/
-    // if (item == '$') {
-    //     var nextItem = theLevel.itemAt(xPos + xofs, yPos + yofs);
-
-    //     /* empty or goal */
-    //     if (nextItem == ' ' || nextItem == '.') {
-
-
-    //         if (oldItem == '@'/* player */) {
-    //             theLevel.addItem(PlayerH, PlayerV, ' ');
-    //         } else if (oldItem == '+' /* player on goal */) {
-    //             theLevel.addItem(PlayerH, PlayerV, '.');
-    //         }
-
-    //         theLevel.addItem(xPos, yPos, '@');
-
-    //         if (nextItem == ' ' /* empty */) {
-    //             theLevel.addItem(xPos + xofs, yPos + yofs, '$');
-    //             ion.sound.play("push")
-    //         } else if (nextItem == '.' /* goal */) {
-    //             theLevel.addItem(xPos + xofs, yPos + yofs, '*'); // treasure on goal;
-    //             ion.sound.play("push in")
-    //         }
-
-    //         didMove = true
-    //         didPush = true
-    //     }
-    // }
-
-    // /* treasure on goal */
-    // if (item == '*') {
-    //     var otherItem = theLevel.itemAt(xPos + xofs, yPos + yofs);
-    //     if (otherItem == ' ' || otherItem == '.') {
-    //         if (oldItem == '@') {
-    //             theLevel.addItem(PlayerH, PlayerV, ' ');
-    //         } else if (oldItem == '+') {
-    //             theLevel.addItem(PlayerH, PlayerV, '.');
-    //         }
-
-    //         theLevel.addItem(xPos, yPos, '+');
-
-    //         if (otherItem == ' ' /* empty */) {
-    //             ion.sound.play("push out")
-
-    //             theLevel.addItem(xPos + xofs, yPos + yofs, '$'); // tresure
-    //         } else if (otherItem == '.' /* goal */) {
-    //             theLevel.addItem(xPos + xofs, yPos + yofs, '*'); // treasure on goal;
-    //             ion.sound.play("push in")
-    //         }
-
-    //         didMove = true
-    //         didPush = true
-    //     }
-    // }
+    } else {
+        this.movePiece(player, nextPosition)
+        theLevel.moves++
+    }
 
 
 
@@ -276,15 +196,75 @@ SokobanManager.prototype.moveEmpty = function (player, cell) {
 };
 
 // Move a tile and its representation
-SokobanManager.prototype.movePiece = function (tile, cell) {
-    theLevel.objArr[tile.x][tile.y] = null;
+SokobanManager.prototype.movePiece = function (piece, cell) {
+    var nextPiece = theLevel.itemAt(cell)
+
+    var goals = ['+', '*', '.']
+    var onGoal = goals.includes(piece.value)
+    var willBeOnGoal = nextPiece != null && nextPiece.value == '.'
+    var position = { x: piece.x, y: piece.y }
+
+    if (!onGoal && willBeOnGoal) {
+        if (piece.value == '@') {
+            piece.value = '+'
+        }
+        if (piece.value == '$') {
+            piece.value = '*'
+        }
+    } else if (onGoal && !willBeOnGoal) {
+        if (piece.value == '+') {
+            piece.value = '@'
+        }
+        if (piece.value == '*') {
+            piece.value = '$'
+        }
+    }
+    piece.updatePosition(cell);
+    theLevel.addItem(piece)
+
+    if (onGoal) {
+        theLevel.addItem(new SokoPiece(position, '.'))
+    } else {
+        theLevel.objArr[position.x][position.y] = null;
+    }
+
+    // if (onGoal && !willBeOnGoal) {
+    //     piece.updatePosition(cell);
+    //     theLevel.addItem(piece)
+    //     theLevel.addItem(new SokoPiece(position, '.'))
+    // } 
+    // if (onGoal && willBeOnGoal) {
+    //     piece.updatePosition(cell);
+    //     theLevel.addItem(piece)
+    //     theLevel.addItem(new SokoPiece(position, '.'))        
+    // }
+    // if (!onGoal && willBeOnGoal) {
+    //     piece.updatePosition(cell);
+    //     theLevel.addItem(piece)
+    //     theLevel.objArr[position.x][position.y] = null;  
+    // }
+    // if(!onGoal && !willBeOnGoal) {
+    //     piece.updatePosition(cell);
+    //     theLevel.addItem(piece)
+    //     theLevel.objArr[position.x][position.y] = null;  
+    // }
+
+
+
     // theLevel.objArr[cell.x][cell.y] = tile;
-    tile.updatePosition(cell);
-    theLevel.addItem(tile)
+
 };
 
 SokobanManager.prototype.restart = function () {
     this.storageManager.clearGameState(levelNumber)
+    // TODO: uncomment these lines
+    // might speed up resets
+
+    // theLevel = parseXML(level)
+    // theLevel.addPlayer()
+    // moves = 0
+    // pushes = 0
+    // this.actuate();
     this.setup()
 }
 
@@ -313,6 +293,7 @@ SokobanManager.prototype.actuate = function () {
     //     this.storageManager.clearGameState();
     // } else {
 
+    countSavedPackets()
     var serial = theLevel.serialize()
     this.storageManager.setGameState(serial, levelNumber);
 
@@ -659,7 +640,7 @@ function countSavedPackets() {
 
             var item = theLevel.itemAt(x, y);
 
-            if (item == '*') {
+            if (item != null && item.value == '*') {
                 theLevel.savedPacks += 1;
             }
 
@@ -833,7 +814,9 @@ function setWindowTitle() {
 }
 
 
-
+function XOR(a, b) {
+    return (a || b) && !(a && b)
+}
 
 
 

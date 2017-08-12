@@ -59,15 +59,17 @@ HTMLActuator.prototype.clearContainer = function (container) {
 };
 
 HTMLActuator.prototype.updateMoves = function (moves) {
-
+    document.getElementById("moves").innerText = theLevel.moves
+    document.getElementById("best-moves").innerText = bestMoves
 }
 
 HTMLActuator.prototype.updatePushes = function (pushes) {
-
+    document.getElementById("pushes").innerText = theLevel.pushes
+    document.getElementById("best-pushes").innerText = bestPushes
 }
 
 HTMLActuator.prototype.updateSaved = function (saved) {
-
+    document.getElementById("saved").innerText = theLevel.savedPacks
 }
 
 HTMLActuator.prototype.positionClass = function (position) {
@@ -96,14 +98,21 @@ HTMLActuator.prototype.addPiece = function (piece) {
 
         var classes = ["piece", positionClass]
 
-        var pieceArr = ['$', '.', '@', '+', '*', '?']
+        var pieceArr = ['$', '@', '+', '*', '?']
         var isWall = !pieceArr.includes(piece.value)
         if (!isWall) {
-            wrapper.setAttribute("piece", piece.value)
-            this.applyClasses(wrapper, classes)
+            if (piece.value == '+') {
+                wrapper.setAttribute("piece", '@')
+                wrapper.textContent = '@';
+            } else if (piece.value == '*') {
+                wrapper.setAttribute("piece", '$')
+                wrapper.textContent = '$';
+            } else {
+                wrapper.setAttribute("piece", piece.value)
+                wrapper.textContent = piece.value;
+            }
 
-            // inner.classList.add("piece-inner");
-            wrapper.textContent = piece.value;
+            this.applyClasses(wrapper, classes)
 
             if (piece.previousPosition) {
                 // Make sure that the tile gets rendered in the previous position first
@@ -126,25 +135,33 @@ HTMLActuator.prototype.addWall = function (piece) {
     if (piece.value != null) {
         var self = this;
 
-        var wrapper = document.createElement("div")
-        var inner = document.createElement("div")
-        var position = piece.previousPosition || { x: piece.x, y: piece.y }
-        var positionClass = this.positionClass(position)
+
 
         // We can't use classlist because it somehow glitches when replacing classes
 
 
         var pieceArr = ['$', '.', '@', '+', '*', '?']
         var isWall = !pieceArr.includes(piece.value)
-        if (isWall) {
-            var classes = ["wall", positionClass]
-            
-            wrapper.setAttribute("piece", piece.value)
+        if (isWall || piece.value == '.' || piece.value == '+' || piece.value == '*') {
+
+            var wrapper = document.createElement("div")
+            var inner = document.createElement("div")
+            var position = piece.previousPosition || { x: piece.x, y: piece.y }
+            var positionClass = this.positionClass(position)
+
+            var classes = []
+            if (isWall) {
+                classes = ["wall", positionClass]
+                wrapper.setAttribute("piece", piece.value)
+                wrapper.textContent = piece.value
+            } else {
+                classes = ["piece", positionClass]
+                wrapper.setAttribute("piece", '.')
+                wrapper.textContent = '.'
+            }
+
 
             this.applyClasses(wrapper, classes)
-
-            // inner.classList.add("piece-inner");
-            wrapper.textContent = piece.value;
 
             if (piece.previousPosition) {
                 // Make sure that the tile gets rendered in the previous position first

@@ -18,6 +18,12 @@ body {
     padding: 20;
 }
 
+.list:hover {
+
+    outline: #333333 solid thick;
+
+}
+
 .soko-room {
     /* float: center; */
     /* text-align: center;     */
@@ -171,6 +177,7 @@ body {
 
     border-color: #000000;
     border-style: solid;
+    height: fit-content;
 
 }
 
