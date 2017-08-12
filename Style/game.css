@@ -66,6 +66,7 @@ body {
     font-variant: normal;
     text-transform: none;
     text-align: left;
+    position: absolute;
 
     /* line-height: 0.1em; */
 
@@ -125,6 +126,16 @@ body {
 [piece="*"]::after {
     color: #999933;
 }
+
+
+[piece="$"]::before,
+[piece="@"]::before {
+    z-index: 10;
+} 
+[piece="."] {
+    z-index: -10;
+}
+
 
 /* [piece="#"]::before {
     color: #FFFFFF;
@@ -260,11 +271,10 @@ body {
     }
 }
 
-.piece,
-.wall {
-    -webkit-transition: 100ms ease-in-out;
-    -moz-transition: 100ms ease-in-out;
-    transition: 100ms ease-in-out;
+.piece {
+    -webkit-transition: 100ms linear;
+    -moz-transition: 100ms linear;
+    transition: 100ms linear;
 }
 
 .GameSpace,
@@ -284,14 +294,14 @@ body {
     white-space: pre;      /* Turn newlines into actual newlines */
     line-height: 0;        /* Overlap icons vertically */
     /*padding: 0.0em 0;      /* Compensate for zero line height */
-    width: 1em;            /* Compensate for negative letter spacing */
+    width: 10em;            /* Compensate for negative letter spacing */
     /*overflow: hidden;*/
     /* Remove rest of the actual word, leaving the first letter */
         
     padding: 0;
-    /* -webkit-transition: 100ms ease-in-out;
-    -moz-transition: 100ms ease-in-out;
-    transition: 100ms ease-in-out; */
+    /* -webkit-transition: 100ms linear;
+    -moz-transition: 100ms linear;
+    transition: 100ms linear; */
 }
 
 

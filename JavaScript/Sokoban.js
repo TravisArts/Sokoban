@@ -180,6 +180,7 @@ SokobanManager.prototype.move = function (direction) {
         }
 
     } else {
+        ion.sound.play("walk")
         this.movePiece(player, nextPosition)
         theLevel.moves++
     }
@@ -188,10 +189,6 @@ SokobanManager.prototype.move = function (direction) {
 
 
     this.actuate()
-
-};
-
-SokobanManager.prototype.moveEmpty = function (player, cell) {
 
 };
 
@@ -217,8 +214,20 @@ SokobanManager.prototype.movePiece = function (piece, cell) {
         }
         if (piece.value == '*') {
             piece.value = '$'
+            ion.sound.play("push out")
         }
     }
+
+    if (willBeOnGoal) {
+        if (piece.value == '*' || piece.value == '$') {
+            ion.sound.play("push in")
+        }
+    } else if (!onGoal) {
+        if (piece.value == '$') {
+            ion.sound.play("push")
+        }
+    }
+
     piece.updatePosition(cell);
     theLevel.addItem(piece)
 
