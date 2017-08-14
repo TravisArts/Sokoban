@@ -183,22 +183,22 @@ body {
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
 
-    margin-top: 40px;
-    padding: 15px;
+    margin-top: 60px;
+    /* padding: 15px; */
 
-    border-color: #000000;
-    border-style: solid;
+    /* border-color: #000000;
+    border-style: solid; */
     height: fit-content;
 
 }
 
 .gameArea {
-    border-color: #000000;
-    border-style: solid;
+    /* border-color: #000000;
+    border-style: solid; */
 
     white-space: nowrap;
     position: absolute;
-    padding: 20px;
+    /* padding: 20px; */
     left: 50%;
     top: 70%;
     transform: translate(-50%,-50%);
@@ -242,7 +242,7 @@ body {
 
 
 .restart-button {
-    display: inline-block;
+    /* display: inline-block; */
     background: #3333CC;
     border-radius: 3px;
     padding: 0 20px;
@@ -251,11 +251,35 @@ body {
     height: 40px;
     line-height: 42px;
     cursor: pointer;
-    display: block;
+    /* display: block; */
     text-align: center;
     float: right; 
 }
+button {
+    display: inline-block;
+    background: #3333CC;
+    border-radius: 3px;
+    padding: 0px 10px;
+    text-decoration: none;
+    height: 40px;
+    line-height: 42px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    float: right;
+}
+.material-icons {
+    vertical-align: middle;    
+    /* background: url('../Buttons/mute.png'); */
+    /* padding: 10px 10px; */
+    /* size: 20px 20px; */
+    /* margin: auto; */
+    color: #CCCCFF;    
+}
 
+.button {
+    margin-left: 10px;
+}
 
 
 @media screen and (max-width: 520px) {

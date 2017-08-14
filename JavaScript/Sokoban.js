@@ -7,12 +7,16 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
 
 
     this.inputManager = new InputManager
-    this.storageManager = new StorageManager;
+    this.storageManager = new StorageManager
     this.actuator = new Actuator;
 
+    this.mute = false
+    this.states = new Array()
 
     this.inputManager.on("move", this.move.bind(this));
     this.inputManager.on("restart", this.restart.bind(this));
+    this.inputManager.on("toggleMute", this.toggleMute.bind(this))
+    this.inputManager.on("undo", this.undo.bind(this))
     // this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
     this.setup();
@@ -52,8 +56,10 @@ SokobanManager.prototype.setup = function () {
                 }
             }
         }
-        var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
-        theLevel.player = new SokoPiece(playerPosition, '@')
+        // var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
+        // theLevel.player = theLevel.itemAt(playerPosition)
+        theLevel.addPlayer()
+        // new SokoPiece(playerPosition, '@')
 
 
         // renderLevel(theLevel)
@@ -74,10 +80,10 @@ SokobanManager.prototype.setup = function () {
     style = document.createElement('style');
     document.head.appendChild(style);
     stylesheet = style.sheet;
-    var width = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns + 1)
+    var width = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns)
 
     style.innerText += '.GameBoard {'
-    style.innerText += 'font-size:' + width + 'px;'
+    style.innerText += 'font-size:' + (width + 1) + 'px;'
     style.innerText += 'height:' + width * theLevel.rows + 'px;'
     style.innerText += '}'
 
@@ -180,7 +186,7 @@ SokobanManager.prototype.move = function (direction) {
         }
 
     } else {
-        ion.sound.play("walk")
+        this.play("walk")
         this.movePiece(player, nextPosition)
         theLevel.moves++
     }
@@ -214,17 +220,17 @@ SokobanManager.prototype.movePiece = function (piece, cell) {
         }
         if (piece.value == '*') {
             piece.value = '$'
-            ion.sound.play("push out")
+            this.play("push-out")
         }
     }
 
     if (willBeOnGoal) {
         if (piece.value == '*' || piece.value == '$') {
-            ion.sound.play("push in")
+            this.play("push-in")
         }
     } else if (!onGoal) {
         if (piece.value == '$') {
-            ion.sound.play("push")
+            this.play("push")
         }
     }
 
@@ -263,6 +269,12 @@ SokobanManager.prototype.movePiece = function (piece, cell) {
     // theLevel.objArr[cell.x][cell.y] = tile;
 
 };
+
+SokobanManager.prototype.play = function (sound) {
+    if (!this.mute) {
+        ion.sound.play(sound)
+    }
+}
 
 SokobanManager.prototype.restart = function () {
     this.storageManager.clearGameState(levelNumber)
@@ -305,6 +317,7 @@ SokobanManager.prototype.actuate = function () {
     countSavedPackets()
     var serial = theLevel.serialize()
     this.storageManager.setGameState(serial, levelNumber);
+    this.states.push(serial)
 
     this.actuator.actuate(theLevel)
     // this.actuator.actuate(foo, {
@@ -318,24 +331,84 @@ SokobanManager.prototype.actuate = function () {
         // var cookieTitle = "level" + levelNumber
         // setCookie(cookieTitle, true)
 
+        var self = this
+
+        setTimeout(function () {
+            if (bestMoves > theLevel.moves || bestMoves == 0) {
+                self.storageManager.setBestMoves(theLevel.moves, levelNumber)
+            }
+            if (bestPushes > theLevel.pushes || bestPushes == 0) {
+                self.storageManager.setBestPushes(theLevel.pushes, levelNumber)
+            }
+            self.storageManager.clearGameState(levelNumber)
+    
+            nextLevel()
+        }, 1000);
+
         console.log("you win")
 
-        if (bestMoves > theLevel.moves || bestMoves == 0) {
-            this.storageManager.setBestMoves(theLevel.moves, levelNumber)
-        }
-        if (bestPushes > theLevel.pushes || bestPushes == 0) {
-            this.storageManager.setBestPushes(theLevel.pushes, levelNumber)
-        }
-        this.storageManager.clearGameState(levelNumber)
-
-        nextLevel()
+        
 
     }
 
 };
 
+SokobanManager.prototype.toggleMute = function () {
+
+    this.mute = !this.mute
+    var button = document.getElementById("mute-icon")
+    if (this.mute) {
+        button
+        button.innerHTML = "volume_off"
+        // button.setAttribute("-webkit-mask-box-image", "url('Buttons/mute.png')")
+    } else {
+        button.innerHTML = "volume_up"
+        // button.attributes["webkit-mask-box-image"] = "url('Buttons/unmute.png')"
+        // button.setAttribute("-webkit-mask-box-image", "url('Buttons/unmute.png')")        
+    }
+}
+
+SokobanManager.prototype.undo = function () {
+    console.log("undo")
+    var previousState = this.states.pop()
+    previousState = this.states.pop()
+
+    if (previousState) {        
+
+        theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], previousState.title)
+        theLevel.rows = previousState.rows
+        theLevel.columns = previousState.columns
+        theLevel.packs = previousState.packs
+        theLevel.savedPacks = previousState.savedPacks
+        theLevel.playerV = previousState.playerV
+        theLevel.playerH = previousState.playerH
+        // theLevel.rawData = previousState.rawData
+
+        theLevel.pushes = previousState.pushes
+        theLevel.moves = previousState.moves
+
+        // theLevel.objArr = previousState.objArr
+        theLevel.objArr = theLevel.empty()
+
+        for (var x = 0; x < theLevel.columns; x++) {
+            for (var y = 0; y < theLevel.columns; y++) {
+                var value = previousState.objArr[x][y]
+                if (value != null) {
+                    theLevel.addItem(new SokoPiece({ x: x, y: y }, value))
+                }
+            }
+        }
+        var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
+        theLevel.player = new SokoPiece(playerPosition, '@')
 
 
+        // renderLevel(theLevel)
+
+        isCompleted = (bestMoves != 0)
+        this.actuate()        
+    }
+
+}
 
 
 
@@ -363,8 +436,8 @@ var undoBuffer = []
 
 ion.sound({
     sounds: [
-        { name: "push in" },
-        { name: "push out" },
+        { name: "push-in" },
+        { name: "push-out" },
         { name: "push" },
         { name: "walk" },
     ],
@@ -444,130 +517,130 @@ function undo_pop() {
 }
 
 
-function move(yofs, xofs) {
-    var xPos = 0;
-    var yPos = 0;
+// function move(yofs, xofs) {
+//     var xPos = 0;
+//     var yPos = 0;
 
-    PlayerH = theLevel.playerH
-    PlayerV = theLevel.playerV
+//     PlayerH = theLevel.playerH
+//     PlayerV = theLevel.playerV
 
-    xPos = PlayerH + xofs;
-    yPos = PlayerV + yofs;
+//     xPos = PlayerH + xofs;
+//     yPos = PlayerV + yofs;
 
-    var item = theLevel.itemAt(xPos, yPos);
-    var oldItem = theLevel.itemAt(PlayerH, PlayerV);
-    // console.log( "was: " + itemAt( xPos, yPos ) + ", " + itemAt( PlayerH, PlayerV ) + " location : " + PlayerH + ", " + PlayerV);
+//     var item = theLevel.itemAt(xPos, yPos);
+//     var oldItem = theLevel.itemAt(PlayerH, PlayerV);
+//     // console.log( "was: " + itemAt( xPos, yPos ) + ", " + itemAt( PlayerH, PlayerV ) + " location : " + PlayerH + ", " + PlayerV);
 
-    // console.log(item);
-
-
-    var didMove = false;
-    var didPush = false;
-
-    undoBuffer.push(theLevel.objArr)
-
-    /* empty */
-    if (item == ' ') {
-        theLevel.addItem(xPos, yPos, '@');
-        if (oldItem == '@') {
-            theLevel.addItem(PlayerH, PlayerV, ' ');
-        } else if (oldItem == '+') {
-            theLevel.addItem(PlayerH, PlayerV, '.');
-        }
-
-        ion.sound.play("walk")
-
-        didMove = true
-    }
-
-    /* goal */
-    if (item == '.') {
-        theLevel.addItem(xPos, yPos, '+');
-        if (oldItem == '@' /* player */) {
-            theLevel.addItem(PlayerH, PlayerV, ' '); /* empty */
-        } else if (oldItem == '+' /* player on goal */) {
-            theLevel.addItem(PlayerH, PlayerV, '.'); /* goal */
-        }
-
-        ion.sound.play("walk")
-
-        didMove = true
+//     // console.log(item);
 
 
-    }
+//     var didMove = false;
+//     var didPush = false;
 
-    /*treasure*/
-    if (item == '$') {
-        var nextItem = theLevel.itemAt(xPos + xofs, yPos + yofs);
+//     undoBuffer.push(theLevel.objArr)
 
-        /* empty or goal */
-        if (nextItem == ' ' || nextItem == '.') {
+//     /* empty */
+//     if (item == ' ') {
+//         theLevel.addItem(xPos, yPos, '@');
+//         if (oldItem == '@') {
+//             theLevel.addItem(PlayerH, PlayerV, ' ');
+//         } else if (oldItem == '+') {
+//             theLevel.addItem(PlayerH, PlayerV, '.');
+//         }
 
+//         ion.sound.play("walk")
 
-            if (oldItem == '@'/* player */) {
-                theLevel.addItem(PlayerH, PlayerV, ' ');
-            } else if (oldItem == '+' /* player on goal */) {
-                theLevel.addItem(PlayerH, PlayerV, '.');
-            }
+//         didMove = true
+//     }
 
-            theLevel.addItem(xPos, yPos, '@');
+//     /* goal */
+//     if (item == '.') {
+//         theLevel.addItem(xPos, yPos, '+');
+//         if (oldItem == '@' /* player */) {
+//             theLevel.addItem(PlayerH, PlayerV, ' '); /* empty */
+//         } else if (oldItem == '+' /* player on goal */) {
+//             theLevel.addItem(PlayerH, PlayerV, '.'); /* goal */
+//         }
 
-            if (nextItem == ' ' /* empty */) {
-                theLevel.addItem(xPos + xofs, yPos + yofs, '$');
-                ion.sound.play("push")
-            } else if (nextItem == '.' /* goal */) {
-                theLevel.addItem(xPos + xofs, yPos + yofs, '*'); // treasure on goal;
-                ion.sound.play("push in")
-            }
+//         ion.sound.play("walk")
 
-            didMove = true
-            didPush = true
-        }
-    }
-
-    /* treasure on goal */
-    if (item == '*') {
-        var otherItem = theLevel.itemAt(xPos + xofs, yPos + yofs);
-        if (otherItem == ' ' || otherItem == '.') {
-            if (oldItem == '@') {
-                theLevel.addItem(PlayerH, PlayerV, ' ');
-            } else if (oldItem == '+') {
-                theLevel.addItem(PlayerH, PlayerV, '.');
-            }
-
-            theLevel.addItem(xPos, yPos, '+');
-
-            if (otherItem == ' ' /* empty */) {
-                ion.sound.play("push out")
-
-                theLevel.addItem(xPos + xofs, yPos + yofs, '$'); // tresure
-            } else if (otherItem == '.' /* goal */) {
-                theLevel.addItem(xPos + xofs, yPos + yofs, '*'); // treasure on goal;
-                ion.sound.play("push in")
-            }
-
-            didMove = true
-            didPush = true
-        }
-    }
-
-    if (didMove) {
-        theLevel.playerH += xofs
-        theLevel.playerV += yofs
-        theLevel.moves++
-    } else {
-        undoBuffer.pop()
-    }
-
-    if (didPush) {
-        theLevel.pushes++
-    }
+//         didMove = true
 
 
+//     }
 
-    // renderLevel(theLevel)
-    countSavedPackets()
-}
+//     /*treasure*/
+//     if (item == '$') {
+//         var nextItem = theLevel.itemAt(xPos + xofs, yPos + yofs);
+
+//         /* empty or goal */
+//         if (nextItem == ' ' || nextItem == '.') {
+
+
+//             if (oldItem == '@'/* player */) {
+//                 theLevel.addItem(PlayerH, PlayerV, ' ');
+//             } else if (oldItem == '+' /* player on goal */) {
+//                 theLevel.addItem(PlayerH, PlayerV, '.');
+//             }
+
+//             theLevel.addItem(xPos, yPos, '@');
+
+//             if (nextItem == ' ' /* empty */) {
+//                 theLevel.addItem(xPos + xofs, yPos + yofs, '$');
+//                 ion.sound.play("push")
+//             } else if (nextItem == '.' /* goal */) {
+//                 theLevel.addItem(xPos + xofs, yPos + yofs, '*'); // treasure on goal;
+//                 ion.sound.play("push in")
+//             }
+
+//             didMove = true
+//             didPush = true
+//         }
+//     }
+
+//     /* treasure on goal */
+//     if (item == '*') {
+//         var otherItem = theLevel.itemAt(xPos + xofs, yPos + yofs);
+//         if (otherItem == ' ' || otherItem == '.') {
+//             if (oldItem == '@') {
+//                 theLevel.addItem(PlayerH, PlayerV, ' ');
+//             } else if (oldItem == '+') {
+//                 theLevel.addItem(PlayerH, PlayerV, '.');
+//             }
+
+//             theLevel.addItem(xPos, yPos, '+');
+
+//             if (otherItem == ' ' /* empty */) {
+//                 ion.sound.play("push out")
+
+//                 theLevel.addItem(xPos + xofs, yPos + yofs, '$'); // tresure
+//             } else if (otherItem == '.' /* goal */) {
+//                 theLevel.addItem(xPos + xofs, yPos + yofs, '*'); // treasure on goal;
+//                 ion.sound.play("push in")
+//             }
+
+//             didMove = true
+//             didPush = true
+//         }
+//     }
+
+//     if (didMove) {
+//         theLevel.playerH += xofs
+//         theLevel.playerV += yofs
+//         theLevel.moves++
+//     } else {
+//         undoBuffer.pop()
+//     }
+
+//     if (didPush) {
+//         theLevel.pushes++
+//     }
+
+
+
+//     // renderLevel(theLevel)
+//     countSavedPackets()
+// }
 
 
 

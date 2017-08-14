@@ -21,7 +21,13 @@ function LevelStruct(dataArray, title) {
 }
 
 LevelStruct.prototype.addPlayer = function () {
-	this.player = new SokoPiece({ x: this.playerH, y: this.playerV }, "@")
+	var position = { x: this.playerH, y: this.playerV }
+	if (this.itemAt(position) == null) {
+		this.player = new SokoPiece(position, "@")		
+	} else {
+		this.player = new SokoPiece(position, "+")		
+	}
+
 }
 
 LevelStruct.prototype.cleanWalls = function () {
@@ -29,7 +35,24 @@ LevelStruct.prototype.cleanWalls = function () {
 
 	var WallObjs = this.empty()
 
-	var wallArr = ['•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '┓', '┫', '┏', '┣', '┳', '╋']
+	var wallArr = ['•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '┓', '┫', '┏', '┣', '┳', '╋',
+	'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '┓', '┩', '┏', '┣', '┳', '╃',
+	'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '┓', '┫', '┏', '┡', '┳', '╄',
+	'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '┓', '┩', '┏', '┡', '┳', '╇',
+	'•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '╗', '┪', '┏', '┣', '┱', '╅',
+	'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '╗', '╣', '┏', '┣', '┱', '╉',
+	'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '╗', '┪', '┏', '┡', '┱', '?',
+	'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '╗', '╣', '┏', '┡', '┱', '?',
+	'•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '┓', '┫', '╔', '┣', '┲', '╆',
+	'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '┓', '┩', '╔', '┣', '┲', '?',
+	'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '┓', '┫', '╔', '╠', '┲', '╊',
+	'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '┓', '┩', '╔', '╠', '┲', '?',
+	'•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '╗', '┪', '╔', '┣', '╦', '╈',
+	'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '╗', '╣', '╔', '┣', '╦', '?',
+	'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '╗', '┪', '╔', '╠', '╦', '?',
+	'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '╗', '╣', '╔', '╠', '╦', '╬']
+
+
 
 
 	for (var y = 0; y < this.rows; y++) {
@@ -66,12 +89,16 @@ LevelStruct.prototype.checkSurroundings = function (x, y) {
 	var L, S, R
 	var BL, B, BR
 
+	TL = this.itemAt(Lx,Ty)
 	T = this.itemAt(x, Ty)
+	TR = this.itemAt(Rx, Ty)
 	L = this.itemAt(Lx, y)
 	S = this.itemAt(x, y)
 
 	R = this.itemAt(Rx, y)
+	BL = this.itemAt(Lx, By)
 	B = this.itemAt(x, By)
+	BR = this.itemAt(Rx, By)
 
 
 	// alert(TL + T + TR + "\n" + L + S + R + "\n" + BL + B + BR);
@@ -88,7 +115,20 @@ LevelStruct.prototype.checkSurroundings = function (x, y) {
 	if (B != null) {
 		if (B.value == '#') result |= 8
 	}
+	if (TL != null) {
+		if (TL.value == '#') result |= 16
+	}
+	if (TR != null) {
+		if (TR.value == '#') result |= 32
+	}
+	if (BL != null) {
+		if (BL.value == '#') result |= 64
+	}
+	if (BR != null) {
+		if (BR.value == '#') result |= 128
+	}
 	return result;
+
 }
 
 LevelStruct.prototype.empty = function () {
