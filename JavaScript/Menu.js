@@ -83,7 +83,7 @@ function loadSubMenu(type) {
 
         str += "<div class=levelName> "
         if (type == "IQ Carrier" || type == "Dimitri & Yorick") {
-            let levelTitle = GetResourceName('MAPR', i)
+            let levelTitle = LoadLevelName(i)
             str += levelTitle
         } else {
             str += "Level " + ( i - startNum + 1)
