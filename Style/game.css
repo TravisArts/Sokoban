@@ -73,13 +73,15 @@ body {
 
     
 }
-.soko-room [piece] {
+.soko-room span {
     white-space: pre;      /* Turn newlines into actual newlines */    
     display: inline-block; /* So we can set its width */
     /*line-height: 0.01em;   /* Overlap icons vertically */ 
     /*line-height: 1em;      /* Compensate for zero line height */
     width: 0em;            /* Compensate for negative letter spacing */
-    line-height: 0;
+    /* line-height: 1em; */
+    position: relative;
+    
     font-size: 1vw;
     padding: 0.5vw;
    
