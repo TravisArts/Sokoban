@@ -27,6 +27,8 @@ function loadSubMenu(type) {
 
     setWindowTitle(type)
 
+    history.pushState(0, "" + type, "?collection=" + type)    
+
     var startNum = 0
     var endNum = 0
 

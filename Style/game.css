@@ -186,7 +186,7 @@ body {
     -ms-user-select: none; /* IE10+ */
 
     margin-top: 60px;
-    /* padding: 15px; */
+    padding: 15px;
 
     /* border-color: #000000;
     border-style: solid; */
@@ -281,6 +281,7 @@ button {
 
 .button {
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 

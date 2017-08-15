@@ -750,7 +750,7 @@ function previousLevel() {
 
     }
 
-    history.pushState(0, "" + levelNumber, "index.html?level=" + levelNumber)
+    history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
 
     // setCookie("level", levelNumber)
 
@@ -779,7 +779,7 @@ function nextLevel() {
 
     }
 
-    history.pushState(0, "" + levelNumber, "index.html?level=" + levelNumber)
+    history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
 
     // setCookie("level", levelNumber)
 
