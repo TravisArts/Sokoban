@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" manifest="demo.appcache">
-
+<!-- <html lang="en" manifest="demo.appcache"> -->
+<html lang="en">
 <head>
     <meta charset=utf-8 name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 
@@ -9,8 +9,9 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="mask-icon" href="website_icon.svg" color="red">
     <link rel="preload" href="Levels.json">
-    <link rel "preload" href="buttons" <!--#include file="Sokoban.xml" -->
+    <link rel "preload" href="buttons"> <!--#include file="Sokoban.xml" -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="Style/googleAPIS.css"> -->
 
 
     <script type="text/javascript" src="JavaScript/ion.sound.js"></script>
@@ -26,7 +27,9 @@
     <script type="text/javascript" src="JavaScript/bind_polyfill.js"></script>
     <script type="text/javascript" src="JavaScript/LevelStruct.js"></script>
     <script type="text/javascript" src="JavaScript/SokoPiece.js"></script>
-
+    <script type="text/javascript" src="JavaScript/AutoMove.js"></script>
+    <script type="text/javascript" src="JavaScript/astar.js"></script>
+    
 
 
     <title>Sokoban: Microban levels</title>
@@ -103,9 +106,9 @@
             <i id=mute-icon class="material-icons">volume_up</i>
         </button>
         <button class="button undo-button">
-                <i id=undo-icon class="material-icons">undo</i>
-            </button>
-        <div class=GameBoard>
+            <i id=undo-icon class="material-icons">undo</i>
+        </button>
+        <div id="main" class=GameBoard onmousedown="mouseDown(event)" onmousemove="mouseMove(event)" onmouseup="mouseUp(event)">
             <p id="GameBoard">
             </p>
             <div class="GameSpace"></div>
@@ -132,6 +135,7 @@
         <!-- <button> -->
         <div id=back onclick="previousLevel()">
             <i class=material-icons style="font-size:100px;">chevron_left</i>
+            <!-- <i class=material-icons style="font-size:100px;">back</i> -->
         </div>
         <!-- <input id="back" type="image" src="Buttons/back2.png" onclick="previousLevel()" /> -->
         <!-- </button> -->
@@ -140,6 +144,7 @@
         <!-- <button> -->
         <div id=forward onclick="nextLevel()">
             <i class=material-icons style="font-size:100px;">chevron_right</i>
+            <!-- <i class=material-icons style="font-size:100px;">next</i> -->
         </div>
         <!-- <input id="forward" type="image" src="Buttons/forward2.png" onclick="nextLevel()" /> -->
         <!-- </button> -->
