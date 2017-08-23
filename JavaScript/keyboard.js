@@ -141,7 +141,7 @@ KeyboardInputManager.prototype.listen = function () {
 		}
 
 		if (grabbing != null) {
-			var position = detectCoordinate(e)
+			var position = detectCoordinate(event)
 			var path = findPush(grabbing, position)
 			var route = pathToRoute(path)
 			pushRoute(route, grabbing)
