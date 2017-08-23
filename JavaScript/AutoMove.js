@@ -9,7 +9,6 @@ function getPlayerPosition() {
 var grabbing = null
 
 function mouseDown(e) {
-	mousedown = true
 
 	var position = detectCoordinate(e)
 	var item = theLevel.itemAt(position.x, position.y)
