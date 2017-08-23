@@ -4,8 +4,12 @@ body {
     background-color: #DDDDDD;
     /*font-family: "Sokoban";*/
     font-family: Helvetica;
-     overflow: scroll; 
-    
+    overflow: scroll;
+
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    user-select: none;
 }
 
 p {
@@ -93,7 +97,7 @@ button {
     border: 0;
     box-sizing: content-box;
     color: inherit;
-    cursor: crosshair;
+    /* cursor: crosshair; */
     font: inherit;
     line-height: inherit;
     overflow: visible;
@@ -162,28 +166,24 @@ button:disabled {
 
 
 #back{
-    height: 10%;
-    width: auto;
-	overflow: auto;
-	margin: auto;
-	position: fixed;
-	top: 50%;
 	left: 5%;
-    margin-top: -45px;
-    z-index: 10;
 }
 
 #forward {
-	height: 10%;
-	width: auto;
-	overflow: auto;
-	margin: auto;
-	position: fixed;
-	top: 50%;
     right: 5%;
+}
+
+#back,
+#forward {
+	height: 10%;
+    width: auto;
+    overflow: auto;
+    margin: auto;
+    position: fixed;
+    top: 50%;    
     margin-top: -45px;
     z-index: 10;
-
+    cursor: pointer;
 }
 
 .navigation-button {
@@ -202,14 +202,11 @@ button:disabled {
     background-color: #3333CC;
     text-align: center;
     z-index: 500;
+    position: fixed;
 
-    -webkit-user-select: none; /* Chrome/Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
+    width: 100%;
 
-     -webkit-transition: all .7s ease-in-out; 
-
-
+    /* -webkit-transition: all .7s ease-in-out;  */
 }
 
 .topnav .navButton {
@@ -343,4 +340,36 @@ button:disabled {
         -webkit-transform: translateY(-100%) translateY(108px);
         transform: translateY(-100%) translateY(108px)
     }
+}
+
+
+.levels {
+    margin-top: 40;
+    margin-left: 50;
+    margin-right: 50;
+    display: inline-block;
+    /* white-space: pre-wrap; */
+}
+
+.completionStar {
+    position: absolute;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: auto;
+    float: left;
+
+    width: 0;
+    height: 0;
+    border-top: 50px solid #3333CC;
+    border-right: 50px solid transparent;
+
+    z-index: 10;
+
+    /* background-color: #3333CC;
+    width: fit-content; */
+}
+
+#star {
+    position: absolute;
+    top: -50px;
 }

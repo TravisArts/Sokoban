@@ -49,14 +49,6 @@ body {
     padding: 0;
 }
 
-.levels {
-    margin-top: 40;
-    margin-left: 50;
-    margin-right: 50;
-    display: inline-block;
-    /* white-space: pre-wrap; */
-}
-
 
 [piece] {
 
@@ -302,6 +294,29 @@ button {
     -webkit-transition: 100ms linear;
     -moz-transition: 100ms linear;
     transition: 100ms linear;
+}
+
+.GameBoard {
+    /* cursor: crosshair; */
+}
+
+[piece="$"],
+[piece="*"] {
+    cursor: grab;
+}
+
+[piece="@"],
+[piece="+"] {
+    cursor: 'default'
+}
+
+[piece="$"]:active,
+[piece="*"]:active {
+    cursor: grabbing;
+}
+
+.wall {
+    cursor: default;
 }
 
 .GameSpace,

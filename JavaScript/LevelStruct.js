@@ -22,9 +22,10 @@ function LevelStruct(dataArray, title) {
 
 LevelStruct.prototype.addPlayer = function () {
 	var position = { x: this.playerH, y: this.playerV }
-	if (this.itemAt(position) == null) {
+	var item = this.itemAt(position)
+	if (item == null || item.value == "@") {
 		this.player = new SokoPiece(position, "@")		
-	} else {
+	} else if (item.value == '.' || item.value == '+') {
 		this.player = new SokoPiece(position, "+")		
 	}
 
@@ -245,4 +246,5 @@ LevelStruct.prototype.eachCell = function (callback) {
 LevelStruct.prototype.removeItem = function (piece) {
 	this.objArr[piece.x][piece.y] = null;
 };
+
 

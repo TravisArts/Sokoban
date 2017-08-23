@@ -2,6 +2,7 @@
 
 
 var won = false
+var pieceWidth = 0;
 
 function SokobanManager(InputManager, Actuator, StorageManager) {
 
@@ -23,14 +24,19 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
 }
 
 SokobanManager.prototype.setup = function () {
+    history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
+
     var previousState = this.storageManager.getGameState(levelNumber);
 
-    bestMoves = this.storageManager.getBestMoves(levelNumber)
-    bestPushes = this.storageManager.getBestPushes(levelNumber)
+    // this.storageManager.updateScoreStorage()
+
+    var bestScore = this.storageManager.getBestScore(levelNumber)
+    bestMoves = bestScore.moves
+    bestPushes = bestScore.pushes
     // console.log(previousState)
 
     // Reload the game from a previous game if present
-    if (previousState) {
+    if (previousState != null) {
 
 
         theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], previousState.title)
@@ -80,12 +86,11 @@ SokobanManager.prototype.setup = function () {
     style = document.createElement('style');
     document.head.appendChild(style);
     stylesheet = style.sheet;
-    var width = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns)
+    pieceWidth = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns)
 
-    style.innerText += '.GameBoard {'
-    style.innerText += 'font-size:' + (width + 1) + 'px;'
-    style.innerText += 'height:' + width * theLevel.rows + 'px;'
-    style.innerText += '}'
+    var size = 'font-size:' + (pieceWidth + 1) + 'px;'
+    var height = 'height:' + pieceWidth * theLevel.rows + 'px;'
+    style.innerText += '.GameBoard {' + size + height + '}'
 
     // document.getElementsByClassName("GameBoard")[0].clientHeight
 
@@ -94,15 +99,14 @@ SokobanManager.prototype.setup = function () {
     for (var x = 0; x < theLevel.columns; x++) {
         for (var y = 0; y < theLevel.rows; y++) {
             var selector = ".piece-position-" + x + "-" + y
-            var value1 = width * x
-            var value2 = width * y
+            var value1 = pieceWidth * x
+            var value2 = pieceWidth * y
 
-            style.innerText += selector + '{'
-            style.innerText += 'transform: translate(' + value1 + 'px, ' + value2 + 'px)'
-            style.innerText += '}'
+            style.innerText += selector + '{transform: translate(' + value1 + 'px, ' + value2 + 'px)}'
         }
     }
 
+    setupPathFinding()
 
     // Update the actuator
     this.actuator.actuateWalls(theLevel)
@@ -150,7 +154,7 @@ SokobanManager.prototype.move = function (direction) {
 
     var item = theLevel.itemAt(nextPosition)
     // console.log(player)
-    console.log(item)
+    // console.log(item)
     // var position = {x:x, y:y}
     // tile.updatePosition(nextPosition);
     // theLevel.addItem(tile)
@@ -243,6 +247,8 @@ SokobanManager.prototype.movePiece = function (piece, cell) {
         theLevel.objArr[position.x][position.y] = null;
     }
 
+    setupPathFinding()
+
     // if (onGoal && !willBeOnGoal) {
     //     piece.updatePosition(cell);
     //     theLevel.addItem(piece)
@@ -316,7 +322,9 @@ SokobanManager.prototype.actuate = function () {
 
     countSavedPackets()
     var serial = theLevel.serialize()
-    this.storageManager.setGameState(serial, levelNumber);
+    if (theLevel.moves > 0) {
+        this.storageManager.setGameState(serial, levelNumber);
+    }
     this.states.push(serial)
 
     this.actuator.actuate(theLevel)
@@ -334,20 +342,23 @@ SokobanManager.prototype.actuate = function () {
         var self = this
 
         setTimeout(function () {
-            if (bestMoves > theLevel.moves || bestMoves == 0) {
-                self.storageManager.setBestMoves(theLevel.moves, levelNumber)
-            }
-            if (bestPushes > theLevel.pushes || bestPushes == 0) {
-                self.storageManager.setBestPushes(theLevel.pushes, levelNumber)
+
+            var newBestMoves = bestMoves > theLevel.moves || bestMoves == 0
+            var newBestPushes = bestPushes > theLevel.pushes || bestPushes == 0
+
+            if (newBestMoves || newBestPushes) {
+                var moves = newBestMoves ? theLevel.moves : bestMoves
+                var pushes = newBestPushes ? theLevel.pushes : bestPushes
+                self.storageManager.setBestScore(theLevel.moves, theLevel.pushes, levelNumber)
             }
             self.storageManager.clearGameState(levelNumber)
-    
+
             nextLevel()
-        }, 1000);
+        }, 100);
 
         console.log("you win")
 
-        
+
 
     }
 
@@ -373,7 +384,7 @@ SokobanManager.prototype.undo = function () {
     var previousState = this.states.pop()
     previousState = this.states.pop()
 
-    if (previousState) {        
+    if (previousState) {
 
         theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], previousState.title)
         theLevel.rows = previousState.rows
@@ -403,9 +414,9 @@ SokobanManager.prototype.undo = function () {
 
 
         // renderLevel(theLevel)
-
+        setupPathFinding()
         isCompleted = (bestMoves != 0)
-        this.actuate()        
+        this.actuate()
     }
 
 }
@@ -749,13 +760,6 @@ function previousLevel() {
         }
 
     }
-
-    history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
-
-    // setCookie("level", levelNumber)
-
-    // document.getElementById("levelNumber").value = levelNumber
-
     manager.setup()
 }
 
@@ -764,18 +768,15 @@ function nextLevel() {
     var runLoop = true
 
 
+    won = false
 
-    while (runLoop) {
+    var lvl = null
+
+    while (lvl == null) {
 
         levelNumber++
 
-        // var lvl = GetResource('MAPR', levelNumber)
-        var lvl = LoadLevelData(levelNumber)
-
-
-        if (typeof lvl != "undefined") {
-            runLoop = false;
-        }
+        lvl = LoadLevelData(levelNumber)
 
     }
 

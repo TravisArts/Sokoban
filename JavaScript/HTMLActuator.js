@@ -111,7 +111,7 @@ HTMLActuator.prototype.addPiece = function (piece) {
                 wrapper.setAttribute("piece", piece.value)
                 wrapper.textContent = piece.value;
             }
-
+            // wrapper.innerText += graph.grid[piece.x][piece.y].weight
             this.applyClasses(wrapper, classes)
 
             if (piece.previousPosition) {

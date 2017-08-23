@@ -12,9 +12,9 @@ function loadMenu(type) {
     // LoadAllLevels()
 
     let qVar = getQueryVariable("collection")
-    if ( qVar != false ) {
+    if (qVar != false) {
         var str = qVar.replace("and", "&")
-        console.log( 'str =' + str)
+        console.log('str =' + str)
         loadSubMenu(str)
     } else {
         loadSubMenu(type)
@@ -27,7 +27,7 @@ function loadSubMenu(type) {
 
     setWindowTitle(type)
 
-    history.pushState(0, "" + type, "?collection=" + type)    
+    history.pushState(0, "" + type, "?collection=" + type)
 
     var startNum = 0
     var endNum = 0
@@ -69,40 +69,58 @@ function loadSubMenu(type) {
     var xIndex = 0;
     tableWidth = getTableWidth()
 
+    var container = document.getElementById("levels")
 
-    var str = "" 
-    for( var i = startNum; i <= endNum; i++ ){
-        // if (xIndex == tableWidth) {
-        //     str += "</>\n<tr>"
-        //     xIndex = 0
-        // }
+    var storageManager = new LocalStorageManager
 
-        // str += "<td onClick=prepareForLevel(" + i +")>"
-        str += "<div class=list> <a href= '..?level=" + i + "'>"
-        str += "<span class='soko-room'>"
-        str += getString(i)
-        str += "</span>"
+    var str = ""
 
-        str += "<div class=levelName> "
+
+
+    for (var i = startNum; i <= endNum; i++) {
+        var levelTitle
+
+        var wrapper = document.createElement("div")
+        var link = document.createElement("a")
+        var layout = document.createElement("span")
+        var name = document.createElement("div")
+
+        var level = "..?level=" + i
+        wrapper.setAttribute("class", "list")
+        link.setAttribute("href", level)
+        layout.setAttribute("class", "soko-room")
+        name.setAttribute("class", "levelName")
+        layout.innerHTML = getString(i)
+
         if (type == "IQ Carrier" || type == "Dimitri & Yorick") {
-            let levelTitle = LoadLevelName(i)
-            str += levelTitle
+            levelTitle = LoadLevelName(i)
         } else {
-            str += "Level " + ( i - startNum + 1)
+            levelTitle = "Level " + (i - startNum + 1)
         }
-        str += "</div>"
+        name.textContent = levelTitle
+
+        var moves = storageManager.getBestScore(i).moves
+        console.log(moves)
+        if (moves != 0) {
+            // console.log("complete")
+            var complete = document.createElement("div")
+            complete.setAttribute("class", "completionStar")
+            var star = document.createElement("i")
+            star.setAttribute("class", "material-icons")
+            star.setAttribute("id", "star")
+            star.innerText = "star"
+            complete.appendChild(star)
+
+            wrapper.appendChild(complete)
+        }
 
 
-        
-        str += "</a>"
-        str += "</input>"
-
-        str += "</div>"
-
-        xIndex++
+        link.appendChild(layout)
+        link.appendChild(name)
+        wrapper.appendChild(link)
+        container.appendChild(wrapper)
     }
 
-    document.getElementById("levels").innerHTML = str
 }
 
 function setWindowTitle(type) {
@@ -120,14 +138,14 @@ function setWindowTitle(type) {
 }
 
 function getTableWidth() {
-    
+
     let width = window.innerWidth
     let body = document.getElementById('body')
     let fontSize = 0.5 * parseFloat(window.getComputedStyle(body, null).getPropertyValue('font-size'))
-    
-    var xFloat = width / ( (4 + fontSize) * 20) 
-    var x = Math.round( xFloat + 0.5 ) - 1
-    
+
+    var xFloat = width / ((4 + fontSize) * 20)
+    var x = Math.round(xFloat + 0.5) - 1
+
     console.log(xFloat)
     console.log(x)
     return x
@@ -136,21 +154,21 @@ function getTableWidth() {
 
 function windowDidResize() {
 
-    var width = getTableWidth()
-    
-    if ( width != tableWidth ) {
-         tableWidth = width
-         reformatTable()
-    }
+    // var width = getTableWidth()
+
+    // if ( width != tableWidth ) {
+    //      tableWidth = width
+    //      reformatTable()
+    // }
 }
 
 function reformatTable() {
 
     var levels = document.getElementsByTagName("td")
 
-    var str = "" 
-    for( var i = 0; i < levels.length; i++ ) {
-        if (i != 0 &&  i%tableWidth == 0) {
+    var str = ""
+    for (var i = 0; i < levels.length; i++) {
+        if (i != 0 && i % tableWidth == 0) {
             str += "</tr>\n<tr>"
         }
         str += "<td onmouseover='mouseOver(this)' onmouseout='mouseOut(this)' >" + levels[i].innerHTML + "</td>"
@@ -167,7 +185,7 @@ function getString(i) {
     var text = ""
 
     for (var y = 0; y < theLevel.rows; y++) {
-        for ( var x = 0; x < theLevel.columns; x++) {
+        for (var x = 0; x < theLevel.columns; x++) {
             var item = theLevel.itemAt(x, y)
             var value = " "
             if (item != null) {
@@ -175,8 +193,8 @@ function getString(i) {
             }
             if (value != null) {
 
-                text += formatChar(value);            
-        } else {
+                text += formatChar(value);
+            } else {
                 text += "_-"
             }
         }
@@ -192,25 +210,25 @@ function getString(i) {
 function formatChar(s) {
     var r = ""
 
-    var pieceArr = [' ','$','.','@','+','*','?']
+    var pieceArr = [' ', '$', '.', '@', '+', '*', '?']
 
     var isWall = true
     for (i = 0; i < 7; i++) {
-        if ( s == pieceArr[i] ) {
+        if (s == pieceArr[i]) {
             isWall = false;
         }
     }
-    if (isWall == true){
+    if (isWall == true) {
         r += '<span class="wall" piece=' + s + '>' + s + '</span>';
     } else {
-        r += '<span piece=' + s + '>' + s + '</span>'; 
+        r += '<span piece=' + s + '>' + s + '</span>';
     }
     return r;
 }
 
 function mouseOver(sender) {
 
-    sender.style.outline=  '#333333'
+    sender.style.outline = '#333333'
     sender.style.outlineWidth = 10
     sender.style.outlineStyle = 'solid'
     sender.style.outlineOffset = -10;

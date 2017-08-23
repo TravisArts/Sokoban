@@ -137,29 +137,7 @@ function LoadMenuLevels(type) {
 
 
 function LoadLevelData(ID) {
-    won = false
-
-    // var finalResult = ""
-    // var ResIDs = allLevels.getElementsByTagName('ResourceID');
-    // for (var i = 0; i < ResIDs.length; i++) {
-    //     if (ResIDs[i].childNodes[0].nodeValue == ID) {
-    //         result = ResIDs[i].parentElement;
-    //         result = result.getElementsByTagName('ResourceData');
-    //         // result = result[0].childNodes[0].nodeValue;
-    //         if (result[0].childNodes.length > 0) {
-    //             finalResult = result[0].childNodes[0].nodeValue;
-    //         }
-    //     }
-    // }
-    
     return allLevels[ID] ? allLevels[ID].data : null
-
-    // result = result.trim();
-    // result = result.replace(/(\r\n|\n|\r)/gm,"");
-    // result = result.replace(/(\r\n|\n|\r|	)/gm,"");
-    // result = result.trim();
-
-    // return finalResult;
 }
 
 function LoadLevelName(ID) {
