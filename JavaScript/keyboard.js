@@ -95,13 +95,36 @@ KeyboardInputManager.prototype.listen = function () {
 			return; // Ignore if touching with more than 1 finger or touching input
 		}
 
-		if (window.navigator.msPointerEnabled) {
-			touchStartClientX = event.pageX;
-			touchStartClientY = event.pageY;
+		var position = detectCoordinate(event)
+		var item = theLevel.itemAt(position.x, position.y)
+		if (item != null && (item.value == '$' || item.value == '*')) {
+			grabbing = item
 		} else {
-			touchStartClientX = event.touches[0].clientX;
-			touchStartClientY = event.touches[0].clientY;
+			var route = []
+
+			var playerPosition = getPlayerPosition()
+
+			if (item == null || item.value == '.') {
+				var path = findPath(position, playerPosition)
+				route = pathToRoute(path)
+
+			}
+			if (route.length > 0) {
+				performMoves(route, 0)
+			} else {
+				if (window.navigator.msPointerEnabled) {
+					touchStartClientX = event.pageX;
+					touchStartClientY = event.pageY;
+				} else {
+					touchStartClientX = event.touches[0].clientX;
+					touchStartClientY = event.touches[0].clientY;
+				}
+			}
 		}
+
+
+
+
 
 		event.preventDefault();
 	});
@@ -117,25 +140,35 @@ KeyboardInputManager.prototype.listen = function () {
 			return; // Ignore if still touching with one or more fingers or input
 		}
 
-		var touchEndClientX, touchEndClientY;
+		if (grabbing != null) {
+			var position = detectCoordinate(e)
+			var path = findPush(grabbing, position)
+			var route = pathToRoute(path)
+			pushRoute(route, grabbing)
 
-		if (window.navigator.msPointerEnabled) {
-			touchEndClientX = event.pageX;
-			touchEndClientY = event.pageY;
+			setCursor('grab')
+			grabbing = null
 		} else {
-			touchEndClientX = event.changedTouches[0].clientX;
-			touchEndClientY = event.changedTouches[0].clientY;
-		}
+			var touchEndClientX, touchEndClientY;
 
-		var dx = touchEndClientX - touchStartClientX;
-		var absDx = Math.abs(dx);
+			if (window.navigator.msPointerEnabled) {
+				touchEndClientX = event.pageX;
+				touchEndClientY = event.pageY;
+			} else {
+				touchEndClientX = event.changedTouches[0].clientX;
+				touchEndClientY = event.changedTouches[0].clientY;
+			}
 
-		var dy = touchEndClientY - touchStartClientY;
-		var absDy = Math.abs(dy);
+			var dx = touchEndClientX - touchStartClientX;
+			var absDx = Math.abs(dx);
 
-		if (Math.max(absDx, absDy) > 10) {
-			// (right : left) : (down : up)
-			self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+			var dy = touchEndClientY - touchStartClientY;
+			var absDy = Math.abs(dy);
+
+			if (Math.max(absDx, absDy) > 10) {
+				// (right : left) : (down : up)
+				self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+			}
 		}
 	});
 
@@ -156,7 +189,7 @@ KeyboardInputManager.prototype.toggleMute = function (event) {
 	this.emit("toggleMute");
 };
 
-KeyboardInputManager.prototype.undo = function(event) {
+KeyboardInputManager.prototype.undo = function (event) {
 	event.preventDefault()
 	this.emit("undo")
 }
