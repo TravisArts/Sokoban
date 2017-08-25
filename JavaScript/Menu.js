@@ -70,7 +70,8 @@ function loadSubMenu(type) {
     tableWidth = getTableWidth()
 
     var container = document.getElementById("levels")
-
+    container.innerText = ''
+    
     var storageManager = new LocalStorageManager
 
     var str = ""
@@ -100,7 +101,7 @@ function loadSubMenu(type) {
         name.textContent = levelTitle
 
         var moves = storageManager.getBestScore(i).moves
-        console.log(moves)
+        // console.log(moves)
         if (moves != 0) {
             // console.log("complete")
             var complete = document.createElement("div")

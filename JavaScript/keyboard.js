@@ -81,6 +81,7 @@ KeyboardInputManager.prototype.listen = function () {
 	// this.bindButtonPress(".retry-button", this.restart);
 	this.bindButtonPress(".restart-button", this.restart);
 	this.bindButtonPress(".mute-button", this.toggleMute);
+	this.bindButtonPress(".redo-button", this.redo);
 	this.bindButtonPress(".undo-button", this.undo);
 	// this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
@@ -131,6 +132,9 @@ KeyboardInputManager.prototype.listen = function () {
 
 	gameContainer.addEventListener(this.eventTouchmove, function (event) {
 		event.preventDefault();
+		if (grabbing != null) {
+			dragTreasure(event)
+		}
 	});
 
 	gameContainer.addEventListener(this.eventTouchend, function (event) {
@@ -192,6 +196,11 @@ KeyboardInputManager.prototype.toggleMute = function (event) {
 KeyboardInputManager.prototype.undo = function (event) {
 	event.preventDefault()
 	this.emit("undo")
+}
+
+KeyboardInputManager.prototype.redo = function (event) {
+	event.preventDefault()
+	this.emit("redo")
 }
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {

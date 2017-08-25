@@ -12,11 +12,13 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
     this.actuator = new Actuator;
 
     this.mute = false
-    this.states = new Array()
+    this.pastStates = new Array()
+    this.nextStates = new Array()
 
     this.inputManager.on("move", this.move.bind(this));
     this.inputManager.on("restart", this.restart.bind(this));
     this.inputManager.on("toggleMute", this.toggleMute.bind(this))
+    this.inputManager.on("redo", this.redo.bind(this))
     this.inputManager.on("undo", this.undo.bind(this))
     // this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
@@ -83,13 +85,37 @@ SokobanManager.prototype.setup = function () {
 
     }
 
-    style = document.createElement('style');
-    document.head.appendChild(style);
-    stylesheet = style.sheet;
-    pieceWidth = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns)
+    this.setStyles()
 
+    setupPathFinding()
+
+    // Update the actuator
+    this.actuator.actuateWalls(theLevel)
+    this.actuate(true)
+}
+
+SokobanManager.prototype.setStyles = function () {
+
+    var style = document.getElementById("dynamicStyle")
+
+    if (style == null) {
+        style = document.createElement('style')
+        style.setAttribute("id", "dynamicStyle")
+        document.head.appendChild(style)
+    }
+    var stylesheet = style.sheet
+
+    var usedHeight = document.getElementById("myTopnav").offsetHeight + document.getElementsByClassName("button")[0].scrollHeight + document.getElementsByClassName("stats")[0].scrollHeight
+    var availableHeight = document.body.scrollHeight - usedHeight
+    console.log("body: " + document.body.scrollHeight + ", available: " + availableHeight)
+    var height = availableHeight / (theLevel.rows)
+    var width = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns)
+    
+    pieceWidth = (width < height) ? width : height
+    
     var size = 'font-size:' + (pieceWidth + 1) + 'px;'
     var height = 'height:' + pieceWidth * theLevel.rows + 'px;'
+    style.innerText += '.drag {' + size + '}'
     style.innerText += '.GameBoard {' + size + height + '}'
 
     // document.getElementsByClassName("GameBoard")[0].clientHeight
@@ -105,104 +131,72 @@ SokobanManager.prototype.setup = function () {
             style.innerText += selector + '{transform: translate(' + value1 + 'px, ' + value2 + 'px)}'
         }
     }
-
-    setupPathFinding()
-
-    // Update the actuator
-    this.actuator.actuateWalls(theLevel)
-    this.actuate();
 }
 
 
 // Move tiles on the grid in the specified direction
-SokobanManager.prototype.move = function (direction) {
-    // 0: up, 1: right, 2: down, 3: left
+SokobanManager.prototype.move = function (direction, saveState) {
+
     var self = this;
-
-    // if (this.isGameTerminated()) return; // Don't do anything if the game's over
-
-    var cell, tile;
-
-    var vector = this.getVector(direction);
-
-    // var player
-
-    theLevel.eachCell(function (x, y, piece) {
-        // console.log(piece)
-        var pieceArr = ['$', '@', '+', '*', '?']
-
-
-        if (piece != null) {
-            // if (pieceArr.includes(piece.value)) {
-            piece.savePosition()
-            // }
+    
+        var cell, tile;
+    
+        var vector = this.getVector(direction);
+    
+        theLevel.eachCell(function (x, y, piece) {
+            var pieceArr = ['$', '@', '+', '*', '?']
+    
+    
+            if (piece != null) {
+                piece.savePosition()
+            }
+        })
+    
+    
+        var player = theLevel.player
+        var nextPosition = { x: player.x + vector.x, y: player.y + vector.y }
+        var playerPosition = { x: player.x, y: player.y }
+    
+        var item = theLevel.itemAt(nextPosition)
+    
+        var isWall = false
+        var isTreasure = false
+        if (item != null) {
+            var pieceArr = ['$', '.', '@', '+', '*', '?']
+            var treasures = ['$', '*']
+            isWall = !pieceArr.includes(item.value)
+            isTreasure = treasures.includes(item.value)
         }
-        // if (piece) {
-        //     piece.savePosition()
-        // }
-    })
-
-
-
-    // player = theLevel.getPlayer()
-
-    var player = theLevel.player
-
-
-    var nextPosition = { x: player.x + vector.x, y: player.y + vector.y }
-    var playerPosition = { x: player.x, y: player.y }
-
-    var item = theLevel.itemAt(nextPosition)
-    // console.log(player)
-    // console.log(item)
-    // var position = {x:x, y:y}
-    // tile.updatePosition(nextPosition);
-    // theLevel.addItem(tile)
-    // theLevel.addItem(new SokoPiece(position, null))
-
-    // player.updatePosition(position)
-
-    // move(vector.y, vector.x)
-
-    var isWall = false
-    var isTreasure = false
-    if (item != null) {
-        var pieceArr = ['$', '.', '@', '+', '*', '?']
-        var treasures = ['$', '*']
-        isWall = !pieceArr.includes(item.value)
-        isTreasure = treasures.includes(item.value)
-
-    }
-
-    if (isWall == true) {
-        return;
-    }
-    var nextItem
-    if (isTreasure) {
-        var otherPosition = { x: nextPosition.x + vector.x, y: nextPosition.y + vector.y }
-        nextItem = theLevel.itemAt(otherPosition)
-
-        if (nextItem == null || nextItem.value == '.') {
-            this.movePiece(item, otherPosition)
+    
+        if (isWall == true) {
+            return;
+        }
+        var nextItem
+        if (isTreasure) {
+            var otherPosition = { x: nextPosition.x + vector.x, y: nextPosition.y + vector.y }
+            nextItem = theLevel.itemAt(otherPosition)
+    
+            if (nextItem == null || nextItem.value == '.') {
+                this.movePiece(item, otherPosition)
+                this.movePiece(player, nextPosition)
+                theLevel.moves++
+                theLevel.pushes++
+            }
+        } else {
+            this.play("walk")
             this.movePiece(player, nextPosition)
             theLevel.moves++
-            theLevel.pushes++
         }
 
+    if (saveState == null) {
+        this.actuate(true)
     } else {
-        this.play("walk")
-        this.movePiece(player, nextPosition)
-        theLevel.moves++
+        this.actuate(saveState)        
     }
-
-
-
-
-    this.actuate()
 
 };
 
-// Move a tile and its representation
+// Move a piece and its representation
 SokobanManager.prototype.movePiece = function (piece, cell) {
     var nextPiece = theLevel.itemAt(cell)
 
@@ -292,6 +286,8 @@ SokobanManager.prototype.restart = function () {
     // moves = 0
     // pushes = 0
     // this.actuate();
+
+    console.log("restart")
     this.setup()
 }
 
@@ -310,7 +306,7 @@ SokobanManager.prototype.getVector = function (direction) {
 
 
 // Sends the updated grid to the actuator
-SokobanManager.prototype.actuate = function () {
+SokobanManager.prototype.actuate = function (saveState) {
     // if (this.storageManager.getBestScore() < this.score) {
     //     this.storageManager.setBestScore(this.score);
     // }
@@ -325,7 +321,10 @@ SokobanManager.prototype.actuate = function () {
     if (theLevel.moves > 0) {
         this.storageManager.setGameState(serial, levelNumber);
     }
-    this.states.push(serial)
+    console.log("saveState = " + saveState)
+    if (saveState) {
+        this.pastStates.push(serial)
+    }
 
     this.actuator.actuate(theLevel)
     // this.actuator.actuate(foo, {
@@ -381,11 +380,12 @@ SokobanManager.prototype.toggleMute = function () {
 
 SokobanManager.prototype.undo = function () {
     console.log("undo")
-    var previousState = this.states.pop()
-    previousState = this.states.pop()
-
+    var previousState = this.pastStates.pop()
+    this.nextStates.push(previousState)
+    previousState = this.pastStates.pop()
+    console.log(previousState)
     if (previousState) {
-
+        console.log("im here")
         theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], previousState.title)
         theLevel.rows = previousState.rows
         theLevel.columns = previousState.columns
@@ -416,11 +416,48 @@ SokobanManager.prototype.undo = function () {
         // renderLevel(theLevel)
         setupPathFinding()
         isCompleted = (bestMoves != 0)
-        this.actuate()
+        this.actuate(true)
     }
 
 }
 
+SokobanManager.prototype.redo = function () {
+    console.log("redo")
+    var redoState = this.nextStates.pop()
+    if (redoState) {
+        
+                theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], redoState.title)
+                theLevel.rows = redoState.rows
+                theLevel.columns = redoState.columns
+                theLevel.packs = redoState.packs
+                theLevel.savedPacks = redoState.savedPacks
+                theLevel.playerV = redoState.playerV
+                theLevel.playerH = redoState.playerH
+        
+                theLevel.pushes = redoState.pushes
+                theLevel.moves = redoState.moves
+        
+                // theLevel.objArr = redoState.objArr
+                theLevel.objArr = theLevel.empty()
+        
+                for (var x = 0; x < theLevel.columns; x++) {
+                    for (var y = 0; y < theLevel.columns; y++) {
+                        var value = redoState.objArr[x][y]
+                        if (value != null) {
+                            theLevel.addItem(new SokoPiece({ x: x, y: y }, value))
+                        }
+                    }
+                }
+                var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
+                theLevel.player = new SokoPiece(playerPosition, '@')
+        
+        
+                // renderLevel(theLevel)
+                setupPathFinding()
+                isCompleted = (bestMoves != 0)
+                this.actuate(true)
+            }
+}
 
 
 var Rows = 0;

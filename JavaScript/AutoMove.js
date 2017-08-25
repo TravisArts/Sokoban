@@ -59,11 +59,17 @@ function mouseMove(e) {
 		}
 	} else {
 		setCursor('grabbing')
+		dragTreasure(e)
 	}
 }
 
 function mouseUp(e) {
 	if (grabbing != null) {
+		var wrapper = document.getElementsByClassName("drag")[0]
+		if (wrapper != null) {
+			wrapper.remove()
+		}
+
 		var position = detectCoordinate(e)
 		var path = findPush(grabbing, position)
 		var route = pathToRoute(path)
@@ -72,6 +78,24 @@ function mouseUp(e) {
 		setCursor('grab')
 		grabbing = null
 	}
+}
+
+function dragTreasure(e) {
+	// var wrapper = document.getElementsByClassName("drag")[0]
+	// if (wrapper == null) {
+	// 	wrapper = document.createElement("div")
+	// 	wrapper.setAttribute("class", "drag")
+	// 	wrapper.textContent = "$"
+	// 	document.body.appendChild(wrapper)
+	// }
+	// wrapper.style.webkitTransform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px) translate(-50%, 0)'
+	// wrapper.style.MozTransform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px) translate(-50%, 0)'
+	// wrapper.style.msTransform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px) translate(-50%, 0)'
+	// wrapper.style.OTransform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px) translate(-50%, 0)'
+	// wrapper.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px) translate(-50%, 0)'
+	
+	// wrapper.style.fontSize = document.getElementById("GameBoard")[0].style.fontSize
+
 }
 
 function pushRoute(route, treasure) {
@@ -171,10 +195,12 @@ function detectCoordinate(e) {
 function performMoves(moves, i) {
 	setTimeout(function () {
 		var dir = moves[i]
-		manager.move(dir)
 		j = i + 1
 		if (j < moves.length) {
+			manager.move(dir, false)			
 			performMoves(moves, j)
+		} else {
+			manager.move(dir, true)			
 		}
 	}, 100);
 }
@@ -207,7 +233,7 @@ var graph
 
 function setupPathFinding() {
 	var nodes = []
-	graph = new Graph(nodes)
+	var theGraph = new Graph(nodes)
 
 	for (var x = 0; x < theLevel.columns; x++) {
 		var nodeRow = []
@@ -233,6 +259,41 @@ function findPath(s, e) {
 		var end = graph.grid[e.x][e.y]
 
 		var path = astar.search(graph, start, end)
+		if (path != null) {
+			var result = [s]
+			for (var i = 0; i < path.length; i++) {
+				node = path[i]
+				var point = { x: node.x, y: node.y }
+				result.push(point)
+			}
+			// console.log(result)
+		} else {
+			var result = []
+		}
+	} else {
+		result = []
+	}
+	return result
+}
+
+function findPush(s, e) {
+
+	var sTime = performance ? performance.now() : new Date().getTime();
+
+	if (theLevel.withinBounds(s) && theLevel.withinBounds(e)) {
+		var start = graph.grid[s.x][s.y]
+		var end = graph.grid[e.x][e.y]
+		var p = getPlayerPosition()
+		var player = graph.grid[p.x][p.y]
+		
+		// var graphCopy = new Graph(graph.gridIn)
+
+		var path = astar.search2way(graph, start, end, player)
+
+		setupPathFinding()
+		// graph = graphCopy
+
+		console.log(path)
 		if (path.length != 0) {
 			var result = [s]
 			for (var i = 0; i < path.length; i++) {
@@ -247,29 +308,13 @@ function findPath(s, e) {
 	} else {
 		result = []
 	}
+	var fTime = performance ? performance.now() : new Date().getTime(),
+		duration = (fTime-sTime).toFixed(2);
+	if(result.length === 0) {
+		console.log("couldn't find a path (" + duration + "ms)")
+	} else {
+		console.log("search took " + duration + "ms.")
+	}
+
 	return result
 }
-
-function findPush(s, e) {
-	
-		if (theLevel.withinBounds(s) && theLevel.withinBounds(e)) {
-			var start = graph.grid[s.x][s.y]
-			var end = graph.grid[e.x][e.y]
-	
-			var path = astar.search2way(graph, start, end)
-			if (path.length != 0) {
-				var result = [s]
-				for (var i = 0; i < path.length; i++) {
-					node = path[i]
-					var point = { x: node.x, y: node.y }
-					result.push(point)
-				}
-				// console.log(result)
-			} else {
-				var result = path
-			}
-		} else {
-			result = []
-		}
-		return result
-	}

@@ -58,9 +58,20 @@ function doOnOrientationChange() {
 	manager.setup()	
 }
 
+var resizeTimer
+function windowDidResize(e) {
+	clearTimeout(resizeTimer)
+	resizeTimer = setTimeout(function() {
+		// run code here, resizing has "stopped"
+	}, 250)
+}
+
 
 window.addEventListener('orientationchange', doOnOrientationChange);
 
 // window.onload = function() {
 // 	    LoadAllLevels();
 // }
+
+
+window.addEventListener('resize', windowDidResize(event))
