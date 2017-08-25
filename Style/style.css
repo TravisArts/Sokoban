@@ -57,29 +57,36 @@ li:hover {
 }*/
 
 @font-face {
-    /*font-family: "fore";*/
     font-family: "mid";
-    /*font-family: "back";*/
-    src: url('../Fonts/SokobanColor-Black.ttf');
+    src: url('../Fonts/SokobanColor-Black.ttf') format('truetype'),
+        url('../Fonts/SokobanColor-Black.woff') format('woff'),
+        url('../Fonts/SokobanColor-Black.woff2') format('woff2');
     font-style: normal;
+    font-weight: normal;
 }
 
 @font-face {
-    /*font-family: "fore";*/
-    /*font-family: "mid";*/
     font-family: "back";
-    src: url('../Fonts/SokobanColor-Red.ttf');
+    src: url('../Fonts/SokobanColor-Red.ttf'),
+        url('../Fonts/SokobanColor-Red.woff') format('woff'),
+        url('../Fonts/SokobanColor-Red.woff2') format('woff2');
     font-style: normal;
+    font-weight: normal;
 }
 
 @font-face {
     font-family: "fore";
-    /*font-family: "mid";
-    font-family: "back";*/
-    src: url('../Fonts/SokobanColor-DarkRed.ttf');
+    src: url('../Fonts/SokobanColor-DarkRed.ttf'),
+        url('../Fonts/SokobanColor-DarkRed.woff') format('woff'),
+        url('../Fonts/SokobanColor-DarkRed.woff2') format('woff2');
     font-style: normal;
+    font-weight: normal;
 }
 
+body {
+    font-feature-settings: "liga","dlig";
+    text-rendering: optimizeLegibility;  
+}
 
 
 
