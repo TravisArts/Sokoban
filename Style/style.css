@@ -1,16 +1,4 @@
 
-body {
-    margin: 0;
-    background-color: #DDDDDD;
-    /*font-family: "Sokoban";*/
-    font-family: Helvetica;
-    overflow: scroll;
-
-    -webkit-user-select: none; /* Chrome/Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
-    user-select: none;
-}
 
 p {
     margin: 0;
@@ -82,21 +70,6 @@ li:hover {
     font-style: normal;
     font-weight: normal;
 }
-
-body {
-    font-feature-settings: "liga","dlig";
-    text-rendering: optimizeLegibility;  
-}
-
-
-
-
-
-
-
-
-
-
 
 
 button {
@@ -182,9 +155,9 @@ button:disabled {
 
 #back,
 #forward {
-	height: 10%;
-    width: auto;
-    overflow: auto;
+	height: fit-content;
+    width: fit-content;
+    overflow: hidden;
     margin: auto;
     position: fixed;
     top: 50%;    
@@ -379,4 +352,419 @@ button:disabled {
 #star {
     position: absolute;
     top: -50px;
+}
+
+body {
+    overflow: hidden;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    margin: 0;
+    background-color: #DDDDDD;
+    /*font-family: "Sokoban";*/
+    font-family: Helvetica;
+    /* overflow: scroll; */
+    
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    user-select: none;
+
+    font-feature-settings: "liga","dlig";
+    text-rendering: optimizeLegibility;  
+
+}
+
+
+.list {
+    
+    width: 25%;
+    text-align: center;
+    display : inline-block;  
+    text-align: center;    
+    /* display: inline-flex;  */
+    padding: 20;
+}
+
+.list:hover {
+
+    outline: #333333 solid thick;
+
+}
+
+.soko-room {
+    /* float: center; */
+    /* text-align: center;     */
+    display : inline-block;
+    /*padding : 1px;*/
+    /*line-height : 1;*/
+    /* cursor: crosshair; */
+    /*line-height: 106%;*/
+
+    /* min-width: 100%;  */
+    /* height: auto; */
+
+    /* left: 0;
+    right: 0;  */
+    /* padding: 1; */
+
+    line-height: 0;
+    width: fit-content;
+    /* border-color: #000000;
+    border-style: solid; */
+    overflow: visible;
+    white-space:nowrap;
+    padding: 0;
+}
+
+
+[piece] {
+
+    /* font-size: 2em; */
+    font-family: "mid"; /* See @font-face declarations at bottom */
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-align: left;
+    position: absolute;
+
+    /* line-height: 0.1em; */
+
+
+    
+}
+.soko-room span {
+    white-space: pre;      /* Turn newlines into actual newlines */    
+    display: inline-block; /* So we can set its width */
+    /*line-height: 0.01em;   /* Overlap icons vertically */ 
+    /*line-height: 1em;      /* Compensate for zero line height */
+    width: 0em;            /* Compensate for negative letter spacing */
+    /* line-height: 1em; */
+    position: relative;
+    
+    font-size: 1vw;
+    padding: 0.5vw;
+   
+}
+
+
+[piece]::before {
+    content: attr(piece)"\a";
+    font-family: "back";
+}
+
+[piece]::after {
+    content: "\a"attr(piece);
+    font-family: "fore";
+}
+
+[piece="@"] {
+    color: #000000;
+}
+[piece="@"]::before {
+    color: #DD0000;
+}
+[piece="@"]::after {
+    color: #770000;
+}
+
+[piece="+"] {
+    color: #000000;
+}
+[piece="+"]::before {
+    color: #DD0000;
+}
+[piece="+"]::after {
+    color: #770000;
+}
+
+
+[piece="$"] {
+    color: #999933;
+}
+[piece="*"] {
+    color: #000000;
+}
+[piece="*"]::after {
+    color: #999933;
+}
+
+
+[piece="$"]::before,
+[piece="@"]::before {
+    z-index: 10;
+} 
+[piece="."] {
+    z-index: -10;
+}
+
+
+/* [piece="#"]::before {
+    color: #FFFFFF;
+} */
+[piece="#"] {
+    color: #CCCCFF;
+}
+/* [piece="#"]::after {
+    color: #3333CC;
+} */
+
+
+
+/*[piece='━']::before {
+    color: #FFFFFF;
+}
+
+[piece='━']::after {
+    color: #3333CC;
+}*/
+
+.wall::before {
+    color: #FFFFFF;
+}
+
+.wall {
+    color: #CCCCFF;
+}
+
+.wall::after {
+    color: #3333CC;
+}
+
+
+
+/*[piece="#"]::before {
+    color: #CCCCFF;
+}
+[piece="#"]::after {
+    color: #CCCCFF;
+}*/
+
+.GameBoard {
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    margin-top: 60px;
+    padding: 15px;
+
+    /* border-color: #000000;
+    border-style: solid; */
+    height: fit-content;
+
+}
+
+.gameArea {
+    /* border-color: #000000;
+    border-style: solid; */
+
+    white-space: nowrap;
+    position: absolute;
+    /* padding: 20px; */
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%,-50%);
+
+    height: 100%;
+
+    width: 500px;
+    margin: 0 auto;
+    /* padding-bottom: 0; */
+
+
+    /* width: 75%;
+    height: 75%;   */
+}
+
+/* .stats>div {
+     display: inline; 
+} */
+
+.block1>div {
+    display: inline;
+} 
+.block2>div {
+    display: inline;
+}
+
+
+.stats {
+    white-space: nowrap;
+    /*position: absolute;*/
+    /*padding: 20px;*/
+    /*left: 50%;
+    top: 50%;*/
+    /*transform: translate(-50%,-50%);*/
+
+    /*width: 75%;
+    height: 75%;*/
+    text-align: center;
+    /*float: left;*/
+}
+
+
+.restart-button {
+    /* display: inline-block; */
+    background: #3333CC;
+    border-radius: 3px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #CCCCFF;
+    height: 40px;
+    line-height: 42px;
+    cursor: pointer;
+    /* display: block; */
+    text-align: center;
+    float: right; 
+}
+.button {
+    display: inline-block;
+    background: #3333CC;
+    border-radius: 3px;
+    padding: 0px 10px;
+    text-decoration: none;
+    height: 40px;
+    line-height: 42px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    float: right;
+}
+.material-icons {
+    vertical-align: middle;    
+    /* background: url('../Buttons/mute.png'); */
+    /* padding: 10px 10px; */
+    /* size: 20px 20px; */
+    /* margin: auto; */
+    color: #CCCCFF;    
+}
+
+.button {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+
+@media screen and (max-width: 520px) {
+  
+    .gameArea {
+        width: 280px;
+        margin: 0 auto;
+    }
+
+    .GameBoard {
+        margin-top: 17px;
+        padding: 10px;
+    }
+}
+
+.piece {
+    -webkit-transition: 100ms linear;
+    -moz-transition: 100ms linear;
+    transition: 100ms linear;
+}
+
+.GameBoard {
+    /* cursor: crosshair; */
+}
+
+[piece="$"],
+[piece="*"] {
+    cursor: grab;
+}
+
+[piece="@"],
+[piece="+"] {
+    cursor: 'default'
+}
+
+[piece="$"]:active,
+[piece="*"]:active {
+    cursor: grabbing;
+}
+
+.wall {
+    cursor: default;
+}
+
+.GameSpace,
+.WallSpace {
+    position: absolute;
+    font-size: fit-width-precise; 
+    /* font-size: 2em; */
+    font-family: "mid"; /* See @font-face declarations at bottom */
+    speak: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-align: left;
+
+    /* line-height: 0.1em; */
+    display: inline-block; /* So we can set its width */
+    white-space: pre;      /* Turn newlines into actual newlines */
+    line-height: 0;        /* Overlap icons vertically */
+    /*padding: 0.0em 0;      /* Compensate for zero line height */
+    width: 10em;            /* Compensate for negative letter spacing */
+    /*overflow: hidden;*/
+    /* Remove rest of the actual word, leaving the first letter */
+        
+    padding: 0;
+    /* -webkit-transition: 100ms linear;
+    -moz-transition: 100ms linear;
+    transition: 100ms linear; */
+}
+
+
+.drag {
+    font-family: "mid";
+    opacity: 0.5;
+    color: #333333;
+    cursor: grabbing;
+    float: center;
+    position: absolute;
+    /* text-align: center; */
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../Fonts/SokobanColor-Black.ttf');
+    /* format('woff2'); */
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+
+button {
+    background: #3333CC;
+    border-radius: 3px;
+    /* padding: 0px 10px; */
+    text-decoration: none;
+    height: fit-content;
+    /* 40px; */
+    padding: 10px;
+    line-height: 42px;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'mid'; 
+    color: #CCCCFF;
+    font-size: 40px;
+    /* float: right; */
 }

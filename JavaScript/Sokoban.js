@@ -30,6 +30,8 @@ SokobanManager.prototype.setup = function () {
 
     var previousState = this.storageManager.getGameState(levelNumber);
 
+    this.mute = (getCookie("mute") != "true") ? true : false
+    this.toggleMute()
     // this.storageManager.updateScoreStorage()
 
     var bestScore = this.storageManager.getBestScore(levelNumber)
@@ -70,7 +72,6 @@ SokobanManager.prototype.setup = function () {
         // new SokoPiece(playerPosition, '@')
 
 
-        // renderLevel(theLevel)
 
         isCompleted = (bestMoves != 0)
         // console.log(listCookies())
@@ -80,7 +81,6 @@ SokobanManager.prototype.setup = function () {
 
     } else {
 
-        // LoadResFork("Sokoban");
         gotoLevel(levelNumber);
 
     }
@@ -92,6 +92,10 @@ SokobanManager.prototype.setup = function () {
     // Update the actuator
     this.actuator.actuateWalls(theLevel)
     this.actuate(true)
+
+    // if (isMobile) {
+    //     drawNavigation()
+    // }
 }
 
 SokobanManager.prototype.setStyles = function () {
@@ -105,22 +109,20 @@ SokobanManager.prototype.setStyles = function () {
     }
     var stylesheet = style.sheet
 
+
     var usedHeight = document.getElementById("myTopnav").offsetHeight + document.getElementsByClassName("button")[0].scrollHeight + document.getElementsByClassName("stats")[0].scrollHeight
-    var availableHeight = document.body.scrollHeight - usedHeight
-    console.log("body: " + document.body.scrollHeight + ", available: " + availableHeight)
+    var availableHeight = document.getElementsByClassName("gameArea")[0].offsetHeight - usedHeight
+    console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
     var height = availableHeight / (theLevel.rows)
     var width = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns)
-    
+
     pieceWidth = (width < height) ? width : height
-    
+
     var size = 'font-size:' + (pieceWidth + 1) + 'px;'
     var height = 'height:' + pieceWidth * theLevel.rows + 'px;'
     style.innerText += '.drag {' + size + '}'
     style.innerText += '.GameBoard {' + size + height + '}'
 
-    // document.getElementsByClassName("GameBoard")[0].clientHeight
-
-    // document.getElementsByClassName("GameBoard")[0].style.height = width * theLevel.rows
 
     for (var x = 0; x < theLevel.columns; x++) {
         for (var y = 0; y < theLevel.rows; y++) {
@@ -128,7 +130,7 @@ SokobanManager.prototype.setStyles = function () {
             var value1 = pieceWidth * x
             var value2 = pieceWidth * y
 
-            style.innerText += selector + '{transform: translate(' + value1 + 'px, ' + value2 + 'px)}'
+            style.innerText += selector + '{transform: translate(' + value1 + 'px, ' + value2 + 'px); -webkit-transform: translate(' + value1 + 'px, ' + value2 + 'px); s-moz-transform: translate(' + value1 + 'px, ' + value2 + 'px)}'
         }
     }
 }
@@ -138,60 +140,60 @@ SokobanManager.prototype.setStyles = function () {
 SokobanManager.prototype.move = function (direction, saveState) {
 
     var self = this;
-    
-        var cell, tile;
-    
-        var vector = this.getVector(direction);
-    
-        theLevel.eachCell(function (x, y, piece) {
-            var pieceArr = ['$', '@', '+', '*', '?']
-    
-    
-            if (piece != null) {
-                piece.savePosition()
-            }
-        })
-    
-    
-        var player = theLevel.player
-        var nextPosition = { x: player.x + vector.x, y: player.y + vector.y }
-        var playerPosition = { x: player.x, y: player.y }
-    
-        var item = theLevel.itemAt(nextPosition)
-    
-        var isWall = false
-        var isTreasure = false
-        if (item != null) {
-            var pieceArr = ['$', '.', '@', '+', '*', '?']
-            var treasures = ['$', '*']
-            isWall = !pieceArr.includes(item.value)
-            isTreasure = treasures.includes(item.value)
+
+    var cell, tile;
+
+    var vector = this.getVector(direction);
+
+    theLevel.eachCell(function (x, y, piece) {
+        var pieceArr = ['$', '@', '+', '*', '?']
+
+
+        if (piece != null) {
+            piece.savePosition()
         }
-    
-        if (isWall == true) {
-            return;
-        }
-        var nextItem
-        if (isTreasure) {
-            var otherPosition = { x: nextPosition.x + vector.x, y: nextPosition.y + vector.y }
-            nextItem = theLevel.itemAt(otherPosition)
-    
-            if (nextItem == null || nextItem.value == '.') {
-                this.movePiece(item, otherPosition)
-                this.movePiece(player, nextPosition)
-                theLevel.moves++
-                theLevel.pushes++
-            }
-        } else {
-            this.play("walk")
+    })
+
+
+    var player = theLevel.player
+    var nextPosition = { x: player.x + vector.x, y: player.y + vector.y }
+    var playerPosition = { x: player.x, y: player.y }
+
+    var item = theLevel.itemAt(nextPosition)
+
+    var isWall = false
+    var isTreasure = false
+    if (item != null) {
+        var pieceArr = ['$', '.', '@', '+', '*', '?']
+        var treasures = ['$', '*']
+        isWall = !pieceArr.includes(item.value)
+        isTreasure = treasures.includes(item.value)
+    }
+
+    if (isWall == true) {
+        return;
+    }
+    var nextItem
+    if (isTreasure) {
+        var otherPosition = { x: nextPosition.x + vector.x, y: nextPosition.y + vector.y }
+        nextItem = theLevel.itemAt(otherPosition)
+
+        if (nextItem == null || nextItem.value == '.') {
+            this.movePiece(item, otherPosition)
             this.movePiece(player, nextPosition)
             theLevel.moves++
+            theLevel.pushes++
         }
+    } else {
+        this.play("walk")
+        this.movePiece(player, nextPosition)
+        theLevel.moves++
+    }
 
     if (saveState == null) {
         this.actuate(true)
     } else {
-        this.actuate(saveState)        
+        this.actuate(saveState)
     }
 
 };
@@ -280,12 +282,6 @@ SokobanManager.prototype.restart = function () {
     this.storageManager.clearGameState(levelNumber)
     // TODO: uncomment these lines
     // might speed up resets
-
-    // theLevel = parseXML(level)
-    // theLevel.addPlayer()
-    // moves = 0
-    // pushes = 0
-    // this.actuate();
 
     console.log("restart")
     this.setup()
@@ -376,6 +372,7 @@ SokobanManager.prototype.toggleMute = function () {
         // button.attributes["webkit-mask-box-image"] = "url('Buttons/unmute.png')"
         // button.setAttribute("-webkit-mask-box-image", "url('Buttons/unmute.png')")        
     }
+    setCookie("mute", this.mute)
 }
 
 SokobanManager.prototype.undo = function () {
@@ -413,7 +410,6 @@ SokobanManager.prototype.undo = function () {
         theLevel.player = new SokoPiece(playerPosition, '@')
 
 
-        // renderLevel(theLevel)
         setupPathFinding()
         isCompleted = (bestMoves != 0)
         this.actuate(true)
@@ -425,38 +421,37 @@ SokobanManager.prototype.redo = function () {
     console.log("redo")
     var redoState = this.nextStates.pop()
     if (redoState) {
-        
-                theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], redoState.title)
-                theLevel.rows = redoState.rows
-                theLevel.columns = redoState.columns
-                theLevel.packs = redoState.packs
-                theLevel.savedPacks = redoState.savedPacks
-                theLevel.playerV = redoState.playerV
-                theLevel.playerH = redoState.playerH
-        
-                theLevel.pushes = redoState.pushes
-                theLevel.moves = redoState.moves
-        
-                // theLevel.objArr = redoState.objArr
-                theLevel.objArr = theLevel.empty()
-        
-                for (var x = 0; x < theLevel.columns; x++) {
-                    for (var y = 0; y < theLevel.columns; y++) {
-                        var value = redoState.objArr[x][y]
-                        if (value != null) {
-                            theLevel.addItem(new SokoPiece({ x: x, y: y }, value))
-                        }
-                    }
+
+        theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], redoState.title)
+        theLevel.rows = redoState.rows
+        theLevel.columns = redoState.columns
+        theLevel.packs = redoState.packs
+        theLevel.savedPacks = redoState.savedPacks
+        theLevel.playerV = redoState.playerV
+        theLevel.playerH = redoState.playerH
+
+        theLevel.pushes = redoState.pushes
+        theLevel.moves = redoState.moves
+
+        // theLevel.objArr = redoState.objArr
+        theLevel.objArr = theLevel.empty()
+
+        for (var x = 0; x < theLevel.columns; x++) {
+            for (var y = 0; y < theLevel.columns; y++) {
+                var value = redoState.objArr[x][y]
+                if (value != null) {
+                    theLevel.addItem(new SokoPiece({ x: x, y: y }, value))
                 }
-                var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
-                theLevel.player = new SokoPiece(playerPosition, '@')
-        
-        
-                // renderLevel(theLevel)
-                setupPathFinding()
-                isCompleted = (bestMoves != 0)
-                this.actuate(true)
             }
+        }
+        var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
+        theLevel.player = new SokoPiece(playerPosition, '@')
+
+
+        setupPathFinding()
+        isCompleted = (bestMoves != 0)
+        this.actuate(true)
+    }
 }
 
 
@@ -560,7 +555,6 @@ function undo_pop() {
         }
 
         // theLevel.objArr = undo
-        // renderLevel(theLevel)
     }
 }
 
@@ -686,7 +680,6 @@ function undo_pop() {
 
 
 
-//     // renderLevel(theLevel)
 //     countSavedPackets()
 // }
 
@@ -733,23 +726,6 @@ function play(snd) {
 }
 
 
-
-function renderLevel(lvl) {
-
-    // pushOut.play();
-
-    // printLevel(lvl)
-    // document.getElementById("GameBoard").innerHTML = text
-
-    // document.getElementById("moves").innerText = theLevel.moves
-    // document.getElementById("pushes").innerText = theLevel.pushes
-    // document.getElementById("saved").innerText = theLevel.savedPacks
-    // document.getElementById("best-moves").innerText = bestMoves
-    // document.getElementById("best-pushes").innerText = bestPushes
-
-}
-
-
 var myGamePiece;
 var myObstacles = [];
 var myScore;
@@ -788,7 +764,6 @@ function previousLevel() {
 
         levelNumber--
 
-        // var lvl = GetResource('MAPR', levelNumber)
         var lvl = LoadLevelData(levelNumber)
 
 
@@ -821,19 +796,10 @@ function nextLevel() {
 
     // setCookie("level", levelNumber)
 
-    // document.getElementById("levelNumber").value = levelNumber
-    // loadLevel(levelNumber)
     manager.setup()
 }
 
 function gotoLevel(num) {
-
-    // if (levelNumber == "" ) {
-    //     levelNumber = document.getElementById("levelNumber").value
-    // } else {
-    //     document.getElementById("levelNumber").value = levelNumber
-    // }
-
     loadLevel(num)
 }
 
@@ -847,7 +813,6 @@ function loadLevel(level) {
     moves = 0
     pushes = 0
 
-    // renderLevel(theLevel)
     isCompleted = (bestMoves != 0)
     // console.log(listCookies())
     levelTitle = theLevel.title
@@ -938,7 +903,9 @@ function XOR(a, b) {
     return (a || b) && !(a && b)
 }
 
-
+function loadMenu(type) {
+    window.location.href = "Menu/?collection=" + type
+}
 
 
 

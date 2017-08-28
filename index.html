@@ -1,59 +1,46 @@
 <!DOCTYPE html>
 <!-- <html lang="en" manifest="demo.appcache"> -->
 <html lang="en">
+
 <head>
     <meta charset=utf-8 name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 
     <link rel="stylesheet" type="text/css" href="Style/style.css">
-    <link rel="stylesheet" type="text/css" href="Style/game.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="mask-icon" href="website_icon.svg" color="red">
     <link rel="preload" href="Levels.json">
-    <link rel "preload" href="buttons"> <!--#include file="Sokoban.xml" -->
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <!-- <link rel="stylesheet" href="Style/googleAPIS.css"> -->
+    <link rel "preload" href="buttons">
 
 
-    <script type="text/javascript" src="JavaScript/ion.sound.js"></script>
+
+    <script>
+        document.onreadystatechange = function (e) {
+            console.log(document.readyState)
+            if (document.readyState === 'complete') {
+                //dom is ready, window.onload fires later
+                LoadAllLevels()
+            }
+        };
+    </script>
+
     <script type="text/javascript" src="JavaScript/hex.js"></script>
-    <script type="text/javascript" src="JavaScript/xml-Parsing.js"></script>
-    <script type="text/javascript" src="JavaScript/Carbon.js"></script>
+    <script type="text/javascript" src="JavaScript/ion.sound.js"></script>
     <script type="text/javascript" src="JavaScript/Sokoban.js"></script>
-    <script type="text/javascript" src="JavaScript/Cookies.js"></script>
     <script type="text/javascript" src="JavaScript/keyboard.js"></script>
     <script type="text/javascript" src="JavaScript/application.js"></script>
     <script type="text/javascript" src="JavaScript/HTMLActuator.js"></script>
     <script type="text/javascript" src="JavaScript/StorageManager.js"></script>
     <script type="text/javascript" src="JavaScript/bind_polyfill.js"></script>
     <script type="text/javascript" src="JavaScript/LevelStruct.js"></script>
-    <script type="text/javascript" src="JavaScript/SokoPiece.js"></script>
     <script type="text/javascript" src="JavaScript/AutoMove.js"></script>
-    <script type="text/javascript" src="JavaScript/astar.js"></script>
-    
+
 
 
     <title>Sokoban: Microban levels</title>
-    <style>
-        td {
-            text-align: center;
-            /*outline-style: solid;*/
-            cursor: pointer;
-            padding: 20px;
-            background-color: #DDDDDD
-        }
-    </style>
 
 </head>
 
-<!-- <body onkeydown="keyhandler(event)" onload="startGame()">   -->
-
 <body>
-
-    <script type='text/javascript'>
-        LoadAllLevels();
-    </script>
-
-
     <div class="topnav" id="myTopnav">
         <div id="navTitle"></div>
         <div class="navButton" onClick='loadMenu("Original Levels")'> Original Levels </div>
@@ -70,47 +57,19 @@
         </div>
     </div>
 
-    <script>
-        /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
-        function toggleResponse(e) {
-            console.log("click")
-            e.classList.toggle("change");
-            var x = document.getElementById("myTopnav");
-            if (x.className === "topnav") {
-                x.className += " responsive";
-            } else {
-                x.className = "topnav";
-            }
-        }
-
-        function loadMenu(type) {
-            window.location.href = "Menu?collection=" + type
-        }
-    </script>
-
-    <!-- <ul>
-        <li><a href='menu.html?collection=Original Levels'> Original Levels </a></li>
-        <li><a href='menu.html?collection=Boxxle'> Boxxle </a></li>
-        <li><a href='menu.html?collection=Dimitri and Yorick'> Dimitri & Yorick </a></li>
-        <li><a href='menu.html?collection=Extra'> Extra </a></li>
-        <li><a href='menu.html?collection=IQ Carrier'> IQ Carrier </a></li>
-        <li><a href='menu.html?collection=Simple Sokoban'> Simple Sokoban </a></li>
-        <li><a href='menu.html?collection=Still More'> Still More </a></li>
-    </ul>  -->
-
     <!--style="overflow: hidden;max-width: 3ch;overflow-wrap: break-word;"-->
     <!--<p id="demo">the solution goes here</p>-->
     <div class=gameArea>
-        <button class="button restart-button"> Restart </button>
-        <button class="button mute-button">
+        <div class="button restart-button"> Restart </div>
+        <div class="button mute-button">
             <i id=mute-icon class="material-icons">volume_up</i>
-        </button>
-        <button class="button redo-button">
+        </div>
+        <div class="button redo-button">
             <i id=redo-icon class="material-icons">redo</i>
-        </button>
-        <button class="button undo-button">
+        </div>
+        <div class="button undo-button">
             <i id=undo-icon class="material-icons">undo</i>
-        </button>
+        </div>
         <div id="main" class=GameBoard onmousedown="mouseDown(event)" onmousemove="mouseMove(event)" onmouseup="mouseUp(event)">
             <p id="GameBoard">
             </p>
@@ -135,22 +94,14 @@
     </div>
 
     <div class=previousContainer>
-        <!-- <button> -->
         <div id=back onclick="previousLevel()">
             <i class=material-icons style="font-size:100px;">chevron_left</i>
-            <!-- <i class=material-icons style="font-size:100px;">back</i> -->
         </div>
-        <!-- <input id="back" type="image" src="Buttons/back2.png" onclick="previousLevel()" /> -->
-        <!-- </button> -->
     </div>
     <div class=nextContainer>
-        <!-- <button> -->
         <div id=forward onclick="nextLevel()">
             <i class=material-icons style="font-size:100px;">chevron_right</i>
-            <!-- <i class=material-icons style="font-size:100px;">next</i> -->
         </div>
-        <!-- <input id="forward" type="image" src="Buttons/forward2.png" onclick="nextLevel()" /> -->
-        <!-- </button> -->
     </div>
     <p id="stats"></p>
 </body>

@@ -1,26 +1,17 @@
-
-
-
-var tableWidth = 0
-
-
-
 function loadMenu(type) {
 
-    // LoadResFork( "Sokoban");
-
-    // LoadAllLevels()
-
-    let qVar = getQueryVariable("collection")
-    if (qVar != false) {
-        var str = qVar.replace("and", "&")
-        console.log('str =' + str)
-        loadSubMenu(str)
+    if (type == undefined) {
+        let qVar = getQueryVariable("collection")
+        if (qVar != false) {
+            var str = qVar.replace("and", "&")
+            console.log('str =' + str)
+            loadSubMenu(str)
+        } else {
+            loadSubMenu('Original Levels')
+        }
     } else {
         loadSubMenu(type)
     }
-    // document.getElementById("levels").innerHTML = str
-
 }
 
 function loadSubMenu(type) {
@@ -29,8 +20,7 @@ function loadSubMenu(type) {
 
     history.pushState(0, "" + type, "?collection=" + type)
 
-    var startNum = 0
-    var endNum = 0
+    var startNum, endNum = 0
 
     switch (type) {
         case "Original Levels":
@@ -65,31 +55,28 @@ function loadSubMenu(type) {
             return;
     }
 
-
-    var xIndex = 0;
-    tableWidth = getTableWidth()
-
     var container = document.getElementById("levels")
     container.innerText = ''
-    
+
     var storageManager = new LocalStorageManager
 
     var str = ""
 
 
+    var i, levelTitle, wrapper, link, layout, name, level, moves
+    for (i = startNum; i <= endNum; i++) {
 
-    for (var i = startNum; i <= endNum; i++) {
-        var levelTitle
 
-        var wrapper = document.createElement("div")
-        var link = document.createElement("a")
-        var layout = document.createElement("span")
-        var name = document.createElement("div")
-
-        var level = "..?level=" + i
+        wrapper = document.createElement("div")
         wrapper.setAttribute("class", "list")
-        link.setAttribute("href", level)
+
+        link = document.createElement("a")
+        link.setAttribute("href", "..?level=" + i)
+
+        layout = document.createElement("span")
         layout.setAttribute("class", "soko-room")
+
+        name = document.createElement("div")
         name.setAttribute("class", "levelName")
         layout.innerHTML = getString(i)
 
@@ -100,7 +87,7 @@ function loadSubMenu(type) {
         }
         name.textContent = levelTitle
 
-        var moves = storageManager.getBestScore(i).moves
+        moves = storageManager.getBestScore(i).moves
         // console.log(moves)
         if (moves != 0) {
             // console.log("complete")
@@ -138,46 +125,6 @@ function setWindowTitle(type) {
     document.title = winTitle
 }
 
-function getTableWidth() {
-
-    let width = window.innerWidth
-    let body = document.getElementById('body')
-    let fontSize = 0.5 * parseFloat(window.getComputedStyle(body, null).getPropertyValue('font-size'))
-
-    var xFloat = width / ((4 + fontSize) * 20)
-    var x = Math.round(xFloat + 0.5) - 1
-
-    console.log(xFloat)
-    console.log(x)
-    return x
-}
-
-
-function windowDidResize() {
-
-    // var width = getTableWidth()
-
-    // if ( width != tableWidth ) {
-    //      tableWidth = width
-    //      reformatTable()
-    // }
-}
-
-function reformatTable() {
-
-    var levels = document.getElementsByTagName("td")
-
-    var str = ""
-    for (var i = 0; i < levels.length; i++) {
-        if (i != 0 && i % tableWidth == 0) {
-            str += "</tr>\n<tr>"
-        }
-        str += "<td onmouseover='mouseOver(this)' onmouseout='mouseOut(this)' >" + levels[i].innerHTML + "</td>"
-    }
-    document.getElementById("levels").innerHTML = str
-
-}
-
 function getString(i) {
 
 
@@ -213,17 +160,7 @@ function formatChar(s) {
 
     var pieceArr = [' ', '$', '.', '@', '+', '*', '?']
 
-    var isWall = true
-    for (i = 0; i < 7; i++) {
-        if (s == pieceArr[i]) {
-            isWall = false;
-        }
-    }
-    if (isWall == true) {
-        r += '<span class="wall" piece=' + s + '>' + s + '</span>';
-    } else {
-        r += '<span piece=' + s + '>' + s + '</span>';
-    }
+    r += '<span piece=' + s + '>' + s + '</span>';
     return r;
 }
 

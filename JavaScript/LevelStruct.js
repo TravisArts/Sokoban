@@ -24,50 +24,45 @@ LevelStruct.prototype.addPlayer = function () {
 	var position = { x: this.playerH, y: this.playerV }
 	var item = this.itemAt(position)
 	if (item == null || item.value == "@") {
-		this.player = new SokoPiece(position, "@")		
+		this.player = new SokoPiece(position, "@")
 	} else if (item.value == '.' || item.value == '+') {
-		this.player = new SokoPiece(position, "+")		
+		this.player = new SokoPiece(position, "+")
 	}
 
 }
 
 LevelStruct.prototype.cleanWalls = function () {
-
-
 	var WallObjs = this.empty()
 
 	var wallArr = ['•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '┓', '┫', '┏', '┣', '┳', '╋',
-	'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '┓', '┩', '┏', '┣', '┳', '╃',
-	'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '┓', '┫', '┏', '┡', '┳', '╄',
-	'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '┓', '┩', '┏', '┡', '┳', '╇',
-	'•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '╗', '┪', '┏', '┣', '┱', '╅',
-	'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '╗', '╣', '┏', '┣', '┱', '╉',
-	'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '╗', '┪', '┏', '┡', '┱', '╱',
-	'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '╗', '╣', '┏', '┡', '┱', '╭',
-	'•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '┓', '┫', '╔', '┢', '┲', '╆',
-	'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '┓', '┩', '╔', '┢', '┲', '╲',
-	'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '┓', '┫', '╔', '╠', '┲', '╊',
-	'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '┓', '┩', '╔', '╠', '┲', '╮',
-	'•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '╗', '┪', '╔', '┢', '╦', '╈',
-	'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '╗', '╣', '╔', '┢', '╦', '╰',
-	'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '╗', '┪', '╔', '╠', '╦', '╯',
-	'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '╗', '╣', '╔', '╠', '╦', '╬']
+		'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '┓', '┩', '┏', '┣', '┳', '╃',
+		'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '┓', '┫', '┏', '┡', '┳', '╄',
+		'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '┓', '┩', '┏', '┡', '┳', '╇',
+		'•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '╗', '┪', '┏', '┣', '┱', '╅',
+		'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '╗', '╣', '┏', '┣', '┱', '╉',
+		'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '╗', '┪', '┏', '┡', '┱', '╱',
+		'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '╗', '╣', '┏', '┡', '┱', '╭',
+		'•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '┓', '┫', '╔', '┢', '┲', '╆',
+		'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '┓', '┩', '╔', '┢', '┲', '╲',
+		'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '┓', '┫', '╔', '╠', '┲', '╊',
+		'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '┓', '┩', '╔', '╠', '┲', '╮',
+		'•', '╹', '╸', '┛', '╺', '┗', '━', '┻', '╻', '┃', '╗', '┪', '╔', '┢', '╦', '╈',
+		'•', '╹', '╸', '╝', '╺', '┗', '━', '┹', '╻', '┃', '╗', '╣', '╔', '┢', '╦', '╰',
+		'•', '╹', '╸', '┛', '╺', '╚', '━', '┺', '╻', '┃', '╗', '┪', '╔', '╠', '╦', '╯',
+		'•', '╹', '╸', '╝', '╺', '╚', '━', '╩', '╻', '┃', '╗', '╣', '╔', '╠', '╦', '╬']
 
-
-
-
-	for (var y = 0; y < this.rows; y++) {
+	var rows = this.rows
+	for (var y = 0; y < rows; y++) {
 		for (var x = 0; x < this.columns; x++) {
 			let item = this.itemAt(x, y)
 			if (item && item.value == "#") {
 				var flags = this.checkSurroundings(x, y)
-
 				WallObjs[x][y] = wallArr[flags]
 			}
 		}
 	}
 
-	for (var y = 0; y < this.rows; y++) {
+	for (var y = 0; y < rows; y++) {
 		for (var x = 0; x < this.columns; x++) {
 			let item = this.itemAt(x, y)
 			if (item && item.value == "#") {
@@ -75,7 +70,6 @@ LevelStruct.prototype.cleanWalls = function () {
 			}
 		}
 	}
-
 }
 
 LevelStruct.prototype.checkSurroundings = function (x, y) {
@@ -90,7 +84,7 @@ LevelStruct.prototype.checkSurroundings = function (x, y) {
 	var L, S, R
 	var BL, B, BR
 
-	TL = this.itemAt(Lx,Ty)
+	TL = this.itemAt(Lx, Ty)
 	T = this.itemAt(x, Ty)
 	TR = this.itemAt(Rx, Ty)
 	L = this.itemAt(Lx, y)
@@ -100,9 +94,6 @@ LevelStruct.prototype.checkSurroundings = function (x, y) {
 	BL = this.itemAt(Lx, By)
 	B = this.itemAt(x, By)
 	BR = this.itemAt(Rx, By)
-
-
-	// alert(TL + T + TR + "\n" + L + S + R + "\n" + BL + B + BR);
 
 	if (T != null) {
 		if (T.value == '#') result |= 1
@@ -184,7 +175,7 @@ LevelStruct.prototype.changeItem = function (X, Y, value) {
 			this.objArr[x][y].value = value
 		}
 	} else {
-		theLevel.objArr[x][y] = null		
+		theLevel.objArr[x][y] = null
 	}
 }
 
@@ -213,7 +204,7 @@ LevelStruct.prototype.serialize = function () {
 	}
 	this.playerH = this.player.x
 	this.playerV = this.player.y
-	
+
 	return {
 		rows: this.rows,
 		columns: this.columns,
@@ -248,3 +239,44 @@ LevelStruct.prototype.removeItem = function (piece) {
 };
 
 
+
+
+function SokoPiece(position, value) {
+	this.x = position.x
+	this.y = position.y
+	this.value = value
+
+	this.previousPosition = null
+}
+
+SokoPiece.prototype.savePosition = function () {
+	this.previousPosition = { x: this.x, y: this.y }
+}
+
+SokoPiece.prototype.updatePosition = function (position) {
+	this.x = position.x
+	this.y = position.y
+}
+
+SokoPiece.prototype.serialize = function () {
+	return {
+		position: {
+			x: this.x,
+			y: this.y
+		},
+		value: this.value
+	}
+}
+
+SokoPiece.prototype.didMove = function() {
+	if (previousPosition == null) {
+		return true
+	}
+	var sameX = (previousPosition.x == this.x)
+	var sameY = (previousPosition.y == this.y)
+	if (sameX && sameY) {
+		return false
+	} else {
+		return true
+	}
+}

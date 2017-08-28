@@ -1,69 +1,32 @@
 <html lang="en">
 
 <head>
-    <script type="text/javascript" src="../JavaScript/Carbon.js"></script>
-    <script type="text/javascript" src="../JavaScript/hex.js"></script>
-    <script type="text/javascript" src="../JavaScript/xml-Parsing.js"></script>
-    <script type="text/javascript" src="../JavaScript/Menu.js"></script>
-    <script type="text/javascript" src="../JavaScript/LevelStruct.js"></script>
-    <script type="text/javascript" src="../JavaScript/SokoPiece.js"></script>
-    <script type="text/javascript" src="../JavaScript/StorageManager.js"></script>    
-
-    <link rel="stylesheet" type="text/css" href="../Style/style.css">
-    <link rel="stylesheet" type="text/css" href="../Style/game.css">
-    <!-- <link rel="stylesheet" href="../Style/googleAPIS.css">     -->
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link rel="mask-icon" href="../website_icon.svg" color="red">
     <link rel="preload" href="../Levels.json">
-
-
-    <style>
-        td {
-            text-align: center;
-            /*outline-style: solid;*/
-            cursor: pointer;
-            padding: 20px;
-            background-color: #DDDDDD;
-        }
-
-        [obj-id] {
-            /*font-family: "Sokoban";
-            white-space: pre;
-            display: inline-block;
-            line-height: 0;
-            padding: 0.5em 0;*/
-            /* font-size: 0.5em;
-            padding: 0.5em 0; */
-        }
-
-        body {
-            /*margin-left: 50px;
-            margin-right: 50px;
-            margin-top: 50px;
-            background-color: #333333*/
-            overflow: scroll;
-        }
-        /*.levelName {
-
-        }*/
-    </style>
-</head>
-
-<body id='body' class=unselectable onresize="windowDidResize()">
+    <link rel="stylesheet" type="text/css" href="../Style/style.css">
+    <link rel="stylesheet" type="text/css" href="../Style/game.css">
 
     <script>
-        LoadMenuLevels('Original Levels')
+        document.onreadystatechange = function (e) {
+            console.log(document.readyState)
+            if (document.readyState === 'complete') {
+                //dom is ready, window.onload fires later
+                LoadMenuLevels()
+            }
+        };
     </script>
-    <!-- <ul>
-        <li onClick='loadSubMenu("Original Levels")'> Original Levels </li>
-        <li onClick='loadSubMenu("Boxxle")'> Boxxle </li>
-        <li onClick='loadSubMenu("Dimitri & Yorick")'> Dimitri & Yorick </li>
-        <li onClick='loadSubMenu("Extra")'> Extra </li>
-        <li onClick='loadSubMenu("IQ Carrier")'> IQ Carrier </li>
-        <li onClick='loadSubMenu("Simple Sokoban")'> Simple Sokoban </li>
-        <li onClick='loadSubMenu("Still More")'> Still More </a>
-        </li>
-    </ul> -->
+    <script type="text/javascript" src="../JavaScript/hex.js"></script>
+    <script type="text/javascript" src="../JavaScript/Menu.js"></script>
+    <script type="text/javascript" src="../JavaScript/LevelStruct.js"></script>
+    <script type="text/javascript" src="../JavaScript/StorageManager.js"></script>
+
+
+
+
+</head>
+
+<body id='body' class=unselectable style="overflow: scroll;">
 
     <div class="topnav" id="myTopnav">
         <div class="navButton" onClick='loadSubMenu("Original Levels")'> Original Levels </div>
@@ -79,24 +42,9 @@
             <div class="bar3"></div>
         </div>
     </div>
-
-    <script>
-        /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
-        function toggleResponse(e) {
-            console.log("click")
-            e.classList.toggle("change");
-            var x = document.getElementById("myTopnav");
-            if (x.className === "topnav") {
-                x.className += " responsive";
-            } else {
-                x.className = "topnav";
-            }
-        }
-    </script>
-
     <div id="levels" class="levels" align="center" cellspacing="20">
-
     </div>
+    
 </body>
 
 </html>
