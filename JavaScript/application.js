@@ -49,7 +49,7 @@ function prepareGame() {
 
 	isMobile = window.mobilecheck()
 	if (isMobile) {
-		drawNavigation()
+		// drawNavigation()
 	}
 }
 
