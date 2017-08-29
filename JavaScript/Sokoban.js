@@ -26,6 +26,7 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
 }
 
 SokobanManager.prototype.setup = function () {
+    
     history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
 
     var previousState = this.storageManager.getGameState(levelNumber);
@@ -98,6 +99,10 @@ SokobanManager.prototype.setup = function () {
     // }
 }
 
+SokobanManager.prototype.clearStyle = function() {
+    document.getElementById("dynamicStyle").innerText = ""
+}
+
 SokobanManager.prototype.setStyles = function () {
 
     var style = document.getElementById("dynamicStyle")
@@ -129,7 +134,7 @@ SokobanManager.prototype.setStyles = function () {
         var valueX = pieceWidth * x        
         for (var y = 0; y < theLevel.rows; y++) {
             var selector = ".piece-position-" + x + "-" + y
-            var valueY = pieceWidth * y
+            var valueY = pieceWidth * (y+0.5)
 
             styleString += selector + '{transform: translate(' + valueX + 'px, ' + valueY + 'px);}'
             // styleString += ' -webkit-transform: translate(' + valueX + 'px, ' + valueY + 'px);'
@@ -776,6 +781,7 @@ function previousLevel() {
         }
 
     }
+    manager.clearStyle()
     manager.setup()
 }
 
@@ -799,7 +805,7 @@ function nextLevel() {
     history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
 
     // setCookie("level", levelNumber)
-
+    manager.clearStyle()
     manager.setup()
 }
 

@@ -184,7 +184,7 @@ function setCursor(type) {
 
 function detectCoordinate(e) {
 	var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
-	var x = Math.floor((e.pageX - rect.left) / pieceWidth - 0.5)
+	var x = Math.floor((e.pageX - rect.left) / pieceWidth)
 	var y = Math.floor((e.pageY - rect.top) / pieceWidth)
 
 	var position = { x: x, y: y }

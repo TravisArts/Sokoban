@@ -145,30 +145,7 @@ button:disabled {
 
 
 
-#back{
-	left: 5%;
-}
 
-#forward {
-    right: 5%;
-}
-
-#back,
-#forward {
-	height: fit-content;
-    width: fit-content;
-    overflow: hidden;
-    margin: auto;
-    position: fixed;
-    top: 50%;    
-    margin-top: -45px;
-    z-index: 10;
-    cursor: pointer;
-}
-
-.navigation-button {
-    font-size:100px;
-}
 
 
 
@@ -185,6 +162,8 @@ button:disabled {
     position: fixed;
 
     width: 100%;
+    height: fit-content;
+    
     top:0;
     left: 0;
     right: 0;
@@ -357,7 +336,7 @@ button:disabled {
     top: -50px;
 }
 
-body {
+html,body {
     overflow: hidden;
 
     -webkit-font-smoothing: antialiased;
@@ -369,14 +348,14 @@ body {
     font-family: Helvetica;
     /* overflow: scroll; */
     
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
     user-select: none;
 
     font-feature-settings: "liga","dlig";
-    text-rendering: optimizeLegibility;  
-
+    text-rendering: optimizeLegibility;
+    height: 100%;
 }
 
 
@@ -498,8 +477,12 @@ body {
 [piece="@"]::before {
     z-index: 10;
 } 
+[piece="$"],
+[piece="@"] {
+    z-index: 10;
+} 
 [piece="."] {
-    z-index: -10;
+    z-index: 1;
 }
 
 
@@ -545,6 +528,7 @@ body {
 }*/
 
 .button-space {
+    height: 40px;
     margin-bottom: 10px;
 }
 
@@ -554,8 +538,8 @@ body {
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
 
-    margin-top: 60px;
-    padding: 15px;
+    margin-top: 20px;
+    /* padding: 15px; */
 
     /* border-color: #000000;
     border-style: solid; */
@@ -578,8 +562,12 @@ body {
 
     /* height: 100%; */
     /* padding-top: 20px; */
+    /* position: relative; */
     width: 500px;
-    margin: 40px auto;
+    margin: 60px auto;
+    /* min-height: 100%; */
+    height: 100%;
+    /* bottom: 0; */
     /* padding-bottom: 0; */
 
 
@@ -709,7 +697,6 @@ body {
     font-variant: normal;
     text-transform: none;
     text-align: left;
-
     /* line-height: 0.1em; */
     display: inline-block; /* So we can set its width */
     white-space: pre;      /* Turn newlines into actual newlines */
@@ -718,11 +705,15 @@ body {
     width: 10em;            /* Compensate for negative letter spacing */
     /*overflow: hidden;*/
     /* Remove rest of the actual word, leaving the first letter */
-        
+    
     padding: 0;
     /* -webkit-transition: 100ms linear;
     -moz-transition: 100ms linear;
     transition: 100ms linear; */
+}
+
+[piece="@"] {
+    vertical-align: -100px;
 }
 
 
@@ -777,4 +768,47 @@ button {
     color: #CCCCFF;
     font-size: 40px;
     /* float: right; */
+}
+
+
+.navigation-footer {
+    position: fixed;
+    /* height: 1em; */
+    height: fit-content;
+    /* display: block; */
+    width: 100%;
+    
+    bottom: 0;
+    background-color: #3030CC;
+    /* background-color: #3CC; */
+}
+
+.back{
+    left: 5%;
+    float: left;
+}
+
+.forward {
+    /* right: 5%; */
+    float: right;
+}
+
+.back,
+.forward {
+	height: 30px;
+    width: 30px;
+    overflow: hidden;
+    /* margin: 5px; */
+    position: static;
+    margin: 8px;    
+    z-index: 10;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: center;
+    /* padding: -0.5em; */
+}
+
+.navigation-button {
+    font-size: 30px;
+    /* font-size:100px; */
 }
