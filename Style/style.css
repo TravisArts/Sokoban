@@ -562,12 +562,15 @@ html,body {
 
     /* height: 100%; */
     /* padding-top: 20px; */
-    /* position: relative; */
+    position: absolute;
     width: 500px;
     margin: 60px auto;
     /* min-height: 100%; */
-    height: 100%;
-    /* bottom: 0; */
+    /* height: 100%; */
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     /* padding-bottom: 0; */
 
 
@@ -648,7 +651,7 @@ html,body {
   
     .gameArea {
         width: 280px;
-        margin: 0 auto;
+        /* margin: 0 auto; */
     }
 
     .GameBoard {
@@ -779,7 +782,7 @@ button {
     width: 100%;
     
     bottom: 0;
-    background-color: #3030CC;
+    /* background-color: #3030CC; */
     /* background-color: #3CC; */
 }
 
