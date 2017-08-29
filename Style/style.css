@@ -544,6 +544,11 @@ body {
     color: #CCCCFF;
 }*/
 
+.button-space {
+    margin-bottom: 10px;
+}
+
+
 .GameBoard {
     -webkit-user-select: none; /* Chrome/Safari */        
     -moz-user-select: none; /* Firefox */

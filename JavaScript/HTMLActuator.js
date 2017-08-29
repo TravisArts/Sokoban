@@ -3,11 +3,11 @@
 function HTMLActuator() {
     this.gameContainer = document.querySelector(".GameSpace")
     this.wallContainer = document.querySelector(".WallSpace")
-    this.movesDisplay = document.getElementById("moves")
-    this.bestMovesDisplay = document.getElementById("best-moves")
-    this.savedDisplay = document.getElementById("saved")
-    this.pushesDisplay = document.getElementById("pushes")
-    this.bestPushesDisplay = document.getElementById("best-pushes")
+    this.movesDisplay = document.querySelector(".moves")
+    this.bestMovesDisplay = document.querySelector(".best-moves")
+    this.savedDisplay = document.querySelector(".saved")
+    this.pushesDisplay = document.querySelector(".pushes")
+    this.bestPushesDisplay = document.querySelector(".best-pushes")
 }
 
 HTMLActuator.prototype.actuate = function (level) {
