@@ -179,7 +179,6 @@ function reverseOrder(route) {
 }
 
 function setCursor(type) {
-
 	document.getElementsByClassName('GameBoard')[0].style.cursor = type
 }
 

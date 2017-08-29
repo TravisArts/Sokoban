@@ -56,7 +56,7 @@ KeyboardInputManager.prototype.listen = function () {
 	// Respond to direction keys
 	document.addEventListener("keydown", function (event) {
 
-		// console.log("keyDown = " + event.which)
+		console.log("keyDown = " + event.which)
 
 		var modifiers = event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
 		var mapped = map[event.which];
@@ -73,8 +73,25 @@ KeyboardInputManager.prototype.listen = function () {
 
 		// R key restarts the game
 		if (!modifiers && event.which === 82) {
+			event.preventDefault();
 			self.restart.call(self, event);
 		}
+
+		// Z key undoes last move
+		if (modifiers && event.which === 90) {
+			event.preventDefault();
+			self.undo.call(self, event);
+		}
+		// Y key redoes last move
+		if (modifiers && event.which === 89) {
+			event.preventDefault();
+			self.redo.call(self, event);
+		}
+		// M key mutes/unmutes game
+		if (!modifiers && event.which === 77) {
+			self.toggleMute.call(self, event);
+		}
+
 	});
 
 	// Respond to button presses
@@ -212,3 +229,14 @@ KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
 KeyboardInputManager.prototype.targetIsInput = function (event) {
 	return event.target.tagName.toLowerCase() === "input";
 };
+
+Function.prototype.bind = Function.prototype.bind || function (target) {
+	var self = this;
+	return function (args) {
+	  if (!(args instanceof Array)) {
+		args = [args];
+	  }
+	  self.apply(target, args);
+	};
+  };
+  

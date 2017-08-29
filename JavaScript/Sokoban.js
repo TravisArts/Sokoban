@@ -109,9 +109,9 @@ SokobanManager.prototype.setStyles = function () {
     }
     var stylesheet = style.sheet
 
-
+    
     var usedHeight = document.getElementById("myTopnav").offsetHeight + document.getElementsByClassName("button")[0].scrollHeight + document.getElementsByClassName("stats")[0].scrollHeight
-    var availableHeight = document.getElementsByClassName("gameArea")[0].offsetHeight - usedHeight
+    var availableHeight = window.innerHeight /*document.getElementsByClassName("gameArea")[0].offsetHeight*/ - usedHeight
     console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
     var height = availableHeight / (theLevel.rows)
     var width = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns)
@@ -120,19 +120,23 @@ SokobanManager.prototype.setStyles = function () {
 
     var size = 'font-size:' + (pieceWidth + 1) + 'px;'
     var height = 'height:' + pieceWidth * theLevel.rows + 'px;'
-    style.innerText += '.drag {' + size + '}'
-    style.innerText += '.GameBoard {' + size + height + '}'
+
+    var styleString = '.drag {' + size + '}'
+    styleString += '.GameBoard {' + size + height + '}'
 
 
     for (var x = 0; x < theLevel.columns; x++) {
+        var valueX = pieceWidth * x        
         for (var y = 0; y < theLevel.rows; y++) {
             var selector = ".piece-position-" + x + "-" + y
-            var value1 = pieceWidth * x
-            var value2 = pieceWidth * y
+            var valueY = pieceWidth * y
 
-            style.innerText += selector + '{transform: translate(' + value1 + 'px, ' + value2 + 'px); -webkit-transform: translate(' + value1 + 'px, ' + value2 + 'px); s-moz-transform: translate(' + value1 + 'px, ' + value2 + 'px)}'
+            styleString += selector + '{transform: translate(' + valueX + 'px, ' + valueY + 'px);}'
+            // styleString += ' -webkit-transform: translate(' + valueX + 'px, ' + valueY + 'px);'
+            // styleString += ' -moz-transform: translate(' + valueX + 'px, ' + valueY + 'px)}'
         }
     }
+    style.innerText = styleString
 }
 
 
