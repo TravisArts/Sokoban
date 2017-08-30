@@ -28,7 +28,8 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
 SokobanManager.prototype.setup = function () {
     
     history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
-
+    setCookie("level", levelNumber)
+    
     var previousState = this.storageManager.getGameState(levelNumber);
 
     this.mute = (getCookie("mute") != "true") ? true : false
