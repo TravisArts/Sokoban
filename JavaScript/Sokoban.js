@@ -327,7 +327,7 @@ SokobanManager.prototype.actuate = function (saveState) {
     if (theLevel.moves > 0) {
         this.storageManager.setGameState(serial, levelNumber);
     }
-    console.log("saveState = " + saveState)
+    // console.log("saveState = " + saveState)
     if (saveState) {
         this.pastStates.push(serial)
     }

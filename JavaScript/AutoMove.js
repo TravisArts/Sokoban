@@ -72,8 +72,11 @@ function mouseUp(e) {
 
 		var position = detectCoordinate(e)
 		var path = findPush(grabbing, position)
+		// var route = pathToRoute(path)
+		// pushRoute(route, grabbing)
 		var route = pathToRoute(path)
-		pushRoute(route, grabbing)
+		console.log(route)
+		performMoves(route, 0)
 
 		setCursor('grab')
 		grabbing = null
@@ -292,9 +295,9 @@ function findPush(s, e) {
 		setupPathFinding()
 		// graph = graphCopy
 
-		console.log(path)
+		console.log(path + "")
 		if (path.length != 0) {
-			var result = [s]
+			var result = [p]
 			for (var i = 0; i < path.length; i++) {
 				node = path[i]
 				var point = { x: node.x, y: node.y }
@@ -314,8 +317,9 @@ function findPush(s, e) {
 	} else {
 		console.log("search took " + duration + "ms.")
 	}
+	console.log(result)
 
-	return result
+	return result.reverse()
 }
 
 
@@ -327,6 +331,26 @@ function pathTo(node) {
 		path.unshift(curr);
 		curr = curr.parent;
 	}
+	return path;
+}
+
+function pathTo2(node) {
+	var curr = node;
+	var path = [];
+	var path2 = []
+	while (curr.parent) {
+		for (var i = curr.pathTo.length - 1; i >= 0 ; i--) {
+			path.unshift(curr.pathTo[i]);	
+		}
+		path2.unshift(curr);
+		curr = curr.parent;
+	}
+	for (var i = curr.pathTo.length - 1; i >= 0 ; i--) {
+		path.unshift(curr.pathTo[i]);	
+	}
+	path2.unshift(curr);	
+	console.log("node path: " + path2)
+	// path.unshift(curr.pathTo)
 	return path;
 }
 
@@ -458,7 +482,7 @@ var astar = {
 			// console.log(end)
 			// End case -- result has been found, return the traced path.
 			if (currentNode.x == end.x && currentNode.y == end.y) {
-				var path = pathTo(currentNode);
+				var path = pathTo2(currentNode);
 				// console.log(path)
 				return path;
 			}
@@ -509,6 +533,8 @@ var astar = {
 					continue;
 				}
 
+				path2.push(currentNode)
+				
 				// The g score is the shortest distance from start to current node.
 				// We need to check if the path we have arrived at this neighbor is
 				// the shortest one we have seen yet.
@@ -523,7 +549,8 @@ var astar = {
 					neighbor.parent = currentNode
 					neighbor.h = neighbor.h || heuristic(neighbor, end)
 					neighbor.g = gScore
-					neighbor.f = neighbor.g + neighbor.h + path2.length
+					neighbor.f = neighbor.g + neighbor.h + path2.length + currentNode.f
+					neighbor.pathTo = path2
 					G2.markDirty(neighbor)
 
 					if (!beenVisited) {
@@ -540,7 +567,7 @@ var astar = {
 
 						var newState = {
 							graph: newGraph,
-							player: E2,
+							player: currentNode,
 							node: newGraph.grid[neighbor.x][neighbor.y]
 						}
 
@@ -579,6 +606,7 @@ var astar = {
 		node.h = 0;
 		node.searchTimes = 0;
 		node.visitTimes = 0;
+		node.pathTo = []
 		node.visited = false;
 		node.closed = false;
 		node.parent = null;
@@ -639,6 +667,7 @@ Graph.prototype.markAll = function (graph) {
 			node.closed = node2.closed
 			node.searchTimes = node2.searchTimes
 			node.visitTimes = node2.visitTimes
+			node.pathTo = node2.pathTo
 			node.parent = node2.parent
 			if (graph.dirtyNodes.includes(node2)) {
 				this.markDirty(node)
