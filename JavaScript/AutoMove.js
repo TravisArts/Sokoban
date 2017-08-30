@@ -463,8 +463,11 @@ var astar = {
 				return path;
 			}
 
-			// Normal case -- move currentNode from open to closed, process each of its neighbors.
-			currentNode.closed = true;
+			currentNode.searchTimes++
+			if (currentNode.searchTimes >= 2) {
+				// Normal case -- move currentNode from open to closed, process each of its neighbors.
+				currentNode.closed = true;
+			}
 
 			// Find all neighbors for the current node.
 			var x_old = currentNode.x
@@ -510,13 +513,13 @@ var astar = {
 				// We need to check if the path we have arrived at this neighbor is
 				// the shortest one we have seen yet.
 				var gScore = currentNode.g + neighbor.getCost(currentNode);
-				var beenVisited = neighbor.visited;
+				var beenVisited = (neighbor.visitTimes >= 2)
 
 				if (!beenVisited || gScore < neighbor.g) {
 
 					// Found an optimal (so far) path to this node.
 					// Take score for node to see how good it is.
-					neighbor.visited = true
+					neighbor.visitTimes += 1
 					neighbor.parent = currentNode
 					neighbor.h = neighbor.h || heuristic(neighbor, end)
 					neighbor.g = gScore
@@ -574,6 +577,8 @@ var astar = {
 		node.f = 0;
 		node.g = 0;
 		node.h = 0;
+		node.searchTimes = 0;
+		node.visitTimes = 0;
 		node.visited = false;
 		node.closed = false;
 		node.parent = null;
@@ -632,6 +637,8 @@ Graph.prototype.markAll = function (graph) {
 			node.h = node2.h
 			node.visited = node2.visited
 			node.closed = node2.closed
+			node.searchTimes = node2.searchTimes
+			node.visitTimes = node2.visitTimes
 			node.parent = node2.parent
 			if (graph.dirtyNodes.includes(node2)) {
 				this.markDirty(node)
