@@ -15,6 +15,7 @@ function mouseDown(e) {
 
 	if (item != null && (item.value == '$' || item.value == '*')) {
 		grabbing = item
+		setupPathFinding()
 	} else {
 		var playerPosition = getPlayerPosition()
 
@@ -72,11 +73,12 @@ function mouseUp(e) {
 
 		var position = detectCoordinate(e)
 		var path = findPush(grabbing, position)
-		// var route = pathToRoute(path)
-		// pushRoute(route, grabbing)
-		var route = pathToRoute(path)
-		console.log(route)
-		performMoves(route, 0)
+		
+		if (path.length != 0) {
+			var route = pathToRoute(path)
+			// console.log(route)
+			performMoves(route, 0)
+		}
 
 		setCursor('grab')
 		grabbing = null
@@ -144,9 +146,9 @@ function pushRoute(route, treasure) {
 			}
 		}
 		var V2 = map[reverse[i]]
-		graph.grid[point.x][point.y].weight = 1
+		theGraph.grid[point.x][point.y].weight = 1
 		point = { x: point.x + V2.x, y: point.y + V2.y }
-		graph.grid[point.x][point.y].weight = 2
+		theGraph.grid[point.x][point.y].weight = 2
 		playerPosition = {
 			x: playerPosition.x + V2.x,
 			y: playerPosition.y + V2.y
@@ -231,11 +233,10 @@ function pathToRoute(path) {
 }
 
 
-var graph
+var theGraph
 
 function setupPathFinding() {
 	var nodes = []
-	var theGraph = new Graph(nodes)
 
 	for (var x = 0; x < theLevel.columns; x++) {
 		var nodeRow = []
@@ -251,16 +252,16 @@ function setupPathFinding() {
 		}
 		nodes.push(nodeRow)
 	}
-	graph = new Graph(nodes)
+	theGraph = new Graph(nodes)
 }
 
 function findPath(s, e) {
 
 	if (theLevel.withinBounds(s) && theLevel.withinBounds(e)) {
-		var start = graph.grid[s.x][s.y]
-		var end = graph.grid[e.x][e.y]
+		var start = theGraph.grid[s.x][s.y]
+		var end = theGraph.grid[e.x][e.y]
 
-		var path = astar.search(graph, start, end)
+		var path = astar.search(theGraph, start, end)
 		if (path != null) {
 			var result = [s]
 			for (var i = 0; i < path.length; i++) {
@@ -283,19 +284,19 @@ function findPush(s, e) {
 	var sTime = performance ? performance.now() : new Date().getTime();
 
 	if (theLevel.withinBounds(s) && theLevel.withinBounds(e)) {
-		var start = graph.grid[s.x][s.y]
-		var end = graph.grid[e.x][e.y]
+		var start = theGraph.grid[s.x][s.y]
+		var end = theGraph.grid[e.x][e.y]
 		var p = getPlayerPosition()
-		var player = graph.grid[p.x][p.y]
+		var player = theGraph.grid[p.x][p.y]
 
-		// var graphCopy = new Graph(graph.gridIn)
+		// var graphCopy = new Graph(theGraph.gridIn)
+		
+		var path = astar.search2way(theGraph, start, end, player)
 
-		var path = astar.search2way(graph, start, end, player)
+		// setupPathFinding()
+		// theGraph = graphCopy
 
-		setupPathFinding()
-		// graph = graphCopy
-
-		console.log(path + "")
+		// console.log(path + "")
 		if (path.length != 0) {
 			var result = [p]
 			for (var i = 0; i < path.length; i++) {
@@ -317,7 +318,7 @@ function findPush(s, e) {
 	} else {
 		console.log("search took " + duration + "ms.")
 	}
-	console.log(result)
+	// console.log(result)
 
 	return result.reverse()
 }
@@ -339,17 +340,17 @@ function pathTo2(node) {
 	var path = [];
 	var path2 = []
 	while (curr.parent) {
-		for (var i = curr.pathTo.length - 1; i >= 0 ; i--) {
-			path.unshift(curr.pathTo[i]);	
+		for (var i = curr.pathTo.length - 1; i >= 0; i--) {
+			path.unshift(curr.pathTo[i]);
 		}
 		path2.unshift(curr);
 		curr = curr.parent;
 	}
-	for (var i = curr.pathTo.length - 1; i >= 0 ; i--) {
-		path.unshift(curr.pathTo[i]);	
+	for (var i = curr.pathTo.length - 1; i >= 0; i--) {
+		path.unshift(curr.pathTo[i]);
 	}
-	path2.unshift(curr);	
-	console.log("node path: " + path2)
+	path2.unshift(curr);
+	// console.log("node path: " + path2)
 	// path.unshift(curr.pathTo)
 	return path;
 }
@@ -378,17 +379,14 @@ var astar = {
 	* @param {Function} [options.heuristic] Heuristic function (see
 	*          astar.heuristics).
 	*/
-	search: function (graph, start, end, options) {
-		graph.cleanDirty();
-		options = options || {};
-		var heuristic = options.heuristic || astar.heuristics.manhattan;
-		var closest = options.closest || false;
+	search: function (graph, start, end) {
+		// graph.cleanDirty();
+		var heuristic = astar.heuristics.manhattan;
 
 		var openHeap = getHeap();
-		var closestNode = start; // set the start node to be the closest if required
 
 		start.h = heuristic(start, end);
-		graph.markDirty(start);
+		// graph.markDirty(start);
 
 		openHeap.push(start);
 
@@ -408,18 +406,18 @@ var astar = {
 
 			// Find all neighbors for the current node.
 			var neighbors = graph.neighbors(currentNode);
-			// console.log(neighbors)
-			for (var i = 0, il = neighbors.length; i < il; ++i) {
+			var i, il = neighbors.length
+			for (i = 0; i < il; ++i) {
 				var neighbor = neighbors[i];
 
-				if (neighbor.closed || neighbor.isWall() || neighbor.isTreasure()) {
+				if (neighbor.closed || neighbor.isWall()) {
 					// Not a valid node to process, skip to next neighbor.
 					continue;
 				}
 
 				// The g score is the shortest distance from start to current node.
 				// We need to check if the path we have arrived at this neighbor is the shortest one we have seen yet.
-				var gScore = currentNode.g + neighbor.getCost(currentNode);
+				var gScore = currentNode.g + 1
 				var beenVisited = neighbor.visited;
 
 				if (!beenVisited || gScore < neighbor.g) {
@@ -430,14 +428,7 @@ var astar = {
 					neighbor.h = neighbor.h || heuristic(neighbor, end);
 					neighbor.g = gScore;
 					neighbor.f = neighbor.g + neighbor.h;
-					graph.markDirty(neighbor);
-					if (closest) {
-						// If the neighbour is closer than the current closestNode or if it's equally close but has
-						// a cheaper path than the current closest node then it becomes the closest node
-						if (neighbor.h < closestNode.h || (neighbor.h === closestNode.h && neighbor.g < closestNode.g)) {
-							closestNode = neighbor;
-						}
-					}
+					// graph.markDirty(neighbor);
 
 					if (!beenVisited) {
 						// Pushing to heap will put it in proper place based on the 'f' value.
@@ -450,21 +441,17 @@ var astar = {
 			}
 		}
 
-		if (closest) {
-			return pathTo(closestNode);
-		}
-
 		// No result was found - empty array signifies failure to find path.
 		return null;
 	},
-	search2way: function (graph, start, end, player, options) {
-		graph.cleanDirty();
-		options = options || {};
-		var heuristic = options.heuristic || astar.heuristics.manhattan;
+	search2way: function (graph, start, end, player) {
+		// console.log(graph.dirtyNodes)
+		// graph.cleanDirty();
+		var heuristic = astar.heuristics.manhattan;
 		var openHeap = getHeap2();
 
 		start.h = heuristic(start, end);
-		graph.markDirty(start);
+		// graph.markDirty(start);
 
 		openHeap.push({
 			graph: graph,
@@ -478,52 +465,44 @@ var astar = {
 			// Grab the lowest f(x) to process next.  Heap keeps this sorted for us.
 			var state = openHeap.pop()
 			var currentNode = state.node
-			// console.log(currentNode)
-			// console.log(end)
+
 			// End case -- result has been found, return the traced path.
-			if (currentNode.x == end.x && currentNode.y == end.y) {
-				var path = pathTo2(currentNode);
-				// console.log(path)
-				return path;
-			}
-
-			currentNode.searchTimes++
-			if (currentNode.searchTimes >= 2) {
-				// Normal case -- move currentNode from open to closed, process each of its neighbors.
-				currentNode.closed = true;
-			}
-
 			// Find all neighbors for the current node.
 			var x_old = currentNode.x
 			var y_old = currentNode.y
+			if (x_old == end.x && y_old == end.y) {
+				var path = pathTo2(currentNode);
+				return path;
+			}
+
+			// Normal case -- move currentNode from open to closed, process each of its neighbors.
+			currentNode.closed = true;
+
 			var G2 = state.graph
 
 			var neighbors = G2.neighbors(currentNode);
-
-			for (var i = 0, il = neighbors.length; i < il; ++i) {
+			var i, il = neighbors.length
+			for (i = 0; i < il; ++i) {
 				var neighbor = neighbors[i];
+
+
+
+
+				if (neighbor.closed || neighbor.isWall()) {
+					// Not a valid node to process, skip to next neighbor.
+					continue;
+				}
 				// determine the neighber on the oposite side
 				var j = (i + 2 >= 4) ? i - 2 : i + 2
 				var neighbor2 = neighbors[j]
 
-
-				var x2 = neighbor2.x
-				var y2 = neighbor2.y
-
-
-
-				if (neighbor.closed || neighbor.isWall() || neighbor.isTreasure()) {
-					// Not a valid node to process, skip to next neighbor.
+				if (neighbor2.isWall()) {
 					continue;
 				}
-				// if (neighbor2.isWall() || neighbor2.isTreasure()) {
-				// 	// Not a valid node to process, skip to next neighbor2.
-				// 	continue;
-				// }
 
 				var Gsearch = new Graph(G2.gridIn)
 
-				var E2 = Gsearch.grid[x2][y2]
+				var E2 = Gsearch.grid[neighbor2.x][neighbor2.y]
 				var P2 = Gsearch.grid[state.player.x][state.player.y]
 				var path2 = astar.search(Gsearch, P2, E2)
 
@@ -534,48 +513,72 @@ var astar = {
 				}
 
 				path2.push(currentNode)
-				
+
 				// The g score is the shortest distance from start to current node.
 				// We need to check if the path we have arrived at this neighbor is
 				// the shortest one we have seen yet.
-				var gScore = currentNode.g + neighbor.getCost(currentNode);
-				var beenVisited = (neighbor.visitTimes >= 2)
+				var gScore = currentNode.g + 1
+				var beenVisited = neighbor.visited
 
-				if (!beenVisited || gScore < neighbor.g) {
+				if (!beenVisited) {
+
+					var nodes = []
+					for (var x = 0; x < G2.gridIn.length; x++) {
+						nodes.push(G2.gridIn[x].slice())
+					}
+					nodes[neighbor.x][neighbor.y] = 2
+					nodes[x_old][y_old] = 1
+
+					var Gsearch2 = new Graph(nodes)
+					var newEnd = Gsearch2.grid[end.x][end.y]
+					var S2 = Gsearch2.grid[neighbor.x][neighbor.y]
+					var pathNew = astar.search(Gsearch2, S2, newEnd)
 
 					// Found an optimal (so far) path to this node.
 					// Take score for node to see how good it is.
-					neighbor.visitTimes += 1
+					neighbor.visited = true
 					neighbor.parent = currentNode
-					neighbor.h = neighbor.h || heuristic(neighbor, end)
+					neighbor.h = pathNew.length//neighbor.h || heuristic(neighbor, end)
 					neighbor.g = gScore
 					neighbor.f = neighbor.g + neighbor.h + path2.length + currentNode.f
 					neighbor.pathTo = path2
-					G2.markDirty(neighbor)
+					// G2.markDirty(neighbor)
 
-					if (!beenVisited) {
-						// Pushing to heap will put it in proper place based on the 'f' value.
-						var nodes = []
-						for (var x = 0; x < G2.gridIn.length; x++) {
-							nodes.push(G2.gridIn[x].slice())
-						}
-						nodes[neighbor.x][neighbor.y] = 2
-						nodes[x_old][y_old] = 1
 
-						var newGraph = new Graph(nodes)
-						newGraph.markAll(G2)
 
-						var newState = {
-							graph: newGraph,
-							player: currentNode,
-							node: newGraph.grid[neighbor.x][neighbor.y]
-						}
 
-						openHeap.push(newState)
-					} else {
-						// Already seen the node, but since it has been rescored we need to reorder it in the heap
-						openHeap.rescoreElement(state);
+					if (neighbor.h > currentNode.h) {
+						currentNode.closed = false
+						currentNode.visited = false
 					}
+
+					// if (!beenVisited) {
+					// Pushing to heap will put it in proper place based on the 'f' value.
+
+
+					var newGraph = new Graph(nodes)
+					newGraph.markAll(G2)
+
+					var newState = {
+						graph: newGraph,
+						player: currentNode,
+						node: newGraph.grid[neighbor.x][neighbor.y]
+					}
+
+					openHeap.push(newState)
+					// } else {
+					// }
+				} else if (gScore < neighbor.g) {
+					neighbor.visited = true
+					neighbor.parent = currentNode
+					neighbor.h = neighbor.h
+					neighbor.g = gScore
+					neighbor.f = neighbor.g + neighbor.h + path2.length + currentNode.f
+					neighbor.pathTo = path2
+					// G2.markDirty(neighbor)
+					// Already seen the node, but since it has been rescored we need to reorder it in the heap
+					openHeap.rescoreElement(state);
+
 				}
 			}
 
@@ -604,8 +607,6 @@ var astar = {
 		node.f = 0;
 		node.g = 0;
 		node.h = 0;
-		node.searchTimes = 0;
-		node.visitTimes = 0;
 		node.pathTo = []
 		node.visited = false;
 		node.closed = false;
@@ -665,13 +666,11 @@ Graph.prototype.markAll = function (graph) {
 			node.h = node2.h
 			node.visited = node2.visited
 			node.closed = node2.closed
-			node.searchTimes = node2.searchTimes
-			node.visitTimes = node2.visitTimes
 			node.pathTo = node2.pathTo
 			node.parent = node2.parent
-			if (graph.dirtyNodes.includes(node2)) {
-				this.markDirty(node)
-			}
+			// if (graph.dirtyNodes.includes(node2)) {
+			// 	this.markDirty(node)
+			// }
 		}
 	}
 }
@@ -836,7 +835,7 @@ GridNode.prototype.getCost = function (fromNeighbor) {
 };
 
 GridNode.prototype.isWall = function () {
-	return this.weight === 0;
+	return this.weight !== 1;
 };
 GridNode.prototype.isTreasure = function () {
 	return this.weight === 2;
