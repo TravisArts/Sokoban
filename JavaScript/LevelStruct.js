@@ -14,11 +14,14 @@ function LevelStruct(dataArray, title) {
 	this.pushes = 0
 
 
-	this.objArr = new Array()
+	this.objArr = []
 
-	this.player // = new SokoPiece({x: this.playerH, y: this.playerV }, '@')
+	//this.player // = new SokoPiece({x: this.playerH, y: this.playerV }, '@')
 
 }
+
+LevelStruct.prototype.moves = 0
+LevelStruct.prototype.pushes = 0
 
 LevelStruct.prototype.addPlayer = function () {
 	var position = { x: this.playerH, y: this.playerV }
