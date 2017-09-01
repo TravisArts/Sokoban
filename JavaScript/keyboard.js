@@ -162,12 +162,13 @@ KeyboardInputManager.prototype.listen = function () {
 		}
 
 		if (grabbing != null) {
-			var position = detectCoordinate(event)
+			var position = detectCoordinate(e)
 			var path = findPush(grabbing, position)
-			var route = pathToRoute(path)
-			pushRoute(route, grabbing)
-
-			setCursor('grab')
+			if (path.length != 0) {
+				var route = pathToRoute(path)
+				// console.log(route)
+				performMoves(route, 0)
+			}
 			grabbing = null
 		} else {
 			var touchEndClientX, touchEndClientY;
@@ -233,10 +234,9 @@ KeyboardInputManager.prototype.targetIsInput = function (event) {
 Function.prototype.bind = Function.prototype.bind || function (target) {
 	var self = this;
 	return function (args) {
-	  if (!(args instanceof Array)) {
-		args = [args];
-	  }
-	  self.apply(target, args);
+		if (!(args instanceof Array)) {
+			args = [args];
+		}
+		self.apply(target, args);
 	};
-  };
-  
+};
