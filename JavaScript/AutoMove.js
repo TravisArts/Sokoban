@@ -9,7 +9,6 @@ function getPlayerPosition() {
 var grabbing = null
 
 function mouseDown(e) {
-
 	var position = detectCoordinate(e)
 	var item = theLevel.itemAt(position.x, position.y)
 
@@ -130,8 +129,8 @@ function setCursor(type) {
 
 function detectCoordinate(e) {
 	var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
-	var x = Math.floor((e.pageX - rect.left) / pieceWidth)
-	var y = Math.floor((e.pageY - rect.top) / pieceWidth)
+	var x = Math.floor((e.clientX - rect.left) / pieceWidth)
+	var y = Math.floor((e.clientY - rect.top) / pieceWidth)
 
 	var position = { x: x, y: y }
 	return position
@@ -230,7 +229,9 @@ function findPush(s, e) {
 
 		var result = astar.search2way(theGraph, start, e, p)
 
-		result.unshift(p)
+		if (result.length !== 0) {
+			result.unshift(p)
+		}
 	} else {
 		var result = []
 	}
@@ -338,7 +339,7 @@ var astar = {
 			for (i = 0; i < il; ++i) {
 				var neighbor = neighbors[i];
 
-				if (neighbor.closed || neighbor.isWall()) {
+				if (neighbor == undefined || neighbor.closed || neighbor.isWall()) {
 					// Not a valid node to process, skip to next neighbor.
 					continue;
 				}
@@ -376,12 +377,11 @@ var astar = {
 		return null;
 	},
 	search2way: function (graph, start, end, player) {
-		var heuristic = astar.heuristics.manhattan;
-		var openHeap = getHeap2();
 
-		// start.f = 0
+		var openHeap = getHeap2();
+		
 		start.g = 0
-		start.h = heuristic(start, end);
+		start.h = astar.heuristics.manhattan(start, end);
 		start.f = start.h
 
 		var n = 1
@@ -435,7 +435,7 @@ var astar = {
 				var P2 = Gsearch.grid[state.player.x][state.player.y]
 				var path2 = astar.search(Gsearch, P2, neighbor2)
 
-				// console.log("path from " + P2 + " to " + E2 + " on\n" + Gsearch + "\ngives path:" + path2)
+				// console.log("path from " + P2 + " to " + neighbor2 + " on\n" + Gsearch + "\ngives path:" + path2)
 
 				if (path2 == null) {
 					continue;
@@ -450,7 +450,7 @@ var astar = {
 				// The g score is the shortest distance from start to current node.
 				// We need to check if the path we have arrived at this neighbor is
 				// the shortest one we have seen yet.
-				var gScore = currentNode.g + 1
+				var gScore = currentNode.g + path2.length + 1
 				var beenVisited = neighbor.visited
 
 				if (!beenVisited) {
@@ -461,7 +461,7 @@ var astar = {
 					for (var x = 0; x < G2.gridIn.length; x++) {
 						nodes.push(G2.gridIn[x].slice())
 					}
-					nodes[x_new][neighbor.y] = 2
+					nodes[x_new][y_new] = 2
 					nodes[x_old][y_old] = 1
 
 					var Gsearch2 = new Graph(nodes)
@@ -474,9 +474,9 @@ var astar = {
 					// Take score for node to see how good it is.
 					neighbor.visited = true
 					neighbor.parent = currentNode
-					neighbor.h = pathNew.length//neighbor.h || heuristic(neighbor, end)
+					neighbor.h = pathNew.length
 					neighbor.g = gScore
-					neighbor.f = neighbor.g + neighbor.h + path2.length + currentNode.f
+					neighbor.f = neighbor.g + neighbor.h
 					neighbor.pathTo = path2
 
 
@@ -503,7 +503,7 @@ var astar = {
 					neighbor.parent = currentNode
 					neighbor.h = neighbor.h
 					neighbor.g = gScore
-					neighbor.f = neighbor.g + neighbor.h + path2.length + currentNode.f
+					neighbor.f = neighbor.g + neighbor.h
 					neighbor.pathTo = path2
 					// Already seen the node, but since it has been rescored we need to reorder it in the heap
 					openHeap.rescoreElement(state);
@@ -583,7 +583,7 @@ Graph.prototype.markAll = function (graph) {
 			var node = row[y]
 			var node2 = row2[y]
 			for (var property in node2) {
-				if (node2.hasOwnProperty(property)) {
+				if (node2.hasOwnProperty(property) && property != "weight") {
 					node[property] = node2[property];
 				}
 			}
@@ -607,20 +607,22 @@ Graph.prototype.neighbors = function (node) {
 	var y = node.y;
 	var grid = this.grid;
 
+	var maxY = (y == theLevel.rows - 1)
+
 	// North
-	if (grid[x] && grid[x][y + 1]) {
+	if (grid[x][y + 1]) {
 		ret.push(grid[x][y + 1]);
 	}
 	// East
-	if (grid[x + 1] && grid[x + 1][y]) {
+	if (grid[x + 1]) {
 		ret.push(grid[x + 1][y]);
 	}
 	// South
-	if (grid[x] && grid[x][y - 1]) {
+	if (grid[x][y - 1]) {
 		ret.push(grid[x][y - 1]);
 	}
 	// West
-	if (grid[x - 1] && grid[x - 1][y]) {
+	if (grid[x - 1]) {
 		ret.push(grid[x - 1][y]);
 	}
 	if (this.diagonal) {
@@ -646,6 +648,56 @@ Graph.prototype.neighbors = function (node) {
 	}
 	return ret;
 };
+
+// Graph.prototype.neighbors = function (node) {
+// 	var ret = [];
+// 	var x = node.x;
+// 	var y = node.y;
+// 	var grid = this.grid;
+
+// 	var maxY = (y == theLevel.rows - 1)
+
+// 	if (this.diagonal) {
+// 		// North
+// 		ret.push(grid[x][y + 1]);
+
+// 		// Northeast
+// 		ret.push(grid[x + 1][y + 1]);
+
+// 		// East
+// 		ret.push(grid[x + 1][y]);
+
+// 		// Southeast
+// 		ret.push(grid[x + 1][y - 1]);
+
+// 		// South
+// 		ret.push(grid[x][y - 1]);
+
+// 		// Southwest
+// 		ret.push(grid[x - 1][y - 1]);
+
+// 		// West
+// 		ret.push(grid[x - 1][y]);
+
+// 		// Northwest
+// 		ret.push(grid[x - 1][y + 1]);
+		
+// 	} else {
+// 		// North
+// 		ret.push(grid[x][y + 1]);
+
+// 		// East
+// 		ret.push(grid[x + 1][y]);
+
+// 		// South
+// 		ret.push(grid[x][y - 1]);
+
+// 		// West
+// 		ret.push(grid[x - 1][y]);
+
+// 	}
+// 	return ret;
+// };
 
 Graph.prototype.toString = function () {
 	var graphString = [];

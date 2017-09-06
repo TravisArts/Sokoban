@@ -107,16 +107,30 @@ KeyboardInputManager.prototype.listen = function () {
 	var gameContainer = document.getElementsByClassName("gameArea")[0];
 
 	gameContainer.addEventListener(this.eventTouchstart, function (event) {
+		console.log(event)
 		if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
 			event.targetTouches.length > 1 ||
 			self.targetIsInput(event)) {
 			return; // Ignore if touching with more than 1 finger or touching input
 		}
 
-		var position = detectCoordinate(event)
+		var touch = event.touches[0]
+		// var radiusX = touch.radiusX
+		// var radiusY = touch.radiusY
+		// var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
+		// var point = { clientX: touch.clientX - rect.left, clientY: touch.clientY - rect.top }
+		var position = detectCoordinate(touch)
+
+		// var pointUp = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY - radiusY })
+		// var pointDown = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY + radiusY })
+		// var pointLeft = detectCoordinate({ clientX: touch.clientX - radiusX, clientY: touch.clientY })
+		// var pointRight = detectCoordinate({ clientX: touch.clientX + radiusX, clientY: touch.clientY })
+
+
 		var item = theLevel.itemAt(position.x, position.y)
 		if (item != null && (item.value == '$' || item.value == '*')) {
 			grabbing = item
+			console.log("grabbing " + item)
 		} else {
 			var route = []
 
@@ -162,7 +176,7 @@ KeyboardInputManager.prototype.listen = function () {
 		}
 
 		if (grabbing != null) {
-			var position = detectCoordinate(e)
+			var position = detectCoordinate(event.touches[0])
 			var path = findPush(grabbing, position)
 			if (path.length != 0) {
 				var route = pathToRoute(path)

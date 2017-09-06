@@ -55,99 +55,90 @@ function loadSubMenu(type) {
             return;
     }
 
-    var container = document.getElementById("levels")
-    container.innerText = ''
-
     var storageManager = new LocalStorageManager
+    
+    var container = document.getElementById("levels")
+    container.innerHTML = ''
+
+    var sTime = performance ? performance.now() : new Date().getTime();
 
     var str = ""
 
+    var complete = '<div class="completion-star"><i class="material-icons" id="star">star</i></div>'
+    var i, levelTitle, wrapper
 
-    var i, levelTitle, wrapper, link, layout, name, level, moves
+    var hasName = (type == "IQ Carrier" || type == "Dimitri & Yorick")
+
     for (i = startNum; i <= endNum; i++) {
 
-
-        wrapper = document.createElement("div")
-        wrapper.setAttribute("class", "list")
-
-        link = document.createElement("a")
-        link.setAttribute("href", "..?level=" + i)
-
-        layout = document.createElement("span")
-        layout.setAttribute("class", "soko-room")
-
-        name = document.createElement("div")
-        name.setAttribute("class", "levelName")
-        layout.innerHTML = getString(i)
-
-        if (type == "IQ Carrier" || type == "Dimitri & Yorick") {
+        if (hasName) {
             levelTitle = LoadLevelName(i)
         } else {
             levelTitle = "Level " + (i - startNum + 1)
         }
-        name.textContent = levelTitle
 
-        moves = storageManager.getBestScore(i).moves
-        // console.log(moves)
-        if (moves != 0) {
-            // console.log("complete")
-            var complete = document.createElement("div")
-            complete.setAttribute("class", "completionStar")
-            var star = document.createElement("i")
-            star.setAttribute("class", "material-icons")
-            star.setAttribute("id", "star")
-            star.innerText = "star"
-            complete.appendChild(star)
 
-            wrapper.appendChild(complete)
+        wrapper = '<div class=list>'
+        if (storageManager.getBestScore(i).moves != 0) {
+            wrapper += complete
         }
 
+        wrapper += '<a href=..?level=' + i + '><span class=soko-room>'
+        wrapper += getString(i)
+        wrapper += '</span><div class=levelName>' + levelTitle + '</div></a></div>'
 
-        link.appendChild(layout)
-        link.appendChild(name)
-        wrapper.appendChild(link)
-        container.appendChild(wrapper)
+        str += wrapper
+
+
     }
+    container.innerHTML = str
 
+    var fTime = performance ? performance.now() : new Date().getTime(),
+        duration = (fTime - sTime).toFixed(2);
+    console.log("loading menu took " + duration + "ms")
 }
 
 function setWindowTitle(type) {
-
-    var winTitle = "Sokoban - " + type
-
-    // if (type == "IQ Carrier" || type == "Dimitri & Yorick") {
-    //     winTitle += ' "' + levelTitle + '"'
-    // }
-
-    // if (isCompleted)
-    //     winTitle += completedStr
-
-    document.title = winTitle
+    document.title = "Sokoban - " + type
 }
 
 function getString(i) {
 
+    var arr = Base64ToDec(LoadLevelData(i));
 
-    var theLevel = parseXML(i)
+    var rows = arr.shift()
+    var columns = arr.shift()
+    var packs = arr.shift()
+    var savedPacks = arr.shift()
+    arr.shift()
+    arr.shift()
+    // var playerV = arr.shift() - 1
+    // var playerH = arr.shift() - 1
+
+    var i = 0
+
+    var x, y, lx = columns
+    var ly = rows
 
     var text = ""
+    for (y = 0; y < ly; y++) {
+        for (x = 0; x < lx; x++) {
 
-    for (var y = 0; y < theLevel.rows; y++) {
-        for (var x = 0; x < theLevel.columns; x++) {
-            var item = theLevel.itemAt(x, y)
-            var value = " "
-            if (item != null) {
-                value = item.value
-            }
-            if (value != null) {
+            var pieceChar = getChar(getObj(i, arr))
+            var value = formatChar(pieceChar)
+            text += value
+            if (getPacked(i, arr) == true) {
+                i++
+                var count = x + getValue(i, arr) - 1
 
-                text += formatChar(value);
-            } else {
-                text += "_-"
+                while (++x <= count) {
+                        text += value
+                }
+                x--
             }
+            i++
         }
-        text += "<br/>";
-        // text += '<span class="soko-indent"> &nbsp; </span>';
+        text += "<br/>";        
     }
     return text
 }
@@ -156,32 +147,5 @@ function getString(i) {
 
 
 function formatChar(s) {
-    var r = ""
-
-    var pieceArr = [' ', '$', '.', '@', '+', '*', '?']
-
-    r += '<span piece=' + s + '>' + s + '</span>';
-    return r;
-}
-
-function mouseOver(sender) {
-
-    sender.style.outline = '#333333'
-    sender.style.outlineWidth = 10
-    sender.style.outlineStyle = 'solid'
-    sender.style.outlineOffset = -10;
-
-    sender.style.border = '10 solid #ff0000'
-    // sender.style.backgroundColor = '#333333'
-    // sender.getElementsByClassName("levelName")[0].style.color = '#dddddd'
-}
-
-function mouseOut(sender) {
-
-    sender.style.outline = '#dddddd'
-    sender.style.outlineWidth = 0
-    sender.style.outlineStyle = 'none'
-
-    // sender.style.backgroundColor = '#dddddd'
-    // sender.getElementsByClassName("levelName")[0].style.color = '#000000'
+    return '<span piece=' + s + '>' + s + '</span>'
 }

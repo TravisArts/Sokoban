@@ -12,6 +12,17 @@
     <link rel "preload" href="buttons">
 
 
+    <style>
+        [piece]::before {
+            content: attr(piece)"\a";
+            font-family: "back";
+        }
+
+        [piece]::after {
+            content: "\a"attr(piece);
+            font-family: "fore";
+        }
+    </style>
 
     <script>
         document.onreadystatechange = function (e) {
@@ -87,19 +98,17 @@
             <div class="GameSpace "></div>
             <div class="WallSpace "></div>
         </div>
-        <div class="stats ">
+        <div class="stats">
             <div class="block1 ">
                 moves:
-                <div class="moves ">0</div>
-                pushes:
-                <div class="pushes ">0</div>
-                saved:
-                <div class="saved ">0</div>
+                <span class="moves ">0</span> pushes:
+                <span class="pushes ">0</span> saved:
+                <span class="saved ">0</span>
             </div>
             <div class="block2 ">
                 Best:
-                <div class="best-moves ">0</div> moves,
-                <div class="best-pushes ">0</div> pushes
+                <span class="best-moves ">0</span> moves,
+                <span class="best-pushes ">0</span> pushes
             </div>
         </div>
     </div>

@@ -118,10 +118,11 @@ SokobanManager.prototype.setStyles = function () {
     
     var usedHeight = document.getElementById("myTopnav").offsetHeight + document.getElementsByClassName("button")[0].scrollHeight + document.getElementsByClassName("stats")[0].scrollHeight
     var availableHeight = window.innerHeight /*document.getElementsByClassName("gameArea")[0].offsetHeight*/ - usedHeight
+    var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
     console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
     var height = availableHeight / (theLevel.rows)
-    var width = document.getElementsByClassName("GameBoard")[0].offsetWidth / (theLevel.columns)
-
+    var width = rect.width / (theLevel.columns)
+//document.getElementsByClassName("GameBoard")[0].offsetWidth
     pieceWidth = (width < height) ? width : height
 
     var size = 'font-size:' + (pieceWidth + 1) + 'px;'
@@ -390,9 +391,8 @@ SokobanManager.prototype.undo = function () {
     var previousState = this.pastStates.pop()
     this.nextStates.push(previousState)
     previousState = this.pastStates.pop()
-    console.log(previousState)
+    // console.log(previousState)
     if (previousState) {
-        console.log("im here")
         theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], previousState.title)
         theLevel.rows = previousState.rows
         theLevel.columns = previousState.columns

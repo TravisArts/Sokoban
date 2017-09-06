@@ -1,20 +1,25 @@
 
 
 function LevelStruct(dataArray, title) {
-	this.rows = dataArray[0]
-	this.columns = dataArray[1]
-	this.packs = dataArray[2]
-	this.savedPacks = dataArray[3]
-	this.playerV = dataArray[4] - 1
-	this.playerH = dataArray[5] - 1
-	this.rawData = dataArray.slice(6, dataArray.count)
+	// this.rows = dataArray[0]
+	// this.columns = dataArray[1]
+	// this.packs = dataArray[2]
+	// this.savedPacks = dataArray[3]
+	// this.playerV = dataArray[4] - 1
+	// this.playerH = dataArray[5] - 1
+	// this.rawData = dataArray.slice(6, dataArray.count)
+	// this.title = title
+
+	this.rows = dataArray.shift()
+	this.columns = dataArray.shift()
+	this.packs = dataArray.shift()
+	this.savedPacks = dataArray.shift()
+	this.playerV = dataArray.shift() - 1
+	this.playerH = dataArray.shift() - 1
+	this.rawData = dataArray //.slice(6, dataArray.count)
 	this.title = title
 
-	this.moves = 0
-	this.pushes = 0
-
-
-	this.objArr = []
+	// this.objArr = []
 
 	//this.player // = new SokoPiece({x: this.playerH, y: this.playerV }, '@')
 
@@ -22,6 +27,7 @@ function LevelStruct(dataArray, title) {
 
 LevelStruct.prototype.moves = 0
 LevelStruct.prototype.pushes = 0
+LevelStruct.prototype.objArr = []
 
 LevelStruct.prototype.addPlayer = function () {
 	var position = { x: this.playerH, y: this.playerV }
@@ -129,10 +135,13 @@ LevelStruct.prototype.checkSurroundings = function (x, y) {
 LevelStruct.prototype.empty = function () {
 	var cells = []
 
-	for (var x = 0; x < this.columns; x++) {
+	var x, y, lx = this.columns
+	var ly = this.rows
+
+	for (x = 0; x < lx; x++) {
 		var row = cells[x] = []
 
-		for (var y = 0; y < this.rows; y++) {
+		for (y = 0; y < ly; y++) {
 			row.push(null)
 		}
 	}
@@ -183,7 +192,6 @@ LevelStruct.prototype.changeItem = function (X, Y, value) {
 }
 
 LevelStruct.prototype.addItem = function (piece) {
-	// console.log(piece)
 	this.objArr[piece.x][piece.y] = piece
 }
 
@@ -225,6 +233,11 @@ LevelStruct.prototype.serialize = function () {
 LevelStruct.prototype.withinBounds = function (position) {
 	return position.x >= 0 && position.x < this.columns &&
 		position.y >= 0 && position.y < this.rows
+};
+
+LevelStruct.prototype.withinInnerBounds = function (position) {
+	return position.x >= 1 && position.x < (this.columns - 1) &&
+		position.y >= 1 && position.y < (this.rows - 1)
 };
 
 

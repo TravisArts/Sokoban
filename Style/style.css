@@ -1,48 +1,31 @@
+html,body {
+    overflow: hidden;
 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    margin: 0;
+    background-color: #DDDDDD;
+    /*font-family: "Sokoban";*/
+    font-family: Helvetica;
+    /* overflow: scroll; */
+    
+    -khtml-user-select: none;    
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    user-select: none;
+
+    font-feature-settings: "liga","dlig";
+    text-rendering: optimizeLegibility;
+    height: 100%;
+}
 
 p {
     margin: 0;
     text-align: center;
     font-size: 1.5vw;
-    /*font-family: monospace;*/
 }
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #3333CC;
-    text-align: center;
-}
-li {
-    color: #CCCCFF;
-    text-align: center;
-    padding: 16px;
-    display: inline-block;
-}
-li:hover {
-    background-color: #111111
-}
-
-/* li a {
-    color: inherit;
-    text-decoration: none;
-} */
-
-*.unselectable {
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-
-/*@font-face {
-    font-family: Sokoban;
-    src: url(Sokoban.ttf);
-}*/
 
 @font-face {
     font-family: "mid";
@@ -276,45 +259,14 @@ button:disabled {
 }
 
 
-@-webkit-keyframes ac-gn-list-searchshow {
-    0% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: cubic-bezier(1, 0, 0, 1);
-        animation-timing-function: cubic-bezier(1, 0, 0, 1)
-    }
-
-    100% {
-        -webkit-transform: translateY(-100%) translateY(108px);
-        transform: translateY(-100%) translateY(108px)
-    }
-}
-
-@keyframes ac-gn-list-searchshow {
-    0% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: cubic-bezier(1, 0, 0, 1);
-        animation-timing-function: cubic-bezier(1, 0, 0, 1)
-    }
-
-    100% {
-        -webkit-transform: translateY(-100%) translateY(108px);
-        transform: translateY(-100%) translateY(108px)
-    }
-}
-
-
 .levels {
     margin-top: 40;
     margin-left: 50;
     margin-right: 50;
     display: inline-block;
-    /* white-space: pre-wrap; */
 }
 
-.completionStar {
-    position: absolute;
+.completion-star {
     margin-top: 0;
     margin-left: 0;
     margin-right: auto;
@@ -326,42 +278,18 @@ button:disabled {
     border-right: 50px solid transparent;
 
     z-index: 10;
-
-    /* background-color: #3333CC;
-    width: fit-content; */
 }
 
 #star {
-    position: absolute;
-    top: -50px;
+    margin-top: -1.75em;
 }
 
-html,body {
-    overflow: hidden;
 
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-    margin: 0;
-    background-color: #DDDDDD;
-    /*font-family: "Sokoban";*/
-    font-family: Helvetica;
-    /* overflow: scroll; */
-    
-    -webkit-user-select: none; /* Chrome/Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
-    user-select: none;
-
-    font-feature-settings: "liga","dlig";
-    text-rendering: optimizeLegibility;
-    height: 100%;
-}
 
 
 .list {
-    
-    width: 25%;
+    width: 320px;
+    /* width: 25%; */
     text-align: center;
     display : inline-block;  
     text-align: center;    
@@ -370,26 +298,11 @@ html,body {
 }
 
 .list:hover {
-
     outline: #333333 solid thick;
-
 }
 
 .soko-room {
-    /* float: center; */
-    /* text-align: center;     */
     display : inline-block;
-    /*padding : 1px;*/
-    /*line-height : 1;*/
-    /* cursor: crosshair; */
-    /*line-height: 106%;*/
-
-    /* min-width: 100%;  */
-    /* height: auto; */
-
-    /* left: 0;
-    right: 0;  */
-    /* padding: 1; */
 
     line-height: 0;
     width: fit-content;
@@ -410,12 +323,21 @@ html,body {
     text-transform: none;
     text-align: left;
     position: absolute;
+    /* white-space: pre; */
 
     /* line-height: 0.1em; */
-
-
-    
 }
+
+/* [piece]::before {
+    content: attr(piece)"\a";
+    font-family: "back";
+}
+
+[piece]::after {
+    content: "\a"attr(piece);
+    font-family: "fore";
+} */
+
 .soko-room span {
     white-space: pre;      /* Turn newlines into actual newlines */    
     display: inline-block; /* So we can set its width */
@@ -431,15 +353,7 @@ html,body {
 }
 
 
-[piece]::before {
-    content: attr(piece)"\a";
-    font-family: "back";
-}
 
-[piece]::after {
-    content: "\a"attr(piece);
-    font-family: "fore";
-}
 
 [piece="@"] {
     color: #000000;
@@ -551,7 +465,7 @@ html,body {
     /* border-color: #000000;
     border-style: solid; */
 
-    /* white-space: nowrap;
+    /*
     position: absolute; */
     /* padding: 20px; */
     /* left: 50%; */

@@ -4,23 +4,15 @@ function swap(x) {
 }
 
 function rotateByteRight(x, c) {
-    var result = 0;
-    var l = x >> (8 - c);
-    var h = x << c;
-    l &= 0xFF;
-    h &= 0xFF;
-    result = h | l;
-    return result;
+    var l = x >> (8 - c)
+    var h = x << c
+    return (h | l) & 0xFF
 }
 
 function rotateByteLeft(x, c) {
-    var result = 0;
-    var l = x >> c;
-    var h = x << (8 - c);
-    l &= 0xFF;
-    h &= 0xFF;
-    result = h | l;
-    return result;
+    var l = x >> c
+    var h = x << (8 - c)
+    return (h | l) & 0xFF
 }
 
 function getObj(i, arr) {
@@ -71,55 +63,64 @@ function getPacked(i, arr) {
 
 
 function getValue(i, arr) {
-    var result = 0;
+    var n = (i >> 2) * 2;
 
-    var index = swap(i);
-
-    var n = (i >> 2);
-    n += n;
     // console.log( n );
-    switch (index) {
+    switch (swap(i)) {
         case 0:
-            result = rotateByteRight((0xF0 & arr[n]), 4);
+            return rotateByteRight((arr[n] & 0xF0), 4);
             break;
         case 1:
-            result = (0x0F & arr[n])
+            return (arr[n] & 0x0F)
             break;
         case 2:
-            result = rotateByteRight((0xF0 & arr[n + 1]), 4);
+            return rotateByteRight((arr[n + 1] & 0xF0), 4);
             break;
         case 3:
-            result = (0x0F & arr[n + 1]);
+            return (arr[n + 1] & 0x0F);
             break;
     }
-
-    return result;
 }
 
 function unpackLevel(lvl) {
-    var index = 0;
+    var i = 0
     var arr = lvl.rawData
     lvl.objArr = lvl.empty()
 
-    for (var y = 0; y < lvl.rows; y++) {
-        for (var x = 0; x < lvl.columns; x++) {
+    var x, y, lx = lvl.columns
+    var ly = lvl.rows
 
-            var pieceChar = getChar(getObj(index, arr))
+    for (y = 0; y < ly; y++) {
+        for (x = 0; x < lx; x++) {
+
+            var pieceChar = getChar(getObj(i, arr))
             if (pieceChar != ' ') {
                 lvl.addItem(new SokoPiece({ x: x, y: y }, pieceChar))
             }
-            if (getPacked(index, arr) == true) {
-                index++
-                var count = getValue(index, arr) + x - 1
+            if (getPacked(i, arr) == true) {
+                i++
+                var count = x + getValue(i, arr) - 1
 
                 if (pieceChar != ' ') {
-                    for (var i = x; i <= count; i++) {
-                        lvl.addItem(new SokoPiece({ x: i, y: y }, pieceChar))
+                    while (++x <= count) {
+                    // for (; x <= count; x++) {
+                        if (x < lx) {
+                            lvl.addItem(new SokoPiece({ x: x, y: y }, pieceChar))
+                        }
                     }
+                    x--
+                } else {
+                    x = count
                 }
-                x = count
+
+                // if (pieceChar != ' ') {
+                //     for (var nx = x; nx <= count; nx++) {
+                //         lvl.addItem(new SokoPiece({ x: nx, y: y }, pieceChar))
+                //     }
+                // }
+                // x = count
             }
-            index++
+            i++
         }
     }
 }
@@ -212,12 +213,12 @@ function toggleResponse(e) {
 }
 
 function Base64ToDec(s) {
-    var arr = new Array();
+    var arr = []
     var str = window.atob(s);
 
-    for (var i = 0; i < str.length; i++) {
-        var char = str[i].charCodeAt(0);
-        arr[i] = char;
+    var i, li = str.length
+    for (i = 0; i < li; i++) {
+        arr[i] = str[i].charCodeAt(0);
     }
     return arr;
 }
@@ -237,7 +238,7 @@ function parseXML(level) {
     var arr = Base64ToDec(LoadLevelData(level));
     var title = LoadLevelName(level)
     var lvl = new LevelStruct(arr, title)
-    var arr2 = arr.slice(6, arr.count)
+    // var arr2 = arr.slice(6, arr.count)
     unpackLevel(lvl)
 
     return lvl
@@ -245,17 +246,15 @@ function parseXML(level) {
 
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
-    var vars = query.split("&");
+    var vars = query.split("+");
 
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split("=")
-        console.log(vars[i])
         if (pair[0] == variable) {
 
             var string = pair[1]
             string.replace('%20', ' ')
             string = window.decodeURIComponent(pair[1])
-            console.log(string)
             return string
         }
     }
