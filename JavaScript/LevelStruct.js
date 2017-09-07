@@ -261,9 +261,9 @@ function SokoPiece(position, value) {
 	this.x = position.x
 	this.y = position.y
 	this.value = value
-
-	this.previousPosition = null
+	// this.previousPosition = null
 }
+this.previousPosition = null
 
 SokoPiece.prototype.savePosition = function () {
 	this.previousPosition = { x: this.x, y: this.y }

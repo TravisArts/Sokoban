@@ -95,7 +95,7 @@ HTMLActuator.prototype.addPiece = function (piece) {
 
         var classes = ["piece", positionClass]
 
-        var pieceArr = ['$', '@', '+', '*', '?']
+        var pieceArr = ['$', '@', '+', '*']
         var isWall = !pieceArr.includes(piece.value)
         if (!isWall) {
             if (piece.value == '+') {
@@ -167,7 +167,7 @@ HTMLActuator.prototype.addWall = function (piece) {
         var isWall = !pieceArr.includes(piece.value)
         if (isWall || piece.value == '.' || piece.value == '+' || piece.value == '*') {
 
-            var position = piece.previousPosition || { x: piece.x, y: piece.y }
+            var position = { x: piece.x, y: piece.y }
             var positionClass = this.positionClass(position)
             var wrapper = '<div ' 
 

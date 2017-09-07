@@ -1,3 +1,39 @@
+@font-face {
+    font-family: "mid";
+    src: url('../Fonts/SokobanColor-Black.ttf') format('truetype'),
+        url('../Fonts/SokobanColor-Black.woff') format('woff'),
+        url('../Fonts/SokobanColor-Black.woff2') format('woff2');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "back";
+    src: url('../Fonts/SokobanColor-Red.ttf'),
+        url('../Fonts/SokobanColor-Red.woff') format('woff'),
+        url('../Fonts/SokobanColor-Red.woff2') format('woff2');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "fore";
+    src: url('../Fonts/SokobanColor-DarkRed.ttf'),
+        url('../Fonts/SokobanColor-DarkRed.woff') format('woff'),
+        url('../Fonts/SokobanColor-DarkRed.woff2') format('woff2');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../Fonts/SokobanColor-Black.ttf');
+    /* format('woff2'); */
+}
+
+
 html,body {
     overflow: hidden;
 
@@ -27,40 +63,12 @@ p {
     font-size: 1.5vw;
 }
 
-@font-face {
-    font-family: "mid";
-    src: url('../Fonts/SokobanColor-Black.ttf') format('truetype'),
-        url('../Fonts/SokobanColor-Black.woff') format('woff'),
-        url('../Fonts/SokobanColor-Black.woff2') format('woff2');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "back";
-    src: url('../Fonts/SokobanColor-Red.ttf'),
-        url('../Fonts/SokobanColor-Red.woff') format('woff'),
-        url('../Fonts/SokobanColor-Red.woff2') format('woff2');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "fore";
-    src: url('../Fonts/SokobanColor-DarkRed.ttf'),
-        url('../Fonts/SokobanColor-DarkRed.woff') format('woff'),
-        url('../Fonts/SokobanColor-DarkRed.woff2') format('woff2');
-    font-style: normal;
-    font-weight: normal;
-}
-
 
 button {
     background: none;
     border: 0;
     box-sizing: content-box;
     color: inherit;
-    /* cursor: crosshair; */
     font: inherit;
     line-height: inherit;
     overflow: visible;
@@ -150,8 +158,6 @@ button:disabled {
     top:0;
     left: 0;
     right: 0;
-
-    /* -webkit-transition: all .7s ease-in-out;  */
 }
 
 .topnav .navButton {
@@ -516,9 +522,11 @@ button:disabled {
     height: 75%;*/
     text-align: center;
     /*float: left;*/
+    cursor: default;
+    /* cursor: pointer; */
 }
 
-
+button,
 .restart-button {
     /* display: inline-block; */
     background: #3333CC;
@@ -624,14 +632,11 @@ button:disabled {
     /* Remove rest of the actual word, leaving the first letter */
     
     padding: 0;
-    /* -webkit-transition: 100ms linear;
-    -moz-transition: 100ms linear;
-    transition: 100ms linear; */
 }
 
-[piece="@"] {
+/* [piece="@"] {
     vertical-align: -100px;
-}
+} */
 
 
 .drag {
@@ -642,14 +647,6 @@ button:disabled {
     float: center;
     position: absolute;
     /* text-align: center; */
-}
-
-@font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url('../Fonts/SokobanColor-Black.ttf');
-    /* format('woff2'); */
 }
 
 .material-icons {
@@ -670,7 +667,8 @@ button:disabled {
 
 
 
-button {
+.forward,
+.back {
     background: #3333CC;
     border-radius: 3px;
     /* padding: 0px 10px; */
@@ -710,6 +708,7 @@ button {
     float: right;
 }
 
+#myBtn,
 .back,
 .forward {
 	height: 30px;
@@ -729,3 +728,74 @@ button {
     font-size: 30px;
     /* font-size:100px; */
 }
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 501; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding-top: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    border-radius: 3px;
+}
+
+/* The Close Button */
+.close {
+    /* color: #aaa; */
+    float: right;
+    /* font-size: 28px; */
+    /* font-weight: bold; */
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal Footer */
+.modal-footer {
+    /* padding: 2px 16px; */
+    background-color: #5cb85c;
+    color: white;
+}
+
+.button-holder {
+    /* height: 100%;
+    text-align: center;
+    display:inline-block; */
+    display: inline-block;
+    width: 100%;
+    /* display: table-cell;
+    vertical-align: center; */
+}
+.button-holder button {
+    margin: 10px;
+    float: right;
+}
+
+#center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#high-scores {
+    width: 80%;
+}
+/* .fb-login-button {
+} */

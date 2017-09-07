@@ -1,5 +1,15 @@
 function loadMenu(type) {
 
+    // var i
+    // for (i = 0; i < 712; i++) {
+
+    // 	var data = LoadLevelData(i)
+    // 	if (data != null) {
+    // 		allLevels[i].data = Base64ToDec(data);
+    // 	}
+    // }
+
+
     if (type == undefined) {
         let qVar = getQueryVariable("collection")
         if (qVar != false) {
@@ -56,7 +66,7 @@ function loadSubMenu(type) {
     }
 
     var storageManager = new LocalStorageManager
-    
+
     var container = document.getElementById("levels")
     container.innerHTML = ''
 
@@ -65,9 +75,10 @@ function loadSubMenu(type) {
     var str = ""
 
     var complete = '<div class="completion-star"><i class="material-icons" id="star">star</i></div>'
-    var i, levelTitle, wrapper
+    var i, levelTitle
 
     var hasName = (type == "IQ Carrier" || type == "Dimitri & Yorick")
+
 
     for (i = startNum; i <= endNum; i++) {
 
@@ -78,7 +89,7 @@ function loadSubMenu(type) {
         }
 
 
-        wrapper = '<div class=list>'
+        var wrapper = '<div class=list>'
         if (storageManager.getBestScore(i).moves != 0) {
             wrapper += complete
         }
@@ -88,8 +99,6 @@ function loadSubMenu(type) {
         wrapper += '</span><div class=levelName>' + levelTitle + '</div></a></div>'
 
         str += wrapper
-
-
     }
     container.innerHTML = str
 
@@ -105,6 +114,7 @@ function setWindowTitle(type) {
 function getString(i) {
 
     var arr = Base64ToDec(LoadLevelData(i));
+    // var arr = LoadLevelData(i)
 
     var rows = arr.shift()
     var columns = arr.shift()
@@ -120,26 +130,29 @@ function getString(i) {
     var x, y, lx = columns
     var ly = rows
 
+    // console.log(arr)
     var text = ""
     for (y = 0; y < ly; y++) {
         for (x = 0; x < lx; x++) {
 
-            var pieceChar = getChar(getObj(i, arr))
+            var piece = getPiece(i, arr)
+            var pieceChar = characterArr[piece.value]//getChar(piece.value)
             var value = formatChar(pieceChar)
             text += value
-            if (getPacked(i, arr) == true) {
+            if (piece.packed == true) {
                 i++
                 var count = x + getValue(i, arr) - 1
 
                 while (++x <= count) {
-                        text += value
+                    text += value
                 }
                 x--
             }
             i++
         }
-        text += "<br/>";        
+        text += "<br/>";
     }
+
     return text
 }
 

@@ -26,10 +26,10 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
 }
 
 SokobanManager.prototype.setup = function () {
-    
+
     history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
     setCookie("level", levelNumber)
-    
+
     var previousState = this.storageManager.getGameState(levelNumber);
 
     this.mute = (getCookie("mute") != "true") ? true : false
@@ -87,6 +87,9 @@ SokobanManager.prototype.setup = function () {
 
     }
 
+    this.actuator.clearContainer(this.actuator.gameContainer)
+    this.actuator.clearContainer(this.actuator.wallContainer)
+
     this.setStyles()
 
     setupPathFinding()
@@ -100,7 +103,7 @@ SokobanManager.prototype.setup = function () {
     // }
 }
 
-SokobanManager.prototype.clearStyle = function() {
+SokobanManager.prototype.clearStyle = function () {
     document.getElementById("dynamicStyle").innerText = ""
 }
 
@@ -115,14 +118,14 @@ SokobanManager.prototype.setStyles = function () {
     }
     var stylesheet = style.sheet
 
-    
+
     var usedHeight = document.getElementById("myTopnav").offsetHeight + document.getElementsByClassName("button")[0].scrollHeight + document.getElementsByClassName("stats")[0].scrollHeight
     var availableHeight = window.innerHeight /*document.getElementsByClassName("gameArea")[0].offsetHeight*/ - usedHeight
     var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
-    console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
+    // console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
     var height = availableHeight / (theLevel.rows)
     var width = rect.width / (theLevel.columns)
-//document.getElementsByClassName("GameBoard")[0].offsetWidth
+
     pieceWidth = (width < height) ? width : height
 
     var size = 'font-size:' + (pieceWidth + 1) + 'px;'
@@ -133,10 +136,10 @@ SokobanManager.prototype.setStyles = function () {
 
 
     for (var x = 0; x < theLevel.columns; x++) {
-        var valueX = pieceWidth * x        
+        var valueX = pieceWidth * x
         for (var y = 0; y < theLevel.rows; y++) {
             var selector = ".piece-position-" + x + "-" + y
-            var valueY = pieceWidth * (y+0.5)
+            var valueY = pieceWidth * (y + 0.5)
 
             styleString += selector + '{transform: translate(' + valueX + 'px, ' + valueY + 'px);}'
             // styleString += ' -webkit-transform: translate(' + valueX + 'px, ' + valueY + 'px);'
@@ -416,9 +419,9 @@ SokobanManager.prototype.undo = function () {
                 }
             }
         }
-        var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
-        theLevel.player = new SokoPiece(playerPosition, '@')
-
+        // var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
+        // theLevel.player = new SokoPiece(playerPosition, '@')
+        theLevel.addPlayer()
 
         setupPathFinding()
         isCompleted = (bestMoves != 0)
@@ -454,9 +457,9 @@ SokobanManager.prototype.redo = function () {
                 }
             }
         }
-        var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
-        theLevel.player = new SokoPiece(playerPosition, '@')
-
+        // var playerPosition = { x: theLevel.playerH, y: theLevel.playerV }
+        // theLevel.player = new SokoPiece(playerPosition, '@')
+        theLevel.addPlayer()
 
         setupPathFinding()
         isCompleted = (bestMoves != 0)
@@ -513,59 +516,6 @@ function startGame() {
 
 
     // findDeadzones()
-}
-
-function keyhandler(e) {
-
-    switch (e.keyCode) {
-        case 38:
-            move(-1, 0);
-            break;
-
-        case 40:
-            move(1, 0);
-            break;
-
-        case 37:
-            move(0, -1);
-            break;
-
-        case 39:
-            move(0, 1);
-            break;
-
-        case 8:
-            undo_pop();
-            break;
-
-        case 122:
-            if (e.metaKey || e.ctrlKey) {
-                undo_pop();
-            }
-            break;
-    }
-
-}
-
-
-
-
-function click(e) {
-
-}
-
-
-function undo_pop() {
-    var undo = undoBuffer.pop()
-    if (undo) {
-        for (var y = 0; y < theLevel.rows; y++) {
-            for (var x = 0; x < theLevel.columns; x++) {
-                theLevel.addItem(x, y, undo[y * 34 + x])
-            }
-        }
-
-        // theLevel.objArr = undo
-    }
 }
 
 
@@ -770,16 +720,25 @@ function previousLevel() {
 
     var runLoop = true
 
-    while (runLoop) {
+    // while (runLoop) {
+
+    //     levelNumber--
+
+    //     var lvl = LoadLevelData(levelNumber)
+
+
+    //     if (typeof lvl != "undefined") {
+    //         runLoop = false;
+    //     }
+
+    // }
+    var lvl = null
+    
+    while (lvl == null) {
 
         levelNumber--
 
-        var lvl = LoadLevelData(levelNumber)
-
-
-        if (typeof lvl != "undefined") {
-            runLoop = false;
-        }
+        lvl = LoadLevelData(levelNumber)
 
     }
     manager.clearStyle()

@@ -3,13 +3,13 @@ function swap(x) {
     return x & 3;
 }
 
-function rotateByteRight(x, c) {
+function rotateByteLeft(x, c) {
     var l = x >> (8 - c)
     var h = x << c
     return (h | l) & 0xFF
 }
 
-function rotateByteLeft(x, c) {
+function rotateByteRight(x, c) {
     var l = x >> c
     var h = x << (8 - c)
     return (h | l) & 0xFF
@@ -60,7 +60,33 @@ function getPacked(i, arr) {
     }
 }
 
+function getPiece(i, arr) {
+    var n = (i >> 2) * 2;
+    
+    
+    var object = {}
 
+
+    switch (index = swap(i)) {
+        case 0:
+            object.value = rotateByteLeft((arr[n] & 0xE0), 3);
+            object.packed = (arr[n] & 0x10) != 0;
+            break;
+        case 1:
+            object.value = rotateByteRight((arr[n] & 0x0E), 1);
+            object.packed = (arr[n] & 0x01) != 0;
+            break;
+        case 2:
+            object.value = rotateByteLeft((arr[n + 1] & 0xE0), 3);
+            object.packed = (arr[n + 1] & 0x10) != 0;
+            break;
+        case 3:
+            object.value = rotateByteRight((arr[n + 1] & 0x0E), 1);
+            object.packed = (arr[n + 1] & 0x01) != 0;
+            break;
+    }
+    return object
+}
 
 function getValue(i, arr) {
     var n = (i >> 2) * 2;
@@ -89,21 +115,20 @@ function unpackLevel(lvl) {
 
     var x, y, lx = lvl.columns
     var ly = lvl.rows
-
+    
     for (y = 0; y < ly; y++) {
         for (x = 0; x < lx; x++) {
-
-            var pieceChar = getChar(getObj(i, arr))
+            var piece = getPiece(i, arr)
+            var pieceChar = getChar(piece.value)
             if (pieceChar != ' ') {
                 lvl.addItem(new SokoPiece({ x: x, y: y }, pieceChar))
             }
-            if (getPacked(i, arr) == true) {
+            if (piece.packed == true) {
                 i++
                 var count = x + getValue(i, arr) - 1
 
                 if (pieceChar != ' ') {
                     while (++x <= count) {
-                    // for (; x <= count; x++) {
                         if (x < lx) {
                             lvl.addItem(new SokoPiece({ x: x, y: y }, pieceChar))
                         }
@@ -112,49 +137,16 @@ function unpackLevel(lvl) {
                 } else {
                     x = count
                 }
-
-                // if (pieceChar != ' ') {
-                //     for (var nx = x; nx <= count; nx++) {
-                //         lvl.addItem(new SokoPiece({ x: nx, y: y }, pieceChar))
-                //     }
-                // }
-                // x = count
             }
             i++
         }
     }
+
 }
 
+let characterArr = ["@","+",".","$","*"," ","#"]
 function getChar(v) {
-    switch (v) {
-        case 20:
-            return " ";
-            break;
-        case 24:
-            return "#";
-            break;
-        case 12:
-            return "$";
-            break;
-        case 8:
-            return ".";
-            break;
-        case 4:
-            return "@";
-            break;
-        case 28:
-            return "+";
-            break;
-        case 16:
-            return "*";
-            break;
-        case 0:
-            return " "
-            break;
-        default:
-            return "?"
-            break
-    }
+    return characterArr[v]
 }
 
 var allLevels

@@ -10,9 +10,6 @@ var isMobile = false
 
 function prepareGame() {
 
-	// LoadAllLevels()
-
-
 	let qVar = getQueryVariable("level")
 	let last = getCookie("level")
 
@@ -101,7 +98,7 @@ function drawNavigation() {
 	var down = document.createElement("button")
 	var left = document.createElement("button")
 	var right = document.createElement("button")
-	navigation.setAttribute("style","text-align:center;width:480px;bottom: 10px;position: absolute;")
+	navigation.setAttribute("style", "text-align:center;width:480px;bottom: 10px;position: absolute;")
 	up.setAttribute("onclick", "manager.move(0)")
 	down.setAttribute("onclick", "manager.move(2)")
 	left.setAttribute("onclick", "manager.move(3)")
