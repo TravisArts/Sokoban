@@ -119,7 +119,7 @@ SokobanManager.prototype.setStyles = function () {
     var stylesheet = style.sheet
 
 
-    var usedHeight = document.getElementById("myTopnav").offsetHeight + document.getElementsByClassName("button")[0].scrollHeight + document.getElementsByClassName("stats")[0].scrollHeight
+    var usedHeight = document.getElementById("myTopnav").offsetHeight + document.getElementsByClassName("button-space")[0].offsetHeight + document.getElementsByClassName("stats")[0].offsetHeight
     var availableHeight = window.innerHeight /*document.getElementsByClassName("gameArea")[0].offsetHeight*/ - usedHeight
     var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
     // console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
@@ -391,6 +391,7 @@ SokobanManager.prototype.toggleMute = function () {
 
 SokobanManager.prototype.undo = function () {
     console.log("undo")
+    // console.log("undo " + performance.now().toFixed(2) + "ms")
     var previousState = this.pastStates.pop()
     this.nextStates.push(previousState)
     previousState = this.pastStates.pop()

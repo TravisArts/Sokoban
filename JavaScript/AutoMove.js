@@ -10,6 +10,10 @@ var grabbing = null
 
 function mouseDown(e) {
 	var position = detectCoordinate(e)
+
+	// position = detectAllCoordinates(e, 30)
+	
+
 	var item = theLevel.itemAt(position.x, position.y)
 
 	if (item != null && (item.value == '$' || item.value == '*')) {
@@ -136,6 +140,127 @@ function detectCoordinate(e) {
 	return position
 }
 
+function detectAllCoordinates(e, r) {
+	var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
+	var cx = e.clientX - rect.left
+	var cy = e.clientY - rect.top
+	
+	var column = Math.floor(cx / pieceWidth)
+	var row = Math.floor(cy / pieceWidth)
+
+	var x = (column + 0.5) * pieceWidth
+	var y = (row + 0.5) * pieceWidth
+
+	console.log(column + " " + row)
+	var arr = theGraph.allNeighbors(theGraph.grid[column][row])
+
+
+	var p0 = {x:x-pieceWidth, y:y-pieceWidth, w:arr[0]};var p1 = {x:x, y:y-pieceWidth, w:arr[1]};	var p2 = {x:x+pieceWidth, y:y-pieceWidth, w:arr[2]}
+	var p3 = {x:x-pieceWidth, y:y, w:arr[3]}; 			var p4 = {x:x, y:y, w:arr[4]}; 				var p5 = {x:x+pieceWidth, y:y, w:arr[5]}
+	var p6 = {x:x-pieceWidth, y:y+pieceWidth, w:arr[6]};var p7 = {x:x, y:y+pieceWidth, w:arr[7]};	var p8 = {x:x+pieceWidth, y:y+pieceWidth, w:arr[8]}
+	
+	// OverlapSorter(x, y, cr)
+
+	// var p1 = [x, y, 1, ]
+
+
+	var p = [p0, p1, p2, p3, p4, p5, p6, p7, p8]
+
+	// var total = sumCirlce(p, cx, cy, e.radiusX, pieceWidth/2)
+	var total = sumCirlce(p, cx, cy, r, pieceWidth/2)
+
+	total.sort(function (a, b) {
+		if (a.per > b.per) {
+			return -1;
+		  }
+		  if (a.per < b.per) {
+			return 1;
+		  }
+		  // a must be equal to b
+		  return 0;
+	})
+
+	console.log(total)
+
+	var best = p[total[0].i]
+	// for (var i = 0; i < total.length; i++) {
+	// 	result.push(p[])
+	// }
+	
+	var result = {x:Math.floor(best.x / pieceWidth), y:Math.floor(best.y / pieceWidth)}
+	console.log(result)
+
+	return result//{ x: best.x, y: best.y }
+
+}
+
+function adjustWeight(x, y) {
+	
+	var arr = theGraph.allNeighbors(theGraph.grid[x][y])
+	var result = []
+	for (var i = 0; i < arr.length; i++) {
+		result.push(arr[i].weight)
+	}
+	return result
+
+}
+
+// function OverlapSorter (cx,cy, cr) {
+
+// }
+
+//p is an array of latitude, longitude, value, and distance from the centerpoint 
+//cx,cy are the lat/lon of the center point, $cr is the radius of the circle
+//pdist is the distance from each node to its edge (in this case, .5 km, since it is a 1km x 1km grid)
+
+function sumCirlce(p, cx, cy, cr, pdist) {
+	var total = 0 //initialize the total
+	var hyp = pdist * Math.SQRT2 //* Math.sqrt((pdist * pdist) + (pdist * pdist)); //hypotenuse of distance
+
+	console.log(pieceWidth)
+	var result = []
+	for (var i = 0; i < p.length; i++) {
+		var px = p[i].x;    //x value of point
+		var py = p[i].y;    //y value of point
+		var pv = p[i].w;    //associated value of point (e.g. population)
+
+		var mx = (cx - px); var my = (cy - py); //calculate the angle of the difference
+		var dist = Math.sqrt(mx * mx + my * my)
+
+		// var dist = p[i][3];  //calculated distance of point coordinate to centerpoint
+		var per = 0
+
+		//first, the easy case — items that are well outside the maximum distance
+		if (dist > cr + hyp) { //if the distance is greater than circle radius plus the hypoteneuse
+			per = 0; //then use 0% of its associated value
+		} else if (dist + hyp <= cr) { //other easy case - completely inside circle (distance + hypotenuse <= radius)
+			per = 1; //then use 100% of its associated value
+		} else { //the edge cases
+			
+			var theta = Math.abs(Math.PI * Math.atan2(my, mx) / 180);
+			var theta = Math.abs(((theta + 89) % 90 + 90) % 90 - 89); //reduce it to a positive degree between 0 and 90
+			var tf = Math.abs(1 - (theta / 45)); //this basically makes it so that if the angle is close to 45, it returns 0, 
+											//if it is close to 0 or 90, it returns 1
+			var hyp_adjust = (hyp * (1 - tf) + (pdist * tf)); //now we create a mixed value that is weighted by whether the
+															  //hypotenuse or the distance between cells should be used                                                   
+
+			per = (cr - dist + hyp_adjust) / 100; //lastly, we use the above numbers to estimate what percentage of 
+													  //the square associated with the centerpoint is covered
+			if (per > 1) per = 1; //normalize for over 100% or under 0%
+			if (per < 0) per = 0;
+		}
+		per *= pv
+		// console.log( i + ": " + (per*100).toFixed(2) + "%")
+		result.push({i: i, per: per})
+		// total += per * pv;   //add the value multiplied by the percentage to the total
+	}
+	return result
+	// return total
+}
+
+
+
+
 function performMoves(moves, i) {
 	setTimeout(function () {
 		var dir = moves[i]
@@ -240,6 +365,7 @@ function findPush(s, e) {
 		duration = (fTime - sTime).toFixed(2);
 	if (result.length === 0) {
 		console.log("couldn't find a path (" + duration + "ms)")
+		// animateNoPath()
 	} else {
 		console.log("search took " + duration + "ms.")
 	}
@@ -379,7 +505,7 @@ var astar = {
 	search2way: function (graph, start, end, player) {
 
 		var openHeap = getHeap2();
-		
+
 		start.g = 0
 		start.h = astar.heuristics.manhattan(start, end);
 		start.f = start.h
@@ -649,6 +775,53 @@ Graph.prototype.neighbors = function (node) {
 	return ret;
 };
 
+Graph.prototype.allNeighbors = function (node) {
+	var ret = [];
+	var x = node.x;
+	var y = node.y;
+	var grid = this.grid;
+
+	var maxY = (y == theLevel.rows - 1)
+	
+	// Northwest
+	if (grid[x - 1] && grid[x - 1][y + 1]) {
+		ret.push(grid[x - 1][y + 1].weight);
+	}
+	// North
+	if (grid[x][y + 1]) {
+		ret.push(grid[x][y + 1].weight);
+	}
+	// Northeast
+	if (grid[x + 1] && grid[x + 1][y + 1]) {
+		ret.push(grid[x + 1][y + 1].weight);
+	}
+	// West
+	if (grid[x - 1]) {
+		ret.push(grid[x - 1][y].weight);
+	}
+	ret.push(node.weight)
+	// East
+	if (grid[x + 1]) {
+		ret.push(grid[x + 1][y].weight);
+	}
+	// Southwest
+	if (grid[x - 1] && grid[x - 1][y - 1]) {
+		ret.push(grid[x - 1][y - 1].weight);
+	}
+	// South
+	if (grid[x][y - 1]) {
+		ret.push(grid[x][y - 1].weight);
+	}
+	// Southeast
+	if (grid[x + 1] && grid[x + 1][y - 1]) {
+		ret.push(grid[x + 1][y - 1].weight);
+	}
+
+
+	
+	return ret;
+};
+
 // Graph.prototype.neighbors = function (node) {
 // 	var ret = [];
 // 	var x = node.x;
@@ -681,7 +854,7 @@ Graph.prototype.neighbors = function (node) {
 
 // 		// Northwest
 // 		ret.push(grid[x - 1][y + 1]);
-		
+
 // 	} else {
 // 		// North
 // 		ret.push(grid[x][y + 1]);
@@ -900,4 +1073,28 @@ BinaryHeap.prototype.bubbleUp = function (n) {
 		}
 	}
 }
+// };
+
+
+
+// function animateNoPath() {
+//     var graph = document.querySelector(".GameBoard")
+//     var jiggle = function (lim, i) {
+//         if (i >= lim) {
+// 			// graph.removeAttribute("top");
+// 			// graph.removeAttribute("left");
+// 			return;
+// 		}
+// 		console.log("jiggle")
+//         if (!i) i = 0;
+// 		i++;
+// 		graph.setAttribute("top", Math.random() * 30);
+// 		graph.setAttribute("left", Math.random() * 30);
+//         // graph.css("top", Math.random() * 6).css("left", Math.random() * 6);
+//         setTimeout(function () {
+//             jiggle(lim, i);
+//         }, 5);
+// 	};
+// 	console.log("animate path")
+//     jiggle(15);
 // };
