@@ -35,9 +35,8 @@
                 LoadAllLevels()
             }
         }
-
     </script>
-    
+
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -96,6 +95,9 @@
             <div class="button undo-button ">
                 <i id=undo-icon class="material-icons ">undo</i>
             </div>
+            <div class="button info-button ">
+                <i id=info-icon class="material-icons ">info_outline</i>
+            </div>
         </div>
         <div id="main " class=GameBoard onmousedown="mouseDown(event) " onmousemove="mouseMove(event) " onmouseup="mouseUp(event) ">
             <p id="GameBoard ">
@@ -125,6 +127,68 @@
             <i class="material-icons navigation-button">chevron_right</i>
         </button>
     </div>
+
+    <!-- Modal content -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <span class="close">&times;</span> -->
+                <h2>Sokoban</h2>
+            </div>
+            <div class="modal-body">
+                <h1>
+                    The Object of the Game
+                </h1>
+                
+                <p>
+                    In Sokoban, you are trying to get treasure <span piece="$" class="piece">$</span> (the little balls) through a maze to their proper locations (the outlined
+                    squares). You push using the large red ball <span piece="@" class="piece">@</span>. The trasures are so heavy that you
+                    can only push them one at a time, and there are no handles to pull them. Be careful that you don't get
+                    one trapped in a corner—you won’t be able to pull it back out!
+                </p>
+                <br>
+                <p>
+                    There are over 400 different levels, separated into several collections in the Collections menu.
+                </p>
+                <h1>
+                    To play
+                </h1>
+
+                <p>
+                    After starting Sokoban, go to the Players menu to select yourself or to log in as a new player. (If no one has played before,
+                    or you are the only player who has logged in before, the program will skip this step.) Sokoban keeps
+                    track of which levels you have solved in the “Sokoban Scores” file.
+                </p>
+                <br>
+                <p>
+                    Using a mouse: If you place the cursor next to the pushball, the cursor will become an arrow, and you can click or drag to
+                    move the pushball. Or, when the cursor is a cross, put it anywhere and click; if the pushball is free
+                    to move there, it will move immediately. If you put the cursor on a treasure ball, the cursor turns into
+                    a hand. Drag the mouse and release; if there is a clear path for the pushball, it will immediately go
+                    to that treasure and move it where you want.
+                </p>
+                <br>
+                <p>
+                    Using a touch screen: touch anywhere if the pushball is free to move there, it will move immediately. If you touch a treasure
+                    ball, you can drag it wherever you want it to go; if there is a clear path for the pushball, it will
+                    immediately go to that treasure and move it where you want.
+                </p>
+                <br>
+                <p>
+                    You can also move using the arrow keys or WASD keys.
+                </p>
+                <br>
+                <p>
+                    Undoing mistakes: Command-Z, or Control-Z will undo a step; holding this combination down will undo repeatedly.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="close">close</button>
+                <!-- <h3>(Modal Footer)</h3> -->
+            </div>
+        </div>
+    </div>
+
 
 </body>
 
