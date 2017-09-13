@@ -609,7 +609,7 @@ var astar = {
 					// Take score for node to see how good it is.
 					neighbor.visited = true
 					neighbor.parent = currentNode
-					neighbor.h = pathNew.length
+					neighbor.h = pathNew.length || -1
 					neighbor.g = gScore
 					neighbor.f = neighbor.g + neighbor.h
 					neighbor.pathTo = path2
