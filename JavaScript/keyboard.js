@@ -138,6 +138,7 @@ KeyboardInputManager.prototype.listen = function () {
 		var item = theLevel.itemAt(position.x, position.y)
 		if (item != null && (item.value == '$' || item.value == '*')) {
 			grabbing = item
+			document.getElementById("console").innerHTML = "grabbing " + item
 			console.log("grabbing " + item)
 		} else {
 			// var route = []

@@ -472,19 +472,24 @@ SokobanManager.prototype.showCompletion = function () {
 
     var title = document.getElementById('completion-title')
 
+    var index = document.title.indexOf("•")
+    console.log(document.title)
+    if (index == -1) {
+        document.title += completedStr
+    }
     title.innerText = document.title
 
     document.getElementById('completion-moves').innerText = theLevel.moves
     document.getElementById('completion-pushes').innerText = theLevel.pushes
 
-    
+
     var modal = document.getElementById('completion-modal')
     var close = document.getElementById('completion-close')
     var share = document.getElementById('completion-share')
     var next = document.getElementById('completion-next')
-    
+
     modal.style.display = "block"
-    
+
     close.onclick = function () {
         modal.style.display = "none"
     }
