@@ -180,7 +180,8 @@ KeyboardInputManager.prototype.listen = function () {
 		}
 
 		if (grabbing != null) {
-			var position = detectCoordinate(event.changedTouches[0])
+			var position = detectAllCoordinates(event.changedTouches[0], event.changedTouches[0].radiusX, true)
+			// var position = detectCoordinate(event.changedTouches[0])
 			var path = findPush(grabbing, position)
 			if (path.length != 0) {
 				var route = pathToRoute(path)

@@ -140,7 +140,7 @@ function detectCoordinate(e) {
 	return position
 }
 
-function detectAllCoordinates(e, r) {
+function detectAllCoordinates(e, r, backwards) {
 	var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
 	var cx = Math.abs(e.clientX - rect.left)
 	var cy = Math.abs(e.clientY - rect.top)
@@ -152,7 +152,7 @@ function detectAllCoordinates(e, r) {
 	var y = (row + 0.5) * pieceWidth
 
 	console.log(column + " " + row)
-	var arr = theGraph.allNeighbors(theGraph.grid[column][row])
+	var arr = theGraph.allNeighbors(theGraph.grid[column][row], backwards)
 
 
 	var p0 = {x:x-pieceWidth, y:y-pieceWidth, w:arr[0]};var p1 = {x:x, y:y-pieceWidth, w:arr[1]};	var p2 = {x:x+pieceWidth, y:y-pieceWidth, w:arr[2]}
@@ -194,12 +194,16 @@ function detectAllCoordinates(e, r) {
 
 }
 
-function adjustWeight(x, y) {
+function adjustWeight(x, y, backwards) {
 	
 	var arr = theGraph.allNeighbors(theGraph.grid[x][y])
 	var result = []
 	for (var i = 0; i < arr.length; i++) {
-		result.push(arr[i].weight)
+		if (backwards) {
+			result.push(2 - arr[i].weight)
+		} else {
+			result.push(arr[i].weight)
+		}
 	}
 	return result
 
@@ -775,7 +779,7 @@ Graph.prototype.neighbors = function (node) {
 	return ret;
 };
 
-Graph.prototype.allNeighbors = function (node) {
+Graph.prototype.allNeighbors = function (node, backwards) {
 	var ret = [];
 	var x = node.x;
 	var y = node.y;
@@ -817,6 +821,11 @@ Graph.prototype.allNeighbors = function (node) {
 		ret.push(grid[x + 1][y - 1].weight);
 	}
 
+	if (backwards) {
+		for (var i = 0; i < 9; i++) {
+			ret[i] = 2 - ret[i]
+		}
+	}
 
 	
 	return ret;
