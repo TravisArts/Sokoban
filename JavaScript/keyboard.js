@@ -211,7 +211,7 @@ KeyboardInputManager.prototype.listen = function () {
 				self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
 			} else {
 				console.log(event)
-				var position = detectCoordinate(event.touches[0])
+				var position = detectCoordinate(event.changedTouches[0])
 				var item = theLevel.itemAt(position.x, position.y)
 
 				alert("position: [" + position.x + ", " + position.y + "]" )
