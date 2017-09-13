@@ -743,7 +743,7 @@ button,
 
 
 /* The Close Button */
-.close {
+.modal-button {
     float: right;
     top: 50%;
     margin-top: 5px;
@@ -803,8 +803,11 @@ button,
     /* padding-top: 20px; */
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
-    height: 70%;    
     border-radius: 5px;
+}
+
+#info-modal .modal-content {
+    height: 70%;    
 }
 
 h1 {
@@ -847,4 +850,8 @@ p [piece]::before {
 
 p [piece]::before{
     z-index: -1;
+}
+
+#completion-share {
+    float: left;
 }

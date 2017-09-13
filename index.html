@@ -48,6 +48,21 @@
       
       </script>
 
+            FB.init({
+                appId: '1889667454690145',
+                xfbml: true,
+                version: 'v2.10'
+            });
+            FB.AppEvents.logPageView();
+        };
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <script type="text/javascript" src="JavaScript/hex.js"></script>
     <script type="text/javascript" src="JavaScript/ion.sound.js"></script>
     <script type="text/javascript" src="JavaScript/Sokoban.js"></script>
@@ -87,7 +102,7 @@
         <div class=button-space>
             <div class="button restart-button ">
                 <i id=restart-icon class="material-icons ">restart</i>
-                 </div>
+            </div>
             <div class="button mute-button ">
                 <i id=mute-icon class="material-icons ">volume_up</i>
             </div>
@@ -97,7 +112,7 @@
             <div class="button undo-button ">
                 <i id=undo-icon class="material-icons ">undo</i>
             </div>
-            <div class="button info-button ">
+            <div class="button info-button">
                 <i id=info-icon class="material-icons ">info_outline</i>
             </div>
         </div>
@@ -133,7 +148,7 @@
     </div>
 
     <!-- Modal content -->
-    <div id="myModal" class="modal">
+    <div id="info-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <span class="close">&times;</span> -->
@@ -143,12 +158,13 @@
                 <h1>
                     The Object of the Game
                 </h1>
-                
+
                 <p>
-                    In Sokoban, you are trying to get treasure <span piece="$" class="piece">$</span> (the little balls) through a maze to their proper locations (the outlined
-                    squares). You push using the large red ball <span piece="@" class="piece">@</span>. The trasures are so heavy that you
-                    can only push them one at a time, and there are no handles to pull them. Be careful that you don't get
-                    one trapped in a corner—you won’t be able to pull it back out!
+                    In Sokoban, you are trying to get treasure <span piece="$" class="piece">$</span> (the little balls)
+                    through a maze to their proper locations (the outlined squares). You push using the large red ball
+                    <span piece="@" class="piece">@</span>. The trasures are so heavy that you can only push them one at
+                    a time, and there are no handles to pull them. Be careful that you don't get one trapped in a corner—you
+                    won’t be able to pull it back out!
                 </p>
                 <br>
                 <p>
@@ -187,8 +203,29 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <button class="close">close</button>
-                <!-- <h3>(Modal Footer)</h3> -->
+                <button class="close modal-button">close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="completion-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="completion-title">Sokoban</h2>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Good job! You finished in <span id="completion-moves" style="font-weight: bold"></span> <span style="font-weight: bold">moves</span>,
+                    and <span id="completion-pushes" style="font-weight: bold"></span> <span style="font-weight: bold">pushes</span>.
+                </p>
+                <p>
+                    Do you want to admire your work (perhaps undoing to review the solution) or go on to the next level?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button" id="completion-next">Go To Next Level</button>
+                <button class="modal-button" id="completion-close">Admire My Work</button>
+                <button class="modal-button" id="completion-share">Share</button>
             </div>
         </div>
     </div>

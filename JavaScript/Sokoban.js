@@ -362,7 +362,7 @@ SokobanManager.prototype.actuate = function (saveState) {
             }
             self.storageManager.clearGameState(levelNumber)
 
-            nextLevel()
+            self.showCompletion()
         }, 100);
 
         console.log("you win")
@@ -468,6 +468,61 @@ SokobanManager.prototype.redo = function () {
     }
 }
 
+SokobanManager.prototype.showCompletion = function () {
+
+    var title = document.getElementById('completion-title')
+
+    title.innerText = document.title
+
+    document.getElementById('completion-moves').innerText = theLevel.moves
+    document.getElementById('completion-pushes').innerText = theLevel.pushes
+
+    
+    var modal = document.getElementById('completion-modal')
+    var close = document.getElementById('completion-close')
+    var share = document.getElementById('completion-share')
+    var next = document.getElementById('completion-next')
+    
+    modal.style.display = "block"
+    
+    close.onclick = function () {
+        modal.style.display = "none"
+    }
+
+    next.onclick = function () {
+        modal.style.display = "none"
+        nextLevel()
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none"
+        }
+    }
+
+    // history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
+    
+
+    
+
+    share.onclick = function () {
+        var link = window.location.origin + "/?level=" + levelNumber
+        FB.ui({
+            method: 'share',
+            display: 'popup',
+            app_id: '1889667454690145',
+            // href: 'https://travisarts.github.io/Sokoban/?level=201'
+            href: link,
+        }, function (response) { });
+    }
+
+    // nextLevel()
+
+}
+
+
+
 
 var Rows = 0;
 var Columns = 0;
@@ -511,10 +566,6 @@ var levelNumber = 0
 var theLevel
 
 function startGame() {
-
-
-
-
 
     // findDeadzones()
 }
@@ -734,7 +785,7 @@ function previousLevel() {
 
     // }
     var lvl = null
-    
+
     while (lvl == null) {
 
         levelNumber--
