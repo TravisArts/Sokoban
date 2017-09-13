@@ -152,7 +152,11 @@ function detectAllCoordinates(e, r, backwards) {
 	var y = (row + 0.5) * pieceWidth
 
 	console.log(column + " " + row)
-	var arr = theGraph.allNeighbors(theGraph.grid[column][row], backwards)
+	try {
+		var arr = theGraph.allNeighbors(theGraph.grid[column][row], backwards)		
+	} catch (error) {
+		var arr = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+	}
 
 
 	var p0 = {x:x-pieceWidth, y:y-pieceWidth, w:arr[0]};var p1 = {x:x, y:y-pieceWidth, w:arr[1]};	var p2 = {x:x+pieceWidth, y:y-pieceWidth, w:arr[2]}
@@ -823,7 +827,10 @@ Graph.prototype.allNeighbors = function (node, backwards) {
 
 	if (backwards) {
 		for (var i = 0; i < 9; i++) {
-			ret[i] = 2 - ret[i]
+			if (weight == 2) {
+				ret[i] = 0
+			}
+			// ret[i] = 2 - ret[i]
 		}
 	}
 
