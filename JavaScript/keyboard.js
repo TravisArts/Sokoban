@@ -124,10 +124,10 @@ KeyboardInputManager.prototype.listen = function () {
 		// var position = detectCoordinate(touch)
 
 		var position = detectAllCoordinates(touch, touch.radiusX)
-		var str = "touch radius: " + touch.radiusX
-		str += "<br>"
-		str += "piece width: " + pieceWidth
-		document.getElementById("console").innerHTML = str
+		// var str = "touch radius: " + touch.radiusX
+		// str += "<br>"
+		// str += "piece width: " + pieceWidth
+		// document.getElementById("console").innerHTML = str
 
 		// var pointUp = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY - radiusY })
 		// var pointDown = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY + radiusY })
@@ -138,7 +138,6 @@ KeyboardInputManager.prototype.listen = function () {
 		var item = theLevel.itemAt(position.x, position.y)
 		if (item != null && (item.value == '$' || item.value == '*')) {
 			grabbing = item
-			document.getElementById("console").innerHTML = "grabbing " + item
 			console.log("grabbing " + item)
 		} else {
 			// var route = []
@@ -210,11 +209,9 @@ KeyboardInputManager.prototype.listen = function () {
 				// (right : left) : (down : up)
 				self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
 			} else {
-				console.log(event)
 				var position = detectCoordinate(event.changedTouches[0])
 				var item = theLevel.itemAt(position.x, position.y)
 
-				alert("position: [" + position.x + ", " + position.y + "]" )
 				var route = []
 
 				var playerPosition = getPlayerPosition()
