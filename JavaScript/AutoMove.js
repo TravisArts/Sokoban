@@ -152,11 +152,12 @@ function detectAllCoordinates(e, r, backwards) {
 	var y = (row + 0.5) * pieceWidth
 
 	console.log(column + " " + row)
-	try {
-		var arr = theGraph.allNeighbors(theGraph.grid[column][row], backwards)		
-	} catch (error) {
-		var arr = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+	if (column >= theLevel.columns || row >= theLevel.rows) {
+		return {x: 0, y: 0}
 	}
+
+	var arr = theGraph.allNeighbors(theGraph.grid[column][row], backwards)
 
 
 	var p0 = {x:x-pieceWidth, y:y-pieceWidth, w:arr[0]};var p1 = {x:x, y:y-pieceWidth, w:arr[1]};	var p2 = {x:x+pieceWidth, y:y-pieceWidth, w:arr[2]}
