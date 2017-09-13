@@ -506,7 +506,7 @@ SokobanManager.prototype.showCompletion = function () {
 
     
 
-    var link = window.location.origin + "/?level=" + levelNumber
+    var link = window.location.origin + "/Sokoban/?level=" + levelNumber
     console.log(link)
     share.onclick = function () {
         FB.ui({
