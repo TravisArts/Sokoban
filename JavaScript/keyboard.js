@@ -120,14 +120,14 @@ KeyboardInputManager.prototype.listen = function () {
 		// var radiusY = touch.radiusY
 		// var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
 		// var point = { clientX: touch.clientX - rect.left, clientY: touch.clientY - rect.top }
-		
+
 		// var position = detectCoordinate(touch)
 
 		var position = detectAllCoordinates(touch, touch.radiusX)
 		var str = "touch radius: " + touch.radiusX
 		str += "<br>"
 		str += "piece width: " + pieceWidth
-		document.getElementById("console").innerHTML = str 
+		document.getElementById("console").innerHTML = str
 
 		// var pointUp = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY - radiusY })
 		// var pointDown = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY + radiusY })
@@ -140,31 +140,27 @@ KeyboardInputManager.prototype.listen = function () {
 			grabbing = item
 			console.log("grabbing " + item)
 		} else {
-			var route = []
+			// var route = []
 
-			var playerPosition = getPlayerPosition()
+			// var playerPosition = getPlayerPosition()
 
-			if (item == null || item.value == '.') {
-				var path = findPath(position, playerPosition)
-				route = pathToRoute(path)
+			// if (item == null || item.value == '.') {
+			// 	var path = findPath(position, playerPosition)
+			// 	route = pathToRoute(path)
 
-			}
-			if (route.length > 0) {
-				performMoves(route, 0)
+			// }
+			// if (route.length > 0) {
+			// 	performMoves(route, 0)
+			// } else {
+			if (window.navigator.msPointerEnabled) {
+				touchStartClientX = event.pageX;
+				touchStartClientY = event.pageY;
 			} else {
-				if (window.navigator.msPointerEnabled) {
-					touchStartClientX = event.pageX;
-					touchStartClientY = event.pageY;
-				} else {
-					touchStartClientX = event.touches[0].clientX;
-					touchStartClientY = event.touches[0].clientY;
-				}
+				touchStartClientX = event.touches[0].clientX;
+				touchStartClientY = event.touches[0].clientY;
 			}
+			// }
 		}
-
-
-
-
 
 		event.preventDefault();
 	});
@@ -212,6 +208,21 @@ KeyboardInputManager.prototype.listen = function () {
 			if (Math.max(absDx, absDy) > 10) {
 				// (right : left) : (down : up)
 				self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+			} else {
+
+				var route = []
+
+				var playerPosition = getPlayerPosition()
+
+				if (item == null || item.value == '.') {
+					var path = findPath(position, playerPosition)
+					route = pathToRoute(path)
+
+				}
+				if (route.length > 0) {
+					performMoves(route, 0)
+				}
+
 			}
 		}
 	});
