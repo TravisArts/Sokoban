@@ -120,7 +120,10 @@ KeyboardInputManager.prototype.listen = function () {
 		// var radiusY = touch.radiusY
 		// var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
 		// var point = { clientX: touch.clientX - rect.left, clientY: touch.clientY - rect.top }
-		var position = detectCoordinate(touch)
+		
+		// var position = detectCoordinate(touch)
+
+		var position = detectAllCoordinates(touch, touch.radiusX)
 
 		// var pointUp = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY - radiusY })
 		// var pointDown = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY + radiusY })
