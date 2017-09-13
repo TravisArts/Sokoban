@@ -851,7 +851,3 @@ p [piece]::before {
 p [piece]::before{
     z-index: -1;
 }
-
-#completion-share {
-    float: left;
-}

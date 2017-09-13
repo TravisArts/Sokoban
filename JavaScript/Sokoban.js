@@ -502,22 +502,6 @@ SokobanManager.prototype.showCompletion = function () {
     }
 
     // history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
-    
-
-    
-
-    var link = window.location.origin + "/Sokoban/?level=" + levelNumber
-    console.log(link)
-    share.onclick = function () {
-        FB.ui({
-            method: 'share',
-            display: 'popup',
-            app_id: '1889667454690145',
-            // href: 'https://travisarts.github.io/Sokoban/?level=201'
-            href: link,
-        }, function (response) { });
-    }
-
     // nextLevel()
 
 }
