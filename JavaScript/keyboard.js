@@ -209,6 +209,8 @@ KeyboardInputManager.prototype.listen = function () {
 				// (right : left) : (down : up)
 				self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
 			} else {
+				var position = detectCoordinate(touch)
+				var item = theLevel.itemAt(position.x, position.y)
 
 				var route = []
 
