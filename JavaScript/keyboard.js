@@ -212,6 +212,7 @@ KeyboardInputManager.prototype.listen = function () {
 				var position = detectCoordinate(touch)
 				var item = theLevel.itemAt(position.x, position.y)
 
+				alert("position: [" + position.x + ", " + position.y + "]" )
 				var route = []
 
 				var playerPosition = getPlayerPosition()
