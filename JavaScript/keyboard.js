@@ -124,6 +124,7 @@ KeyboardInputManager.prototype.listen = function () {
 		// var position = detectCoordinate(touch)
 
 		var position = detectAllCoordinates(touch, touch.radiusX)
+		document.getElementById("console").innerText = "touch radius: " + touch.radiusX
 
 		// var pointUp = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY - radiusY })
 		// var pointDown = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY + radiusY })
