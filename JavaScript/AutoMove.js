@@ -828,7 +828,7 @@ Graph.prototype.allNeighbors = function (node, backwards) {
 
 	if (backwards) {
 		for (var i = 0; i < 9; i++) {
-			if (ret[i].weight == 2) {
+			if (ret[i].weight !== 1) {
 				ret[i] = 0
 			}
 			// ret[i] = 2 - ret[i]
