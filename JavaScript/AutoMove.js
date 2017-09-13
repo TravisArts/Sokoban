@@ -142,8 +142,8 @@ function detectCoordinate(e) {
 
 function detectAllCoordinates(e, r) {
 	var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
-	var cx = e.clientX - rect.left
-	var cy = e.clientY - rect.top
+	var cx = Math.abs(e.clientX - rect.left)
+	var cy = Math.abs(e.clientY - rect.top)
 	
 	var column = Math.floor(cx / pieceWidth)
 	var row = Math.floor(cy / pieceWidth)
