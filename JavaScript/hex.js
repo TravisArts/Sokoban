@@ -63,9 +63,7 @@ function getPacked(i, arr) {
 function getPiece(i, arr) {
     var n = (i >> 2) * 2;
     
-    
     var object = {}
-
 
     switch (index = swap(i)) {
         case 0:

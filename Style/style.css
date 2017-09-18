@@ -273,12 +273,10 @@ button:disabled {
     margin-left: 0;
     margin-right: auto;
     float: left;
-
-    width: 0;
     height: 0;
+    width: 0;
     border-top: 50px solid #3333CC;
     border-right: 50px solid transparent;
-
     z-index: 10;
 }
 
@@ -286,16 +284,11 @@ button:disabled {
     margin-top: -1.75em;
 }
 
-
-
-
 .list {
     width: 320px;
-    /* width: 25%; */
     text-align: center;
     display : inline-block;  
     text-align: center;    
-    /* display: inline-flex;  */
     padding: 20;
 }
 
@@ -308,51 +301,36 @@ button:disabled {
 
     line-height: 0;
     width: fit-content;
-    /* border-color: #000000;
-    border-style: solid; */
     overflow: visible;
     white-space:nowrap;
     padding: 0;
 }
 
-
 [piece] {
-
-    /* font-size: 2em; */
-    font-family: "mid"; /* See @font-face declarations at bottom */
+    
     font-style: normal;
     font-variant: normal;
     text-transform: none;
     text-align: left;
     position: absolute;
-    /* white-space: pre; */
-
-    /* line-height: 0.1em; */
 }
-
-/* [piece]::before {
-    content: attr(piece)"\a";
-    font-family: "back";
-}
-
-[piece]::after {
-    content: "\a"attr(piece);
-    font-family: "fore";
-} */
 
 .soko-room span {
+    font-family: "mid"; /* See @font-face declarations at bottom */
+    
     white-space: pre;      /* Turn newlines into actual newlines */    
     display: inline-block; /* So we can set its width */
-    /*line-height: 0.01em;   /* Overlap icons vertically */ 
-    /*line-height: 1em;      /* Compensate for zero line height */
     width: 0em;            /* Compensate for negative letter spacing */
-    /* line-height: 1em; */
-    position: relative;
-    
+    position: relative;    
     font-size: 1vw;
     padding: 0.5vw;
-   
 }
+
+
+
+
+
+
 
 
 
@@ -401,26 +379,9 @@ button:disabled {
     z-index: 1;
 }
 
-
-/* [piece="#"]::before {
-    color: #FFFFFF;
-} */
 [piece="#"] {
     color: #CCCCFF;
 }
-/* [piece="#"]::after {
-    color: #3333CC;
-} */
-
-
-
-/*[piece='━']::before {
-    color: #FFFFFF;
-}
-
-[piece='━']::after {
-    color: #3333CC;
-}*/
 
 .wall::before {
     color: #FFFFFF;
@@ -434,15 +395,6 @@ button:disabled {
     color: #3333CC;
 }
 
-
-
-/*[piece="#"]::before {
-    color: #CCCCFF;
-}
-[piece="#"]::after {
-    color: #CCCCFF;
-}*/
-
 .button-space {
     height: 40px;
     margin-bottom: 10px;
@@ -455,10 +407,6 @@ button:disabled {
     -ms-user-select: none; /* IE10+ */
 
     margin-top: 20px;
-    /* padding: 15px; */
-
-    /* border-color: #000000;
-    border-style: solid; */
     height: fit-content;
 
 }
@@ -635,15 +583,15 @@ button,
 } */
 
 
-.drag {
+/* .drag {
     font-family: "mid";
     opacity: 0.5;
     color: #333333;
     cursor: grabbing;
     float: center;
-    position: absolute;
+    position: absolute; */
     /* text-align: center; */
-}
+/* } */
 
 .material-icons {
     font-family: 'Material Icons';

@@ -61,7 +61,7 @@ SokobanManager.prototype.setup = function () {
         theLevel.objArr = theLevel.empty()
 
         for (var x = 0; x < theLevel.columns; x++) {
-            for (var y = 0; y < theLevel.columns; y++) {
+            for (var y = 0; y < theLevel.rows; y++) {
                 var value = previousState.objArr[x][y]
                 if (value != null) {
                     theLevel.addItem(new SokoPiece({ x: x, y: y }, value))
@@ -327,12 +327,13 @@ SokobanManager.prototype.actuate = function (saveState) {
     // } else {
 
     countSavedPackets()
-    var serial = theLevel.serialize()
-    if (theLevel.moves > 0) {
-        this.storageManager.setGameState(serial, levelNumber);
-    }
-    // console.log("saveState = " + saveState)
+
     if (saveState) {
+        var serial = theLevel.serialize()
+        console.log(serial)
+        if (theLevel.moves > 0) {
+            this.storageManager.setGameState(serial, levelNumber);
+        }
         this.pastStates.push(serial)
     }
 
@@ -413,7 +414,7 @@ SokobanManager.prototype.undo = function () {
         theLevel.objArr = theLevel.empty()
 
         for (var x = 0; x < theLevel.columns; x++) {
-            for (var y = 0; y < theLevel.columns; y++) {
+            for (var y = 0; y < theLevel.rows; y++) {
                 var value = previousState.objArr[x][y]
                 if (value != null) {
                     theLevel.addItem(new SokoPiece({ x: x, y: y }, value))
@@ -451,7 +452,7 @@ SokobanManager.prototype.redo = function () {
         theLevel.objArr = theLevel.empty()
 
         for (var x = 0; x < theLevel.columns; x++) {
-            for (var y = 0; y < theLevel.columns; y++) {
+            for (var y = 0; y < theLevel.rows; y++) {
                 var value = redoState.objArr[x][y]
                 if (value != null) {
                     theLevel.addItem(new SokoPiece({ x: x, y: y }, value))

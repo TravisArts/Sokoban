@@ -197,12 +197,8 @@ LevelStruct.prototype.addItem = function (piece) {
 
 
 LevelStruct.prototype.serialize = function () {
-	var result = new Array
 
-
-	// var arr = new Array(this.rawData.length)
-	var arr = new Array
-	arr = this.empty()
+	var arr = this.empty()
 
 	for (var x = 0; x < this.columns; x++) {
 		for (var y = 0; y < this.rows; y++) {
@@ -213,16 +209,14 @@ LevelStruct.prototype.serialize = function () {
 			}
 		}
 	}
-	this.playerH = this.player.x
-	this.playerV = this.player.y
 
 	return {
 		rows: this.rows,
 		columns: this.columns,
 		packs: this.packs,
 		savedPacks: this.savedPacks,
-		playerV: this.playerV,
-		playerH: this.playerH,
+		playerV: this.player.y,
+		playerH: this.player.x,
 		moves: this.moves,
 		pushes: this.pushes,
 		objArr: arr

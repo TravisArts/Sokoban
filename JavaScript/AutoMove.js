@@ -519,6 +519,12 @@ var astar = {
 		start.h = astar.heuristics.manhattan(start, end);
 		start.f = start.h
 
+		if (start.h >= 10) {
+			var heuristic = astar.heuristics.diagonal
+		} else {
+			var heuristic = astar.heuristics.manhattan
+		}
+		
 		var n = 1
 		openHeap.push({
 			graph: graph,
@@ -599,17 +605,17 @@ var astar = {
 					nodes[x_new][y_new] = 2
 					nodes[x_old][y_old] = 1
 
-					var Gsearch2 = new Graph(nodes)
-					Gsearch2.diagonal = true
-					var newEnd = Gsearch2.grid[end.x][end.y]
-					var S2 = Gsearch2.grid[x_new][y_new]
-					var pathNew = astar.search(Gsearch2, S2, newEnd, { heuristic: astar.heuristics.diagonal })
+					var heuristicGraph = new Graph(nodes)
+					heuristicGraph.diagonal = (heuristic == astar.heuristics.diagonal)
+					var newEnd = heuristicGraph.grid[end.x][end.y]
+					var S2 = heuristicGraph.grid[x_new][y_new]
+					var pathNew = astar.search(heuristicGraph, S2, newEnd, { heuristic: heuristic })
 
 					// Found an optimal (so far) path to this node.
 					// Take score for node to see how good it is.
 					neighbor.visited = true
 					neighbor.parent = currentNode
-					neighbor.h = pathNew.length || -1
+					neighbor.h = pathNew.length// || -1
 					neighbor.g = gScore
 					neighbor.f = neighbor.g + neighbor.h
 					neighbor.pathTo = path2

@@ -93,7 +93,7 @@ function loadSubMenu(type) {
         if (storageManager.getBestScore(i).moves != 0) {
             wrapper += complete
         }
-
+        
         wrapper += '<a href=..?level=' + i + '><span class=soko-room>'
         wrapper += getString(i)
         wrapper += '</span><div class=levelName>' + levelTitle + '</div></a></div>'
