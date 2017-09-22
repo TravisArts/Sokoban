@@ -204,6 +204,8 @@ SokobanManager.prototype.move = function (direction, saveState) {
         theLevel.moves++
     }
 
+    this.nextStates = []
+    
     if (saveState == null) {
         this.actuate(true)
     } else {
