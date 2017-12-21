@@ -45,26 +45,29 @@
             m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-        ga('create', 'UA-105778471-1', 'auto');
+//         ga('create', 'UA-105778471-1', 'auto');
+        ga('create', 'UA-105778471-1', {‘siteSpeedSampleRate’: 100})
         ga('send', 'pageview');
     </script>
     
     <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
-            // Feature detects Navigation Timing API support.
-            if (window.performance) {
-                // Gets the number of milliseconds since page load
-                // (and rounds the result since the value must be an integer).
-                var timeSincePageLoad = Math.round(performance.now());
-                console.log(timeSincePageLoad)
+//         document.addEventListener("DOMContentLoaded", function(event) {
+//             // Feature detects Navigation Timing API support.
+//             if (window.performance) {
+//                 // Gets the number of milliseconds since page load
+//                 // (and rounds the result since the value must be an integer).
+//                 var timeSincePageLoad = Math.round(performance.now());
+//                 console.log(timeSincePageLoad)
                 
-                var timing = performance.timing;
-                console.log(timing)
+//                 var timing = performance.timing;
+//                 console.log(timing)
+               
+//                 DOMload = timing.domComplete - timing.connectStart
                 
-                // Sends the timing hit to Google Analytics.
-                ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
-}
-        });
+//                 // Sends the timing hit to Google Analytics.
+//                 ga('send', 'timing', 'DOM Content', 'load', loadTime);
+//                 }
+//         });
     </script>
 
     <script type="text/javascript" src="JavaScript/hex.js"></script>
