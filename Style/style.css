@@ -513,18 +513,7 @@ button,
 }
 
 
-@media screen and (max-width: 520px) {
-  
-    .gameArea {
-        width: 280px;
-        /* margin: 0 auto; */
-    }
 
-    .GameBoard {
-        margin-top: 17px;
-        padding: 10px;
-    }
-}
 
 .piece {
     -webkit-transition: 100ms linear;
@@ -799,3 +788,32 @@ p [piece]::before {
 p [piece]::before{
     z-index: -1;
 }
+
+
+.desktop {
+    display: initial;
+  }
+  .mobile {
+    display: none;
+  }
+
+
+@media screen and (max-width: 520px) {
+    
+      .gameArea {
+          width: 280px;
+          /* margin: 0 auto; */
+      }
+  
+      .GameBoard {
+          margin-top: 17px;
+          padding: 10px;
+      }
+
+      .desktop {
+        display: none;        
+      }
+      .mobile {
+          display: initial;
+      }
+  }

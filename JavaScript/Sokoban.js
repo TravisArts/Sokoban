@@ -490,17 +490,26 @@ SokobanManager.prototype.showCompletion = function () {
 
 
     var modal = document.getElementById('completion-modal')
-    var close = document.getElementById('completion-close')
+    var closeD = document.getElementById('completion-closeD')
+    var closeM = document.getElementById('completion-closeM')
     var share = document.getElementById('completion-share')
-    var next = document.getElementById('completion-next')
+    var nextD = document.getElementById('completion-nextD')
+    var nextM = document.getElementById('completion-nextM')
 
     modal.style.display = "block"
 
-    close.onclick = function () {
+    closeD.onclick = function () {
+        modal.style.display = "none"
+    }
+    closeM.onclick = function () {
         modal.style.display = "none"
     }
 
-    next.onclick = function () {
+    nextD.onclick = function () {
+        modal.style.display = "none"
+        nextLevel()
+    }
+    nextM.onclick = function () {
         modal.style.display = "none"
         nextLevel()
     }
