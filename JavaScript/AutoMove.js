@@ -23,7 +23,16 @@ function mouseDown(e) {
 		var playerPosition = getPlayerPosition()
 
 		if (item == null || item.value == '.') {
+			var sTime = performance ? performance.now() : new Date().getTime();			
 			var path = findPath(position, playerPosition)
+			var fTime = performance ? performance.now() : new Date().getTime(),
+				duration = (fTime - sTime).toFixed(2);
+			if (result.length === 0) {
+				pathFindingEvent("move-failed", duration)
+			} else {
+				pathFindingEvent("move", duration)
+			}
+			
 			var route = pathToRoute(path)
 			if (route.length > 0) {
 				performMoves(route, 0)
@@ -374,9 +383,10 @@ function findPush(s, e) {
 		duration = (fTime - sTime).toFixed(2);
 	if (result.length === 0) {
 		console.log("couldn't find a path (" + duration + "ms)")
-		// animateNoPath()
+		pathFindingEvent("push-failed", duration)
 	} else {
 		console.log("search took " + duration + "ms.")
+		pathFindingEvent("push", duration)
 	}
 	// console.log(result)
 
@@ -951,17 +961,14 @@ GridNode.prototype.getCost = function (fromNeighbor) {
 	}
 	return this.weight;
 };
-
 function GridNode(x, y, weight) {
 	this.x = x;
 	this.y = y;
 	this.weight = weight;
 }
-
 GridNode.prototype.toString = function () {
 	return "[" + this.x + " " + this.y + "]";
 };
-
 GridNode.prototype.isWall = function () {
 	return this.weight !== 1;
 };
@@ -981,7 +988,6 @@ BinaryHeap.prototype.toString = function () {
 	result += "]"
 	return result
 }
-
 // BinaryHeap.prototype = {
 BinaryHeap.prototype.push = function (element) {
 	// Add the new element to the end of the array.
@@ -1097,6 +1103,28 @@ BinaryHeap.prototype.bubbleUp = function (n) {
 	}
 }
 // };
+
+
+
+function pathFindingEvent(action, value) {
+	// ga('send', 'event', {
+	// 	eventCategory: 'Path Finding',
+	// 	eventAction: action,
+	// 	eventLabel: eventLabel,
+	// 	eventValue: value
+	//   });
+	
+	gtag('event', action, {
+		'event_category': 'Path Finding',
+		'event_action': action,
+		'event_label': eventLabel,
+		'value': value
+	});
+}
+
+
+
+
 
 
 

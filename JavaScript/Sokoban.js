@@ -77,7 +77,7 @@ SokobanManager.prototype.setup = function () {
 
         isCompleted = (bestMoves != 0)
         // console.log(listCookies())
-        levelTitle = theLevel.title
+        theLevel.title = LoadLevelName(levelNumber)
         setWindowTitle()
 
 
@@ -154,7 +154,7 @@ SokobanManager.prototype.setStyles = function () {
 
 
 // Move tiles on the grid in the specified direction
-SokobanManager.prototype.move = function (direction, saveState) {
+SokobanManager.prototype.move = function (direction, shouldSave) {
 
     var self = this;
 
@@ -209,10 +209,10 @@ SokobanManager.prototype.move = function (direction, saveState) {
 
     this.nextStates = []
     
-    if (saveState == null) {
+    if (shouldSave == null) {
         this.actuate(true)
     } else {
-        this.actuate(saveState)
+        this.actuate(shouldSave)
     }
 
 };
@@ -321,7 +321,7 @@ SokobanManager.prototype.getVector = function (direction) {
 
 
 // Sends the updated grid to the actuator
-SokobanManager.prototype.actuate = function (saveState) {
+SokobanManager.prototype.actuate = function (shouldSave) {
     // if (this.storageManager.getBestScore() < this.score) {
     //     this.storageManager.setBestScore(this.score);
     // }
@@ -333,7 +333,7 @@ SokobanManager.prototype.actuate = function (saveState) {
 
     countSavedPackets()
 
-    if (saveState) {
+    if (shouldSave) {
         var serial = theLevel.serialize()
         console.log(serial)
         if (theLevel.moves > 0) {
@@ -842,13 +842,14 @@ function loadLevel(level) {
 
     isCompleted = (bestMoves != 0)
     // console.log(listCookies())
-    levelTitle = theLevel.title
+    // levelTitle = theLevel.title
     setWindowTitle()
 }
 
 
 var isCompleted = false
-var levelTitle = ""
+var levelTitle
+var eventLabel
 
 function getLevelType() {
     let num = levelNumber
@@ -905,16 +906,16 @@ function getLevelNumber(type) {
 
 function setWindowTitle() {
 
-    var winTitle = "XX-"
 
     let type = getLevelType()
 
-    winTitle += type
-    winTitle += " Level " + getLevelNumber(type)
+    levelTitle = type + " Level " + getLevelNumber(type)
 
     if (type == "IQ Carrier" || type == "Dimitri & Yorick") {
-        winTitle += ' "' + levelTitle + '"'
+        levelTitle += ' "' + theLevel.title + '"'
     }
+
+    var winTitle = levelTitle
 
     if (isCompleted)
         winTitle += completedStr
@@ -923,7 +924,9 @@ function setWindowTitle() {
 
     document.title = winTitle
 
+    eventLabel = levelTitle + " (" + levelNumber + ")"
 }
+
 
 
 function XOR(a, b) {

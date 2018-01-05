@@ -218,7 +218,18 @@ KeyboardInputManager.prototype.listen = function () {
 				var playerPosition = getPlayerPosition()
 
 				if (item == null || item.value == '.') {
+					var sTime = performance ? performance.now() : new Date().getTime();			
+					
 					var path = findPath(position, playerPosition)
+					
+					var fTime = performance ? performance.now() : new Date().getTime(),
+						duration = (fTime - sTime).toFixed(2);
+					if (result.length === 0) {
+						pathFindingEvent("move-failed", duration)
+					} else {
+						pathFindingEvent("move", duration)
+					}
+					
 					route = pathToRoute(path)
 
 				}

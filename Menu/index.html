@@ -28,7 +28,7 @@
             }
         }
     </script>
-    <script>
+    <!-- <script>
         (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
             (i[r].q = i[r].q || []).push(arguments)
@@ -38,7 +38,17 @@
 
         ga('create', 'UA-105778471-1', 'auto');
         ga('send', 'pageview');
+    </script> -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105778471-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-105778471-1', {'site_speed_sample_rate': 100});
     </script>
+
     <script type="text/javascript" src="../JavaScript/Menu.js"></script>
     <script type="text/javascript" src="../JavaScript/StorageManager.js"></script>
     <script type="text/javascript" src="../JavaScript/hex.js"></script>
