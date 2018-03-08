@@ -155,7 +155,7 @@ SokobanManager.prototype.setStyles = function () {
 
 // Move tiles on the grid in the specified direction
 SokobanManager.prototype.move = function (direction, shouldSave) {
-
+    
     var self = this;
 
     var cell, tile;
@@ -335,7 +335,7 @@ SokobanManager.prototype.actuate = function (shouldSave) {
 
     if (shouldSave) {
         var serial = theLevel.serialize()
-        console.log(serial)
+        // console.log(serial)
         if (theLevel.moves > 0) {
             this.storageManager.setGameState(serial, levelNumber);
         }

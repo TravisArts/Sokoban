@@ -1,26 +1,20 @@
 @font-face {
     font-family: "mid";
-    src: url('../Fonts/SokobanColor-Black.ttf') format('truetype'),
-        url('../Fonts/SokobanColor-Black.woff') format('woff'),
-        url('../Fonts/SokobanColor-Black.woff2') format('woff2');
+    src: url('../Fonts/SokobanColor-Black.ttf') format('truetype'), url('../Fonts/SokobanColor-Black.woff') format('woff'), url('../Fonts/SokobanColor-Black.woff2') format('woff2');
     font-style: normal;
     font-weight: normal;
 }
 
 @font-face {
     font-family: "back";
-    src: url('../Fonts/SokobanColor-Red.ttf'),
-        url('../Fonts/SokobanColor-Red.woff') format('woff'),
-        url('../Fonts/SokobanColor-Red.woff2') format('woff2');
+    src: url('../Fonts/SokobanColor-Red.ttf'), url('../Fonts/SokobanColor-Red.woff') format('woff'), url('../Fonts/SokobanColor-Red.woff2') format('woff2');
     font-style: normal;
     font-weight: normal;
 }
 
 @font-face {
     font-family: "fore";
-    src: url('../Fonts/SokobanColor-DarkRed.ttf'),
-        url('../Fonts/SokobanColor-DarkRed.woff') format('woff'),
-        url('../Fonts/SokobanColor-DarkRed.woff2') format('woff2');
+    src: url('../Fonts/SokobanColor-DarkRed.ttf'), url('../Fonts/SokobanColor-DarkRed.woff') format('woff'), url('../Fonts/SokobanColor-DarkRed.woff2') format('woff2');
     font-style: normal;
     font-weight: normal;
 }
@@ -33,32 +27,28 @@
     /* format('woff2'); */
 }
 
-
-html,body {
+html,
+body {
     overflow: hidden;
-
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
     margin: 0;
     background-color: #DDDDDD;
     /*font-family: "Sokoban";*/
     font-family: Helvetica;
     /* overflow: scroll; */
-    
-    -khtml-user-select: none;    
-    -webkit-user-select: none; /* Chrome/Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /* Chrome/Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+ */
     user-select: none;
-
-    font-feature-settings: "liga","dlig";
+    font-feature-settings: "liga", "dlig";
     text-rendering: optimizeLegibility;
     height: 100%;
 }
-
-
-
 
 button {
     background: none;
@@ -128,17 +118,6 @@ button:disabled {
     left: 0
 }
 
-
-
-
-
-
-
-
-
-
-
-
 .topnav {
     float: center;
     display: block;
@@ -147,11 +126,9 @@ button:disabled {
     text-align: center;
     z-index: 500;
     position: fixed;
-
     width: 100%;
     height: fit-content;
-    
-    top:0;
+    top: 0;
     left: 0;
     right: 0;
 }
@@ -174,9 +151,7 @@ button:disabled {
 .topnav #navTitle {
     display: none;
     color: #CCCCFF;
-
 }
-
 
 @media screen and (max-width: 800px) {
     .topnav .navButton:not(:first-child) {
@@ -186,10 +161,9 @@ button:disabled {
         /* float: none;
         text-align: left; */
         padding: 16px;
- 
         float: left;
         display: inline;
-        text-align: left; 
+        text-align: left;
     }
     .topnav .navButton.icon {
         position: absolute;
@@ -198,7 +172,6 @@ button:disabled {
         float: right;
         display: block;
     }
-
     .topnav #navTitle {
         float: left;
         padding: 16px;
@@ -221,14 +194,11 @@ button:disabled {
         display: block;
         text-align: left;
     }
-
     .topnav #navTitle {
         float: none;
         display: block;
         text-align: left;
     }
-
-    
 }
 
 .barContainer {
@@ -260,7 +230,6 @@ button:disabled {
     transform: rotate(45deg) translate(-2.828px, -2.828px);
 }
 
-
 .levels {
     margin-top: 40;
     margin-left: 50;
@@ -287,8 +256,8 @@ button:disabled {
 .list {
     width: 320px;
     text-align: center;
-    display : inline-block;  
-    text-align: center;    
+    display: inline-block;
+    text-align: center;
     padding: 20;
 }
 
@@ -297,17 +266,15 @@ button:disabled {
 }
 
 .soko-room {
-    display : inline-block;
-
+    display: inline-block;
     line-height: 0;
     width: fit-content;
     overflow: visible;
-    white-space:nowrap;
+    white-space: nowrap;
     padding: 0;
 }
 
 [piece] {
-    
     font-style: normal;
     font-variant: normal;
     text-transform: none;
@@ -316,31 +283,27 @@ button:disabled {
 }
 
 .soko-room span {
-    font-family: "mid"; /* See @font-face declarations at bottom */
-    
-    white-space: pre;      /* Turn newlines into actual newlines */    
-    display: inline-block; /* So we can set its width */
-    width: 0em;            /* Compensate for negative letter spacing */
-    position: relative;    
+    font-family: "mid";
+    /* See @font-face declarations at bottom */
+    white-space: pre;
+    /* Turn newlines into actual newlines */
+    display: inline-block;
+    /* So we can set its width */
+    width: 0em;
+    /* Compensate for negative letter spacing */
+    position: relative;
     font-size: 1vw;
     padding: 0.5vw;
 }
 
-
-
-
-
-
-
-
-
-
 [piece="@"] {
     color: #000000;
 }
+
 [piece="@"]::before {
     color: #DD0000;
 }
+
 [piece="@"]::after {
     color: #770000;
 }
@@ -348,33 +311,37 @@ button:disabled {
 [piece="+"] {
     color: #000000;
 }
+
 [piece="+"]::before {
     color: #DD0000;
 }
+
 [piece="+"]::after {
     color: #770000;
 }
 
-
 [piece="$"] {
     color: #999933;
 }
+
 [piece="*"] {
     color: #000000;
 }
+
 [piece="*"]::after {
     color: #999933;
 }
 
-
 [piece="$"]::before,
 [piece="@"]::before {
     z-index: 10;
-} 
+}
+
 [piece="$"],
 [piece="@"] {
     z-index: 10;
-} 
+}
+
 [piece="."] {
     z-index: 1;
 }
@@ -400,21 +367,20 @@ button:disabled {
     margin-bottom: 10px;
 }
 
-
 .GameBoard {
-    -webkit-user-select: none; /* Chrome/Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
-
+    -webkit-user-select: none;
+    /* Chrome/Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+ */
     margin-top: 20px;
     height: fit-content;
-
 }
 
 .gameArea {
     /* border-color: #000000;
     border-style: solid; */
-
     /*
     position: absolute; */
     /* padding: 20px; */
@@ -423,7 +389,6 @@ button:disabled {
     /* display: block;
     float: center; */
     /* transform: translate(-50%,-0%); */
-
     /* height: 100%; */
     /* padding-top: 20px; */
     position: absolute;
@@ -436,11 +401,10 @@ button:disabled {
     top: 0;
     bottom: 0;
     /* padding-bottom: 0; */
-
-
     /* width: 75%;
     height: 75%;   */
 }
+
 
 /* .stats>div {
      display: inline; 
@@ -448,11 +412,11 @@ button:disabled {
 
 .block1>div {
     display: inline;
-} 
+}
+
 .block2>div {
     display: inline;
 }
-
 
 .stats {
     white-space: nowrap;
@@ -461,7 +425,6 @@ button:disabled {
     /*left: 50%;
     top: 50%;*/
     /*transform: translate(-50%,-50%);*/
-
     /*width: 75%;
     height: 75%;*/
     text-align: center;
@@ -483,8 +446,9 @@ button,
     cursor: pointer;
     /* display: block; */
     text-align: center;
-    float: right; 
+    float: right;
 }
+
 .button {
     display: inline-block;
     background: #3333CC;
@@ -498,22 +462,20 @@ button,
     text-align: center;
     float: right;
 }
+
 .material-icons {
-    vertical-align: middle;    
+    vertical-align: middle;
     /* background: url('../Buttons/mute.png'); */
     /* padding: 10px 10px; */
     /* size: 20px 20px; */
     /* margin: auto; */
-    color: #CCCCFF;    
+    color: #CCCCFF;
 }
 
 .button {
     margin-left: 10px;
     margin-bottom: 10px;
 }
-
-
-
 
 .piece {
     -webkit-transition: 100ms linear;
@@ -547,25 +509,30 @@ button,
 .GameSpace,
 .WallSpace {
     position: absolute;
-    font-size: fit-width-precise; 
+    font-size: fit-width-precise;
     /* font-size: 2em; */
-    font-family: "mid"; /* See @font-face declarations at bottom */
+    font-family: "mid";
+    /* See @font-face declarations at bottom */
     speak: none;
     font-style: normal;
     font-variant: normal;
     text-transform: none;
     text-align: left;
     /* line-height: 0.1em; */
-    display: inline-block; /* So we can set its width */
-    white-space: pre;      /* Turn newlines into actual newlines */
-    line-height: 0;        /* Overlap icons vertically */
+    display: inline-block;
+    /* So we can set its width */
+    white-space: pre;
+    /* Turn newlines into actual newlines */
+    line-height: 0;
+    /* Overlap icons vertically */
     /*padding: 0.0em 0;      /* Compensate for zero line height */
-    width: 10em;            /* Compensate for negative letter spacing */
+    width: 10em;
+    /* Compensate for negative letter spacing */
     /*overflow: hidden;*/
     /* Remove rest of the actual word, leaving the first letter */
-    
     padding: 0;
 }
+
 
 /* [piece="@"] {
     vertical-align: -100px;
@@ -579,7 +546,11 @@ button,
     cursor: grabbing;
     float: center;
     position: absolute; */
-    /* text-align: center; */
+
+
+/* text-align: center; */
+
+
 /* } */
 
 .material-icons {
@@ -598,8 +569,6 @@ button,
     -webkit-font-smoothing: antialiased;
 }
 
-
-
 .forward,
 .back {
     background: #3333CC;
@@ -612,12 +581,11 @@ button,
     line-height: 42px;
     cursor: pointer;
     text-align: center;
-    font-family: 'mid'; 
+    font-family: 'mid';
     color: #CCCCFF;
     font-size: 40px;
     /* float: right; */
 }
-
 
 .navigation-footer {
     position: fixed;
@@ -625,13 +593,14 @@ button,
     height: fit-content;
     /* display: block; */
     width: 100%;
-    
     bottom: 0;
-    /* background-color: #3030CC; */
+    z-index: 0;
+    /* background-color: #000000; */
+    /* opacity: 0.5; */
     /* background-color: #3CC; */
 }
 
-.back{
+.back {
     left: 5%;
     float: left;
 }
@@ -644,12 +613,12 @@ button,
 #myBtn,
 .back,
 .forward {
-	height: 30px;
+    height: 30px;
     width: 30px;
     overflow: hidden;
     /* margin: 5px; */
     position: static;
-    margin: 8px;    
+    margin: 8px;
     z-index: 10;
     cursor: pointer;
     text-align: center;
@@ -662,24 +631,55 @@ button,
     /* font-size:100px; */
 }
 
+#dPad {
+    text-align: center;
+    width: 480px;
+    font-size: 0;
+    position: relative;
+    z-index: 10;
+}
+
+.move-button {
+    margin: 5px;
+    padding: 10px;
+    line-height: 42px;
+    float: initial;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: center;
+}
+
+
 /* The Modal (background) */
+
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 501; /* Sit on top */
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 501;
+    /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
     /*overflow: hidden; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
 }
+
 
 /* Modal Content/Box */
 
 
 /* The Close Button */
+
 .modal-button {
     float: right;
     top: 50%;
@@ -693,22 +693,29 @@ button,
     cursor: pointer;
 }
 
+
 /* Modal Header */
+
 .modal-header {
     padding: 2px 16px;
-    background-color: #CCCCFF; /*#5cb85c;*/
+    background-color: #CCCCFF;
+    /*#5cb85c;*/
     color: white;
     border-radius: 5px 5px 0 0;
 }
 
+
 /* Modal Body */
+
 .modal-body {
     max-height: 80%;
     padding: 2px 16px;
     overflow-y: auto;
 }
 
+
 /* Modal Footer */
+
 .modal-footer {
     /* display: inline-block; */
     /* width: 100%; */
@@ -719,7 +726,9 @@ button,
     border-radius: 0 0 5px 5px;
 }
 
+
 /* Modal Content */
+
 .modal-content {
     /* position: relative; */
     background-color: #fefefe;
@@ -727,24 +736,27 @@ button,
     padding: 0;
     border: 1px solid #888;
     width: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     /* -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s */
 }
+
 .modal-content {
     background-color: #fefefe;
-    margin-top: 10%;/* auto; /* 15% from the top and centered */
+    margin-top: 10%;
+    /* auto; /* 15% from the top and centered */
     margin-bottom: 10%;
     /* padding-top: 20px; */
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%;
+    /* Could be more or less, depending on screen size */
     border-radius: 5px;
 }
 
 #info-modal .modal-content {
-    height: 70%;    
+    height: 70%;
 }
 
 h1 {
@@ -757,15 +769,29 @@ p {
     /* font-size: 1.5vw; */
 }
 
+
 /* Add Animation */
+
 @-webkit-keyframes animatetop {
-    from {top: -300px; opacity: 0} 
-    to {top: 0; opacity: 1}
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
 
 @keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
 
 p .piece {
@@ -775,6 +801,7 @@ p .piece {
     width: 1em;
     line-height: 0;
 }
+
 p [piece]::after,
 p [piece]::before {
     display: block;
@@ -785,35 +812,31 @@ p [piece]::before {
     text-indent: 0;
 }
 
-p [piece]::before{
+p [piece]::before {
     z-index: -1;
 }
 
-
 .desktop {
     display: initial;
-  }
-  .mobile {
-    display: none;
-  }
+}
 
+.mobile {
+    display: none;
+}
 
 @media screen and (max-width: 520px) {
-    
-      .gameArea {
-          width: 280px;
-          /* margin: 0 auto; */
-      }
-  
-      .GameBoard {
-          margin-top: 17px;
-          padding: 10px;
-      }
-
-      .desktop {
-        display: none;        
-      }
-      .mobile {
-          display: initial;
-      }
-  }
+    .gameArea {
+        width: 280px;
+        /* margin: 0 auto; */
+    }
+    .GameBoard {
+        margin-top: 17px;
+        padding: 10px;
+    }
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: initial;
+    }
+}

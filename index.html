@@ -36,30 +36,18 @@
         }
     </script>
 
-    <!-- <script>
-        (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-105778471-1', {'siteSpeedSampleRate': 100});
-        ga('send', 'pageview');
-    </script> -->
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105778471-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'UA-105778471-1', {'site_speed_sample_rate': 100});
+        gtag('config', 'UA-105778471-1', { 'site_speed_sample_rate': 100 });
     </script>
 
 
-    
+
     <script>
 //         document.addEventListener("DOMContentLoaded", function(event) {
 //             // Feature detects Navigation Timing API support.
@@ -68,12 +56,12 @@
 //                 // (and rounds the result since the value must be an integer).
 //                 var timeSincePageLoad = Math.round(performance.now());
 //                 console.log(timeSincePageLoad)
-                
+
 //                 var timing = performance.timing;
 //                 console.log(timing)
-               
+
 //                 DOMload = timing.domComplete - timing.connectStart
-                
+
 //                 // Sends the timing hit to Google Analytics.
 //                 ga('send', 'timing', 'DOM Content', 'load', loadTime);
 //                 }
@@ -92,13 +80,13 @@
 
     <title>Sokoban</title>
 
-    <meta property="og:url"content="https://travisarts.github.io/Sokoban/" />    
+    <meta property="og:url" content="https://travisarts.github.io/Sokoban/" />
     <meta property="og:image" content="https://travisarts.github.io/Sokoban/Preview.png">
     <meta property="og:title" content="Sokoban" />
     <meta property="og:description" content="In Sokoban, you are trying to get treasure through a maze to
     their proper locations. The trasures are so heavy that you can only push them one at a time, and
     there are no handles to pull them. Be careful that you don't get one trapped in a corner—you won’t be
-    able to pull it back out!"/>
+    able to pull it back out!" />
 
 </head>
 
@@ -160,10 +148,28 @@
             <div id="console">
             </div>
         </div>
+        <div id="dPad">
+            <button class="move-button" onmousedown="buttonDown('up')" onmouseup="buttonUp()">
+                <i class="material-icons navigation-button">up_arrow</i>
+            </button>
+            <br>
+            <button class="move-button" onmousedown="buttonDown('left')" onmouseup="buttonUp()">
+                <i class="material-icons navigation-button">left_arrow</i>
+            </button>
+            <button class="move-button" onmousedown="buttonDown('down')" onmouseup="buttonUp()">
+                <i class="material-icons navigation-button">down_arrow</i>
+            </button>
+            <button class="move-button" onmousedown="buttonDown('right')" onmouseup="buttonUp()">
+                <i class="material-icons navigation-button">right_arrow</i>
+            </button>
+            <br>
+            <br>
+            
+        </div>
     </div>
     <div class=navigation-footer>
         <button class=back onclick="previousLevel() ">
-            <i class="material-icons navigation-button" >chevron_left</i>
+            <i class="material-icons navigation-button">chevron_left</i>
         </button>
         <button class=forward onclick="nextLevel() ">
             <i class="material-icons navigation-button">chevron_right</i>
@@ -180,18 +186,20 @@
             <div class="modal-body">
 
                 <p>
-                    This HTML5 implementation of Sokoban allows you to play online with any major browser (mobile, or desktop) without requireing any plug-ins.
+                    This HTML5 implementation of Sokoban allows you to play online with any major browser (mobile, or desktop) without requireing
+                    any plug-ins.
                 </p>
                 <h1>
                     The Object of the Game
                 </h1>
 
                 <p>
-                    In Sokoban, you are trying to get treasure <span piece="$" class="piece" style="font-family: 'mid';">$</span> (the little balls)
-                    through a maze to their proper locations (the outlined squares). You push using the large red ball
-                    <span piece="@" class="piece" style="font-family: 'mid';">@</span>. The trasures are so heavy that you can only push them one at
-                    a time, and there are no handles to pull them. Be careful that you don't get one trapped in a corner—you
-                    won’t be able to pull it back out!
+                    In Sokoban, you are trying to get treasure
+                    <span piece="$" class="piece" style="font-family: 'mid';">$</span> (the little balls) through a maze to their proper locations (the outlined squares). You push
+                    using the large red ball
+                    <span piece="@" class="piece" style="font-family: 'mid';">@</span>. The trasures are so heavy that you can only push them one at a time, and there are no handles
+                    to pull them. Be careful that you don't get one trapped in a corner—you won’t be able to pull it back
+                    out!
                 </p>
                 <br>
                 <p>
@@ -242,8 +250,11 @@
             </div>
             <div class="modal-body">
                 <p>
-                    Good job! You finished in <span id="completion-moves" style="font-weight: bold"></span> <span style="font-weight: bold">moves</span>,
-                    and <span id="completion-pushes" style="font-weight: bold"></span> <span style="font-weight: bold">pushes</span>.
+                    Good job! You finished in
+                    <span id="completion-moves" style="font-weight: bold"></span>
+                    <span style="font-weight: bold">moves</span>, and
+                    <span id="completion-pushes" style="font-weight: bold"></span>
+                    <span style="font-weight: bold">pushes</span>.
                 </p>
                 <p>
                     Do you want to admire your work (perhaps undoing to review the solution) or go on to the next level?

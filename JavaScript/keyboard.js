@@ -58,7 +58,7 @@ KeyboardInputManager.prototype.listen = function () {
 	document.addEventListener("keydown", function (event) {
 
 		// console.log("keyDown = " + event.which)
-
+		
 		var modifiers = event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
 		var mapped = map[event.which];
 
@@ -69,6 +69,7 @@ KeyboardInputManager.prototype.listen = function () {
 			if (mapped !== undefined) {
 				event.preventDefault();
 				self.emit("move", mapped);
+				clearTimeout(autoMoveTimout);
 			}
 		}
 
@@ -218,10 +219,10 @@ KeyboardInputManager.prototype.listen = function () {
 				var playerPosition = getPlayerPosition()
 
 				if (item == null || item.value == '.') {
-					var sTime = performance ? performance.now() : new Date().getTime();			
-					
+					var sTime = performance ? performance.now() : new Date().getTime();
+
 					var path = findPath(position, playerPosition)
-					
+
 					var fTime = performance ? performance.now() : new Date().getTime(),
 						duration = (fTime - sTime).toFixed(2);
 					if (result.length === 0) {
@@ -229,7 +230,7 @@ KeyboardInputManager.prototype.listen = function () {
 					} else {
 						pathFindingEvent("move", duration)
 					}
-					
+
 					route = pathToRoute(path)
 
 				}
@@ -275,7 +276,7 @@ KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
 };
 
 KeyboardInputManager.prototype.targetIsInput = function (event) {
-	return event.target.tagName.toLowerCase() === "input";
+	return event.target != document && event.target.tagName.toLowerCase() === "input";
 };
 
 Function.prototype.bind = Function.prototype.bind || function (target) {
@@ -287,3 +288,53 @@ Function.prototype.bind = Function.prototype.bind || function (target) {
 		self.apply(target, args);
 	};
 };
+
+
+var event; // The custom event that will be created
+var intervalId; // keep the ret val from setTimeout()
+var keyRepeatTimout;
+function buttonDown(direction) {
+	var key;
+	var keyCode;
+
+	switch (direction) {
+		case "up":
+			key = "ArrowUp"
+			keyCode = 38;
+			break;
+		case "down":
+			key = "ArrowDown"
+			keyCode = 40;
+			break;
+		case "left":
+			key = "ArrowLeft"
+			keyCode = 37;
+			break;
+		case "right":
+			key = "ArrowRight"
+			keyCode = 39;
+			break;
+
+		default:
+			break;
+	}
+	event = new KeyboardEvent("keydown", { "key": key, "code": key, "keyCode": keyCode, "which": keyCode})
+	// console.log(event)
+	document.dispatchEvent(event)
+	
+	keyRepeatTimout = setTimeout(function() {
+		document.dispatchEvent(event)
+		intervalId = setInterval(function(){
+			document.dispatchEvent(event)
+		},83)
+	},500 )	
+}
+
+function buttonUp() {
+	clearTimeout(keyRepeatTimout);
+	clearInterval(intervalId);
+	var key = event.key;
+	var keyCode = event.keyCode;
+	event = new KeyboardEvent("keyup", { "key": key, "code": key, "keyCode": keyCode, "which": keyCode })
+	document.dispatchEvent(event);
+}

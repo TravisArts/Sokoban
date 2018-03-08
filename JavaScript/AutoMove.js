@@ -27,7 +27,7 @@ function mouseDown(e) {
 			var path = findPath(position, playerPosition)
 			var fTime = performance ? performance.now() : new Date().getTime(),
 				duration = (fTime - sTime).toFixed(2);
-			if (result.length === 0) {
+			if (path.length === 0) {
 				pathFindingEvent("move-failed", duration)
 			} else {
 				pathFindingEvent("move", duration)
@@ -277,17 +277,16 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 }
 
 
-
+var autoMoveTimout;
 
 function performMoves(moves, i) {
-	setTimeout(function () {
-		var dir = moves[i]
-		j = i + 1
+	autoMoveTimout = setTimeout(function () {
+		var j = i + 1;
 		if (j < moves.length) {
-			manager.move(dir, false)
+			manager.move(moves[i], false)
 			performMoves(moves, j)
 		} else {
-			manager.move(dir, true)
+			manager.move(moves[i], true)
 		}
 	}, 100);
 }
@@ -343,7 +342,7 @@ function findPath(s, e) {
 	if (theLevel.withinBounds(s) && theLevel.withinBounds(e)) {
 		var start = theGraph.grid[s.x][s.y]
 		var end = theGraph.grid[e.x][e.y]
-
+		
 		var path = astar.search(theGraph, start, end)
 		if (path != null) {
 			var result = [s]
