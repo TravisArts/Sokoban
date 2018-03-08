@@ -58,7 +58,7 @@ KeyboardInputManager.prototype.listen = function () {
 	document.addEventListener("keydown", function (event) {
 
 		// console.log("keyDown = " + event.which)
-		
+
 		var modifiers = event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
 		var mapped = map[event.which];
 
@@ -242,6 +242,32 @@ KeyboardInputManager.prototype.listen = function () {
 		}
 	});
 
+	var upBtn = document.getElementById("mvUp");
+	var leftBtn = document.getElementById("mvLeft");
+	var downBtn = document.getElementById("mvDown");
+	var rightBtn = document.getElementById("mvRight");
+
+	upBtn.addEventListener("touchstart", function () { buttonDown("up") });
+	leftBtn.addEventListener("touchstart", function () { buttonDown("left") });
+	downBtn.addEventListener("touchstart", function () { buttonDown("down") });
+	rightBtn.addEventListener("touchstart", function () { buttonDown("right") });
+
+	upBtn.addEventListener("touchend", buttonUp);
+	leftBtn.addEventListener("touchend", buttonUp);
+	downBtn.addEventListener("touchend", buttonUp);
+	rightBtn.addEventListener("touchend", buttonUp);
+
+
+	upBtn.addEventListener("mousedown", function () { buttonDown("up") });
+	leftBtn.addEventListener("mousedown", function () { buttonDown("left") });
+	downBtn.addEventListener("mousedown", function () { buttonDown("down") });
+	rightBtn.addEventListener("mousedown", function () { buttonDown("right") });
+
+	upBtn.addEventListener("mouseup", buttonUp);
+	leftBtn.addEventListener("mouseup", buttonUp);
+	downBtn.addEventListener("mouseup", buttonUp);
+	rightBtn.addEventListener("mouseup", buttonUp);
+
 }
 
 KeyboardInputManager.prototype.restart = function (event) {
@@ -296,7 +322,7 @@ var keyRepeatTimout;
 function buttonDown(direction) {
 	var key;
 	var keyCode;
-
+	console.log(direction)
 	switch (direction) {
 		case "up":
 			key = "ArrowUp"
@@ -318,16 +344,16 @@ function buttonDown(direction) {
 		default:
 			break;
 	}
-	event = new KeyboardEvent("keydown", { "key": key, "code": key, "keyCode": keyCode, "which": keyCode})
+	event = new KeyboardEvent("keydown", { "key": key, "code": key, "keyCode": keyCode, "which": keyCode })
 	// console.log(event)
 	document.dispatchEvent(event)
-	
-	keyRepeatTimout = setTimeout(function() {
+
+	keyRepeatTimout = setTimeout(function () {
 		document.dispatchEvent(event)
-		intervalId = setInterval(function(){
+		intervalId = setInterval(function () {
 			document.dispatchEvent(event)
-		},83)
-	},500 )	
+		}, 83)
+	}, 500)
 }
 
 function buttonUp() {
@@ -338,3 +364,4 @@ function buttonUp() {
 	event = new KeyboardEvent("keyup", { "key": key, "code": key, "keyCode": keyCode, "which": keyCode })
 	document.dispatchEvent(event);
 }
+

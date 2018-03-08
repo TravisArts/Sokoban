@@ -633,7 +633,7 @@ button,
 
 #dPad {
     text-align: center;
-    width: 480px;
+    /* width: 480px; */
     font-size: 0;
     position: relative;
     z-index: 10;
