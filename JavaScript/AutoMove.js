@@ -10,7 +10,7 @@ var grabbing = null
 
 function mouseDown(e) {
 	var position = detectCoordinate(e)
-
+	console.log(position)
 	// position = detectAllCoordinates(e, 30)
 	
 
@@ -289,6 +289,9 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 													  //the square associated with the centerpoint is covered
 			if (per > 1) per = 1; //normalize for over 100% or under 0%
 			if (per < 0) per = 0;
+		}
+		if (pv == 0){
+			per = 0;
 		}
 		per *= pv
 		// console.log( i + ": " + (per*100).toFixed(2) + "%")
