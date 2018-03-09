@@ -261,7 +261,7 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 	for (var i = 0; i < p.length; i++) {
 		var px = p[i].x;    	//x value of point
 		var py = p[i].y;    	//y value of point
-		var pv = p[i].w || 0;   //associated value of point (e.g. population)
+		var pv = p[i].w;   //associated value of point (e.g. population)
 
 		var mx = (cx - px); var my = (cy - py); //calculate the angle of the difference
 		var dist = Math.sqrt(mx * mx + my * my)
@@ -288,6 +288,7 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 			if (per > 1) per = 1; //normalize for over 100% or under 0%
 			if (per < 0) per = 0;
 		}
+		
 		console.log(i + " pv = " + pv)
 		per *= pv || 0
 		// console.log( i + ": " + (per*100).toFixed(2) + "%")
