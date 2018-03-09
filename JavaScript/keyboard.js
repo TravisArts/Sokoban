@@ -110,9 +110,8 @@ KeyboardInputManager.prototype.listen = function () {
 
 	gameContainer.addEventListener(this.eventTouchstart, function (event) {
 		console.log(event)
-		if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
-			event.targetTouches.length > 1 ||
-			self.targetIsInput(event)) {
+		if ((!window.navigator.msPointerEnabled && event.touches.length > 1)
+			|| event.targetTouches.length > 1 || self.targetIsInput(event)) {
 			return; // Ignore if touching with more than 1 finger or touching input
 		}
 
