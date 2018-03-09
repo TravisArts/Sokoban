@@ -153,6 +153,8 @@ function drawCircle(X, Y, R) {
 	var canvas = document.getElementById('circle');
 	if (canvas.getContext) {
 		var ctx = canvas.getContext('2d');
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 		// var X = canvas.width / 2;
 		// var Y = canvas.height / 2;
 		// var R = 45;
