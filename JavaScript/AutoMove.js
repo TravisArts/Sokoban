@@ -188,6 +188,7 @@ function detectAllCoordinates(e, r, backwards) {
 
 	var arr = theGraph.allNeighbors(theGraph.grid[column][row], backwards)
 
+	console.log(arr)
 
 	var p0 = { x: x - pieceWidth, y: y - pieceWidth, w: arr[0] }; var p1 = { x: x, y: y - pieceWidth, w: arr[1] }; var p2 = { x: x + pieceWidth, y: y - pieceWidth, w: arr[2] }
 	var p3 = { x: x - pieceWidth, y: y, w: arr[3] }; var p4 = { x: x, y: y, w: arr[4] }; var p5 = { x: x + pieceWidth, y: y, w: arr[5] }
