@@ -205,6 +205,7 @@ function detectAllCoordinates(e, r, backwards) {
 	// var total = sumCirlce(p, cx, cy, e.radiusX, pieceWidth/2)
 	var total = sumCirlce(p, cx, cy, r, pieceWidth/2)
 
+
 	total.sort(function (a, b) {
 		if (a.per > b.per) {
 			return -1;
@@ -289,6 +290,7 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 			if (per > 1) per = 1; //normalize for over 100% or under 0%
 			if (per < 0) per = 0;
 		}
+		console.log(i + " pv = " + pv)
 		per *= pv
 		// console.log( i + ": " + (per*100).toFixed(2) + "%")
 		result.push({i: i, per: per})
