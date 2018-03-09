@@ -1131,12 +1131,12 @@ function pathFindingEvent(action, value) {
 	// 	eventValue: value
 	//   });
 	
-	gtag('event', action, {
-		'event_category': 'Path Finding',
-		'event_action': action,
-		'event_label': eventLabel,
-		'value': value
-	});
+	// gtag('event', action, {
+	// 	'event_category': 'Path Finding',
+	// 	'event_action': action,
+	// 	'event_label': eventLabel,
+	// 	'value': value
+	// });
 }
 
 
