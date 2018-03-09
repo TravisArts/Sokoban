@@ -854,7 +854,6 @@ Graph.prototype.allNeighbors = function (node, backwards) {
 	}
 	// This
 	ret.push(node.weight)
-	console.log(node.weight)
 	// East
 	if (grid[x + 1]) {
 		ret.push(grid[x + 1][y].weight);
@@ -874,7 +873,7 @@ Graph.prototype.allNeighbors = function (node, backwards) {
 
 	if (backwards) {
 		for (var i = 0; i < ret.length; i++) {
-			if (ret[i].weight != 1) {
+			if (ret[i] != 1) {
 				ret[i] = 0
 			}
 			// ret[i] = 2 - ret[i]
