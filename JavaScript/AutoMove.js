@@ -189,9 +189,9 @@ function detectAllCoordinates(e, r, backwards) {
 	var arr = theGraph.allNeighbors(theGraph.grid[column][row], backwards)
 
 
-	var p0 = {x:x-pieceWidth, y:y-pieceWidth, w:arr[0]};var p1 = {x:x, y:y-pieceWidth, w:arr[1]};	var p2 = {x:x+pieceWidth, y:y-pieceWidth, w:arr[2]}
-	var p3 = {x:x-pieceWidth, y:y, w:arr[3]}; 			var p4 = {x:x, y:y, w:arr[4]}; 				var p5 = {x:x+pieceWidth, y:y, w:arr[5]}
-	var p6 = {x:x-pieceWidth, y:y+pieceWidth, w:arr[6]};var p7 = {x:x, y:y+pieceWidth, w:arr[7]};	var p8 = {x:x+pieceWidth, y:y+pieceWidth, w:arr[8]}
+	var p0 = {x:x-pieceWidth, y:y-pieceWidth, w:arr[0]}; var p1 = {x:x, y:y-pieceWidth, w:arr[1]};	var p2 = {x:x+pieceWidth, y:y-pieceWidth, w:arr[2]}
+	var p3 = {x:x-pieceWidth, y:y, w:arr[3]}; 			 var p4 = {x:x, y:y, w:arr[4]}; 			var p5 = {x:x+pieceWidth, y:y, w:arr[5]}
+	var p6 = {x:x-pieceWidth, y:y+pieceWidth, w:arr[6]}; var p7 = {x:x, y:y+pieceWidth, w:arr[7]};	var p8 = {x:x+pieceWidth, y:y+pieceWidth, w:arr[8]}
 	
 	// OverlapSorter(x, y, cr)
 
@@ -199,6 +199,8 @@ function detectAllCoordinates(e, r, backwards) {
 
 
 	var p = [p0, p1, p2, p3, p4, p5, p6, p7, p8]
+
+	console.log(p)
 
 	// var total = sumCirlce(p, cx, cy, e.radiusX, pieceWidth/2)
 	var total = sumCirlce(p, cx, cy, r, pieceWidth/2)
