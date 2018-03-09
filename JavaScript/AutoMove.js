@@ -291,7 +291,7 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 			if (per < 0) per = 0;
 		}
 		console.log(i + " pv = " + pv)
-		per *= pv
+		per *= pv || 0
 		// console.log( i + ": " + (per*100).toFixed(2) + "%")
 		result.push({i: i, per: per})
 		// total += per * pv;   //add the value multiplied by the percentage to the total
