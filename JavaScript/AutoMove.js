@@ -290,6 +290,7 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 			if (per > 1) per = 1; //normalize for over 100% or under 0%
 			if (per < 0) per = 0;
 		}
+		console.log(i + " per = " + per + " pv = " + pv)
 		if (pv == 0){
 			per = 0;
 		}
