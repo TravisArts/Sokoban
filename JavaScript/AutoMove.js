@@ -260,7 +260,7 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 
 	console.log(pieceWidth)
 	var result = []
-	console.log {p[4]}
+	console.log(p[4])
 	for (var i = 0; i < p.length; i++) {
 		var px = p[i].x;    	//x value of point
 		var py = p[i].y;    	//y value of point
