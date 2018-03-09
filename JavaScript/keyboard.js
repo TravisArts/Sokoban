@@ -224,7 +224,7 @@ KeyboardInputManager.prototype.listen = function () {
 
 					var fTime = performance ? performance.now() : new Date().getTime(),
 						duration = (fTime - sTime).toFixed(2);
-					if (result.length === 0) {
+					if (path.length === 0) {
 						pathFindingEvent("move-failed", duration)
 					} else {
 						pathFindingEvent("move", duration)
