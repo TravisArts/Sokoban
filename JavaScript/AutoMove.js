@@ -12,7 +12,7 @@ function mouseDown(e) {
 	var position = detectCoordinate(e)
 	console.log(position)
 	// position = detectAllCoordinates(e, 30)
-	
+
 
 	var item = theLevel.itemAt(position.x, position.y)
 
@@ -23,7 +23,7 @@ function mouseDown(e) {
 		var playerPosition = getPlayerPosition()
 
 		if (item == null || item.value == '.') {
-			var sTime = performance ? performance.now() : new Date().getTime();			
+			var sTime = performance ? performance.now() : new Date().getTime();
 			var path = findPath(position, playerPosition)
 			var fTime = performance ? performance.now() : new Date().getTime(),
 				duration = (fTime - sTime).toFixed(2);
@@ -32,7 +32,7 @@ function mouseDown(e) {
 			} else {
 				pathFindingEvent("move", duration)
 			}
-			
+
 			var route = pathToRoute(path)
 			if (route.length > 0) {
 				performMoves(route, 0)
@@ -171,7 +171,7 @@ function detectAllCoordinates(e, r, backwards) {
 	var cx = Math.abs(e.clientX - rect.left)
 	var cy = Math.abs(e.clientY - rect.top)
 
-	drawCircle(cx,cy, r)
+	drawCircle(cx, cy, r)
 
 
 	var column = Math.floor(cx / pieceWidth)
@@ -183,16 +183,16 @@ function detectAllCoordinates(e, r, backwards) {
 	console.log(column + " " + row)
 
 	if (column >= theLevel.columns || row >= theLevel.rows) {
-		return {x: 0, y: 0}
+		return { x: 0, y: 0 }
 	}
 
 	var arr = theGraph.allNeighbors(theGraph.grid[column][row], backwards)
 
 
-	var p0 = {x:x-pieceWidth, y:y-pieceWidth, w:arr[0]}; var p1 = {x:x, y:y-pieceWidth, w:arr[1]};	var p2 = {x:x+pieceWidth, y:y-pieceWidth, w:arr[2]}
-	var p3 = {x:x-pieceWidth, y:y, w:arr[3]}; 			 var p4 = {x:x, y:y, w:arr[4]}; 			var p5 = {x:x+pieceWidth, y:y, w:arr[5]}
-	var p6 = {x:x-pieceWidth, y:y+pieceWidth, w:arr[6]}; var p7 = {x:x, y:y+pieceWidth, w:arr[7]};	var p8 = {x:x+pieceWidth, y:y+pieceWidth, w:arr[8]}
-	
+	var p0 = { x: x - pieceWidth, y: y - pieceWidth, w: arr[0] }; var p1 = { x: x, y: y - pieceWidth, w: arr[1] }; var p2 = { x: x + pieceWidth, y: y - pieceWidth, w: arr[2] }
+	var p3 = { x: x - pieceWidth, y: y, w: arr[3] }; var p4 = { x: x, y: y, w: arr[4] }; var p5 = { x: x + pieceWidth, y: y, w: arr[5] }
+	var p6 = { x: x - pieceWidth, y: y + pieceWidth, w: arr[6] }; var p7 = { x: x, y: y + pieceWidth, w: arr[7] }; var p8 = { x: x + pieceWidth, y: y + pieceWidth, w: arr[8] }
+
 	// OverlapSorter(x, y, cr)
 
 	// var p1 = [x, y, 1, ]
@@ -203,18 +203,18 @@ function detectAllCoordinates(e, r, backwards) {
 	console.log(p)
 
 	// var total = sumCirlce(p, cx, cy, e.radiusX, pieceWidth/2)
-	var total = sumCirlce(p, cx, cy, r, pieceWidth/2)
+	var total = sumCirlce(p, cx, cy, r, pieceWidth / 2)
 
 
 	total.sort(function (a, b) {
 		if (a.per > b.per) {
 			return -1;
-		  }
-		  if (a.per < b.per) {
+		}
+		if (a.per < b.per) {
 			return 1;
-		  }
-		  // a must be equal to b
-		  return 0;
+		}
+		// a must be equal to b
+		return 0;
 	})
 
 	console.log(total)
@@ -223,8 +223,8 @@ function detectAllCoordinates(e, r, backwards) {
 	// for (var i = 0; i < total.length; i++) {
 	// 	result.push(p[])
 	// }
-	
-	var result = {x:Math.floor(best.x / pieceWidth), y:Math.floor(best.y / pieceWidth)}
+
+	var result = { x: Math.floor(best.x / pieceWidth), y: Math.floor(best.y / pieceWidth) }
 	console.log(result)
 
 	return result//{ x: best.x, y: best.y }
@@ -232,7 +232,7 @@ function detectAllCoordinates(e, r, backwards) {
 }
 
 function adjustWeight(x, y, backwards) {
-	
+
 	var arr = theGraph.allNeighbors(theGraph.grid[x][y])
 	var result = []
 	for (var i = 0; i < arr.length; i++) {
@@ -260,7 +260,7 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 
 	console.log(pieceWidth)
 	var result = []
-	
+
 	console.log(p[4])
 	for (var i = 0; i < p.length; i++) {
 		var px = p[i].x;    	//x value of point
@@ -279,26 +279,26 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 		} else if (dist + hyp <= cr) { //other easy case - completely inside circle (distance + hypotenuse <= radius)
 			per = 1; //then use 100% of its associated value
 		} else { //the edge cases
-			
+
 			var theta = Math.abs(Math.PI * Math.atan2(my, mx) / 180);
 			var theta = Math.abs(((theta + 89) % 90 + 90) % 90 - 89); //reduce it to a positive degree between 0 and 90
 			var tf = Math.abs(1 - (theta / 45)); //this basically makes it so that if the angle is close to 45, it returns 0, 
-											//if it is close to 0 or 90, it returns 1
+			//if it is close to 0 or 90, it returns 1
 			var hyp_adjust = (hyp * (1 - tf) + (pdist * tf)); //now we create a mixed value that is weighted by whether the
-															  //hypotenuse or the distance between cells should be used                                                   
+			//hypotenuse or the distance between cells should be used                                                   
 
 			per = (cr - dist + hyp_adjust) / 100; //lastly, we use the above numbers to estimate what percentage of 
-													  //the square associated with the centerpoint is covered
+			//the square associated with the centerpoint is covered
 			if (per > 1) per = 1; //normalize for over 100% or under 0%
 			if (per < 0) per = 0;
 		}
 		console.log(i + " per = " + per + " pv = " + pv + "/" + p[i].w)
-		if (pv == 0){
+		if (pv == 0) {
 			per = 0;
 		}
 		per *= pv
 		// console.log( i + ": " + (per*100).toFixed(2) + "%")
-		result.push({i: i, per: per})
+		result.push({ i: i, per: per })
 		// total += per * pv;   //add the value multiplied by the percentage to the total
 	}
 	return result
@@ -371,7 +371,7 @@ function findPath(s, e) {
 	if (theLevel.withinBounds(s) && theLevel.withinBounds(e)) {
 		var start = theGraph.grid[s.x][s.y]
 		var end = theGraph.grid[e.x][e.y]
-		
+
 		var path = astar.search(theGraph, start, end)
 		if (path != null) {
 			var result = [s]
@@ -562,7 +562,7 @@ var astar = {
 		} else {
 			var heuristic = astar.heuristics.manhattan
 		}
-		
+
 		var n = 1
 		openHeap.push({
 			graph: graph,
@@ -835,7 +835,7 @@ Graph.prototype.allNeighbors = function (node, backwards) {
 	var grid = this.grid;
 
 	var maxY = (y == theLevel.rows - 1)
-	
+
 	// Northwest
 	if (grid[x - 1] && grid[x - 1][y + 1]) {
 		ret.push(grid[x - 1][y + 1].weight);
@@ -881,7 +881,7 @@ Graph.prototype.allNeighbors = function (node, backwards) {
 		}
 	}
 
-	
+
 	return ret;
 };
 
@@ -1143,7 +1143,7 @@ function pathFindingEvent(action, value) {
 	// 	eventLabel: eventLabel,
 	// 	eventValue: value
 	//   });
-	
+
 	// gtag('event', action, {
 	// 	'event_category': 'Path Finding',
 	// 	'event_action': action,
