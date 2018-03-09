@@ -1,5 +1,3 @@
-
-
 function getPlayerPosition() {
 	var player = theLevel.player
 	var position = { x: player.x, y: player.y }
