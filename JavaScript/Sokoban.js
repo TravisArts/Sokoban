@@ -122,12 +122,20 @@ SokobanManager.prototype.setStyles = function () {
     var stylesheet = style.sheet
 
 
-    var usedHeight = document.getElementById("myTopnav").offsetHeight + document.getElementsByClassName("button-space")[0].offsetHeight + document.getElementsByClassName("stats")[0].offsetHeight
-    var availableHeight = window.innerHeight /*document.getElementsByClassName("gameArea")[0].offsetHeight*/ - usedHeight
+    var topnav = document.getElementById("myTopnav")
+    var buttons = document.getElementsByClassName("button-space")[0]
+    var stats = document.getElementsByClassName("stats")[0]
+    var dPad = document.getElementById("dPad")
+
+
+    var usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + dPad.offsetHeight
+    var availableHeight = window.innerHeight /*document.getElementsByClassName("gameArea")[0].offsetHeight*/ - usedHeight - 45
     var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
     // console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
     var height = availableHeight / (theLevel.rows)
     var width = rect.width / (theLevel.columns)
+
+    console.log("width: " + width + " height: " + height)
 
     pieceWidth = (width < height) ? width : height
 

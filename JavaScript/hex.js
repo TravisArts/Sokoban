@@ -235,7 +235,7 @@ function parseXML(level) {
 }
 
 function getQueryVariable(variable) {
-    var query = window.location.search.substring(1);
+    var query = window.location.search.substring(1).replace(/\//g,'');
     var vars = query.split("+");
 
     for (var i = 0; i < vars.length; i++) {

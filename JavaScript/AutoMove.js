@@ -168,10 +168,14 @@ function drawCircle(X, Y, R) {
 
 function detectAllCoordinates(e, r, backwards) {
 	var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
-	var cx = Math.abs(e.clientX - rect.left)
-	var cy = Math.abs(e.clientY - rect.top)
+	var cx = e.clientX - rect.left
+	var cy = e.clientY - rect.top
 
-	drawCircle(cx, cy, r)
+	if (cx < 0 || cy < 0) {
+		return [{ x: 0, y: 0 }];
+	}
+
+	// drawCircle(cx, cy, r)
 
 
 	var column = Math.floor(cx / pieceWidth)
@@ -180,15 +184,13 @@ function detectAllCoordinates(e, r, backwards) {
 	var x = (column + 0.5) * pieceWidth
 	var y = (row + 0.5) * pieceWidth
 
-	console.log(column + " " + row)
+	// console.log(column + " " + row)
 
 	if (column >= theLevel.columns || row >= theLevel.rows) {
-		return { x: 0, y: 0 }
+		return [{ x: 0, y: 0 }]
 	}
 
 	var arr = theGraph.allNeighbors(theGraph.grid[column][row], backwards)
-
-	console.log(arr)
 
 	var p0 = { x: x - pieceWidth, y: y - pieceWidth, w: arr[0] }; var p1 = { x: x, y: y - pieceWidth, w: arr[1] }; var p2 = { x: x + pieceWidth, y: y - pieceWidth, w: arr[2] }
 	var p3 = { x: x - pieceWidth, y: y, w: arr[3] }; var p4 = { x: x, y: y, w: arr[4] }; var p5 = { x: x + pieceWidth, y: y, w: arr[5] }
@@ -200,8 +202,6 @@ function detectAllCoordinates(e, r, backwards) {
 
 
 	var p = [p0, p1, p2, p3, p4, p5, p6, p7, p8]
-
-	console.log(p)
 
 	// var total = sumCirlce(p, cx, cy, e.radiusX, pieceWidth/2)
 	var total = sumCirlce(p, cx, cy, r, pieceWidth / 2)
@@ -218,15 +218,21 @@ function detectAllCoordinates(e, r, backwards) {
 		return 0;
 	})
 
-	console.log(total)
-
-	var best = p[total[0].i]
+	// var best = p[total[0].i]
 	// for (var i = 0; i < total.length; i++) {
 	// 	result.push(p[])
 	// }
+	var result = [];
+	for (let i = 0; i < total.length; i++) {
+		var rank = total[i]
+		if (rank.per > 0) {
+			var val = p[rank.i]
+			result.push({ x: Math.floor(val.x / pieceWidth), y: Math.floor(val.y / pieceWidth) })
+		}
+	}
 
-	var result = { x: Math.floor(best.x / pieceWidth), y: Math.floor(best.y / pieceWidth) }
-	console.log(result)
+	// var result = { x: Math.floor(best.x / pieceWidth), y: Math.floor(best.y / pieceWidth) }
+	// console.log(result)
 
 	return result//{ x: best.x, y: best.y }
 
@@ -259,14 +265,12 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 	var total = 0 //initialize the total
 	var hyp = pdist * Math.SQRT2 //* Math.sqrt((pdist * pdist) + (pdist * pdist)); //hypotenuse of distance
 
-	console.log(pieceWidth)
 	var result = []
 
-	console.log(p[4])
 	for (var i = 0; i < p.length; i++) {
-		var px = p[i].x;    	//x value of point
-		var py = p[i].y;    	//y value of point
-		var pv = p[i].w || 0;   //associated value of point (e.g. population)
+		var px = p[i].x;	//x value of point
+		var py = p[i].y;	//y value of point
+		var pv = p[i].w;	//associated value of point (e.g. population)
 
 		var mx = (cx - px); var my = (cy - py); //calculate the angle of the difference
 		var dist = Math.sqrt(mx * mx + my * my)
@@ -292,10 +296,6 @@ function sumCirlce(p, cx, cy, cr, pdist) {
 			//the square associated with the centerpoint is covered
 			if (per > 1) per = 1; //normalize for over 100% or under 0%
 			if (per < 0) per = 0;
-		}
-		console.log(i + " per = " + per + " pv = " + pv + "/" + p[i].w)
-		if (pv == 0) {
-			per = 0;
 		}
 		per *= pv
 		// console.log( i + ": " + (per*100).toFixed(2) + "%")
@@ -830,7 +830,7 @@ Graph.prototype.neighbors = function (node) {
 };
 
 Graph.prototype.allNeighbors = function (node, backwards) {
-	var ret = [];
+	var ret = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 	var x = node.x;
 	var y = node.y;
 	var grid = this.grid;
@@ -838,38 +838,38 @@ Graph.prototype.allNeighbors = function (node, backwards) {
 	var maxY = (y == theLevel.rows - 1)
 
 	// Northwest
-	if (grid[x - 1] && grid[x - 1][y + 1]) {
-		ret.push(grid[x - 1][y + 1].weight);
+	if (grid[x - 1] && grid[x - 1][y - 1]) {
+		ret[0] = grid[x - 1][y - 1].weight;
 	}
 	// North
-	if (grid[x][y + 1]) {
-		ret.push(grid[x][y + 1].weight);
+	if (grid[x][y - 1]) {
+		ret[1] = grid[x][y - 1].weight;
 	}
 	// Northeast
-	if (grid[x + 1] && grid[x + 1][y + 1]) {
-		ret.push(grid[x + 1][y + 1].weight);
+	if (grid[x + 1] && grid[x + 1][y - 1]) {
+		ret[2] = grid[x + 1][y - 1].weight;
 	}
 	// West
 	if (grid[x - 1]) {
-		ret.push(grid[x - 1][y].weight);
+		ret[3] = grid[x - 1][y].weight;
 	}
 	// This
-	ret.push(node.weight)
+	ret[4] = node.weight
 	// East
 	if (grid[x + 1]) {
-		ret.push(grid[x + 1][y].weight);
+		ret[5] = grid[x + 1][y].weight;
 	}
 	// Southwest
-	if (grid[x - 1] && grid[x - 1][y - 1]) {
-		ret.push(grid[x - 1][y - 1].weight);
+	if (grid[x - 1] && grid[x - 1][y + 1]) {
+		ret[6] = grid[x - 1][y + 1].weight;
 	}
 	// South
-	if (grid[x][y - 1]) {
-		ret.push(grid[x][y - 1].weight);
+	if (grid[x][y + 1]) {
+		ret[7] = grid[x][y + 1].weight;
 	}
 	// Southeast
-	if (grid[x + 1] && grid[x + 1][y - 1]) {
-		ret.push(grid[x + 1][y - 1].weight);
+	if (grid[x + 1] && grid[x + 1][y + 1]) {
+		ret[8] = grid[x + 1][y + 1].weight;
 	}
 
 	if (backwards) {

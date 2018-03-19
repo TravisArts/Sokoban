@@ -102,6 +102,7 @@ KeyboardInputManager.prototype.listen = function () {
 	this.bindButtonPress(".mute-button", this.toggleMute);
 	this.bindButtonPress(".redo-button", this.redo);
 	this.bindButtonPress(".undo-button", this.undo);
+	this.bindButtonPress(".info-button", this.info)
 	// this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
 	// Respond to swipe events
@@ -109,7 +110,7 @@ KeyboardInputManager.prototype.listen = function () {
 	var gameContainer = document.getElementsByClassName("gameArea")[0];
 
 	gameContainer.addEventListener(this.eventTouchstart, function (event) {
-		console.log(event)
+		// console.log(event)
 		if ((!window.navigator.msPointerEnabled && event.touches.length > 1)
 			|| event.targetTouches.length > 1 || self.targetIsInput(event)) {
 			return; // Ignore if touching with more than 1 finger or touching input
@@ -123,7 +124,7 @@ KeyboardInputManager.prototype.listen = function () {
 
 		// var position = detectCoordinate(touch)
 
-		var position = detectAllCoordinates(touch, touch.radiusX)
+		var position = detectAllCoordinates(touch, touch.radiusX)[0]
 		// var str = "touch radius: " + touch.radiusX
 		// str += "<br>"
 		// str += "piece width: " + pieceWidth
@@ -133,7 +134,6 @@ KeyboardInputManager.prototype.listen = function () {
 		// var pointDown = detectCoordinate({ clientX: touch.clientX, clientY: touch.clientY + radiusY })
 		// var pointLeft = detectCoordinate({ clientX: touch.clientX - radiusX, clientY: touch.clientY })
 		// var pointRight = detectCoordinate({ clientX: touch.clientX + radiusX, clientY: touch.clientY })
-
 
 		var item = theLevel.itemAt(position.x, position.y)
 		if (item != null && (item.value == '$' || item.value == '*')) {
@@ -182,11 +182,18 @@ KeyboardInputManager.prototype.listen = function () {
 		if (grabbing != null) {
 			var position = detectAllCoordinates(event.changedTouches[0], event.changedTouches[0].radiusX, true)
 			// var position = detectCoordinate(event.changedTouches[0])
-			var path = findPush(grabbing, position)
-			if (path.length != 0) {
-				var route = pathToRoute(path)
-				// console.log(route)
-				performMoves(route, 0)
+			var loop = true;
+			var i = 0
+			while (loop && i < position.length) {
+				var path = findPush(grabbing, position[i])
+				if (path.length != 0) {
+					loop = false;
+					var route = pathToRoute(path)
+					// console.log(route)
+					performMoves(route, 0)
+				} else {
+					i += 1;
+				}
 			}
 			grabbing = null
 		} else {
@@ -210,62 +217,46 @@ KeyboardInputManager.prototype.listen = function () {
 				// (right : left) : (down : up)
 				self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
 			} else {
-				var position = detectCoordinate(event.changedTouches[0])
-				var item = theLevel.itemAt(position.x, position.y)
+				var touch = event.changedTouches[0]
+				var positions = detectAllCoordinates(touch, touch.radiusX)
 
-				var route = []
+				var loop = true;
+				var i = 0;
+				while (loop && i < positions.length) {
+					position = positions[i]
+					var item = theLevel.itemAt(position.x, position.y)
 
-				var playerPosition = getPlayerPosition()
+					var path = [];
 
-				if (item == null || item.value == '.') {
-					var sTime = performance ? performance.now() : new Date().getTime();
+					var playerPosition = getPlayerPosition()
 
-					var path = findPath(position, playerPosition)
+					if (item == null || item.value == '.') {
+						var sTime = performance ? performance.now() : new Date().getTime();
+						path = findPath(position, playerPosition)
+						var fTime = performance ? performance.now() : new Date().getTime(),
+							duration = (fTime - sTime).toFixed(2);
 
-					var fTime = performance ? performance.now() : new Date().getTime(),
-						duration = (fTime - sTime).toFixed(2);
-					if (path.length === 0) {
-						pathFindingEvent("move-failed", duration)
-					} else {
-						pathFindingEvent("move", duration)
+						// if (path.length === 0) {
+						// 	pathFindingEvent("move-failed", duration)
+						// } else {
+						// 	pathFindingEvent("move", duration)
+						// }
+
 					}
-
-					route = pathToRoute(path)
-
-				}
-				if (route.length > 0) {
-					performMoves(route, 0)
+					if (path.length > 0) {
+						loop = false;
+						var route = pathToRoute(path)
+						performMoves(route, 0)
+					} else {
+						i += 1;
+					}
 				}
 
 			}
 		}
 	});
 
-	var upBtn = document.getElementById("mvUp");
-	var leftBtn = document.getElementById("mvLeft");
-	var downBtn = document.getElementById("mvDown");
-	var rightBtn = document.getElementById("mvRight");
-
-	upBtn.addEventListener("touchstart", function () { buttonDown("up") });
-	leftBtn.addEventListener("touchstart", function () { buttonDown("left") });
-	downBtn.addEventListener("touchstart", function () { buttonDown("down") });
-	rightBtn.addEventListener("touchstart", function () { buttonDown("right") });
-
-	upBtn.addEventListener("touchend", buttonUp);
-	leftBtn.addEventListener("touchend", buttonUp);
-	downBtn.addEventListener("touchend", buttonUp);
-	rightBtn.addEventListener("touchend", buttonUp);
-
-
-	upBtn.addEventListener("mousedown", function () { buttonDown("up") });
-	leftBtn.addEventListener("mousedown", function () { buttonDown("left") });
-	downBtn.addEventListener("mousedown", function () { buttonDown("down") });
-	rightBtn.addEventListener("mousedown", function () { buttonDown("right") });
-
-	upBtn.addEventListener("mouseup", buttonUp);
-	leftBtn.addEventListener("mouseup", buttonUp);
-	downBtn.addEventListener("mouseup", buttonUp);
-	rightBtn.addEventListener("mouseup", buttonUp);
+	
 
 }
 
@@ -292,6 +283,12 @@ KeyboardInputManager.prototype.undo = function (event) {
 KeyboardInputManager.prototype.redo = function (event) {
 	event.preventDefault()
 	this.emit("redo")
+}
+
+KeyboardInputManager.prototype.info = function (event) {
+	event.preventDefault()
+	var modal = document.getElementById('info-modal');
+	modal.style.display = "block";
 }
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {

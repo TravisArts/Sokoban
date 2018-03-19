@@ -37,14 +37,14 @@
     </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105778471-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105778471-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'UA-105778471-1', { 'site_speed_sample_rate': 100 });
-    </script> -->
+    </script>
 
 
 
@@ -150,8 +150,14 @@
             <div id="console">
             </div>
         </div>
+    </div>
+
+    <div class=navigation-footer>
+        <button class=back onclick="previousLevel() ">
+            <i class="material-icons navigation-button">chevron_left</i>
+        </button>
         <div id="dPad">
-            <button class="move-button" id="mvUp">
+            <!-- <button class="move-button" id="mvUp">
                 <i class="material-icons navigation-button">up_arrow</i>
             </button>
             <br>
@@ -165,14 +171,9 @@
                 <i class="material-icons navigation-button">right_arrow</i>
             </button>
             <br>
-            <br>
+            <br> -->
 
         </div>
-    </div>
-    <div class=navigation-footer>
-        <button class=back onclick="previousLevel() ">
-            <i class="material-icons navigation-button">chevron_left</i>
-        </button>
         <button class=forward onclick="nextLevel() ">
             <i class="material-icons navigation-button">chevron_right</i>
         </button>
