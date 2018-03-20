@@ -3,12 +3,36 @@
 <html lang="en" hreflang="en">
 
 <head>
+
+    <script>
+        var allLevels
+        preload()
+        function preload() {
+            var xmlhttp = new XMLHttpRequest()
+            xmlhttp.open("GET", "./Levels.json", true)
+            xmlhttp.send()
+            
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    allLevels = JSON.parse(this.responseText);
+                    if (document.readyState !== "loading") {
+                        prepareGame();
+                    }
+                    xmlhttp.abort();
+                }
+            }
+
+        }
+        function preloadError(e) { }
+        
+    </script>
+
     <meta charset=utf-8 name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="Style/style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="mask-icon" href="website_icon.svg" color="red">
-    <link rel="preload" href="Levels.json">
-    <link rel "preload" href="buttons">
+    <!-- <link rel="preload" href="Levels.json" as="fetch" type="application/json" onload="preloadFinished(event)"> -->
+    <!-- <link rel="preload" href="buttons"> -->
 
 
     <style>
@@ -30,8 +54,12 @@
             console.log(document.readyState)
             if (document.readyState === "interactive") {
                 //dom is ready, window.onload fires later
-                document.removeEventListener("readystatechange", readyStateDidChange)
-                LoadAllLevels()
+                document.removeEventListener("readystatechange", readyStateDidChange);
+                // LoadAllLevels();
+                if (allLevels != undefined) {
+                    prepareGame();
+                }
+
             }
         }
     </script>

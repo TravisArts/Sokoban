@@ -163,14 +163,14 @@ KeyboardInputManager.prototype.listen = function () {
 		}
 
 		event.preventDefault();
-	});
+	}, {passive: false});
 
 	gameContainer.addEventListener(this.eventTouchmove, function (event) {
 		event.preventDefault();
 		if (grabbing != null) {
 			dragTreasure(event)
 		}
-	});
+	},{passive: false});
 
 	gameContainer.addEventListener(this.eventTouchend, function (event) {
 		if ((!window.navigator.msPointerEnabled && event.touches.length > 0) ||

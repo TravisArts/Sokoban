@@ -156,6 +156,7 @@ function LoadAllLevels() {
     xmlhttp.open("GET", "./Levels.json", true)
     xmlhttp.send()
 
+
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             allLevels = JSON.parse(this.responseText);
