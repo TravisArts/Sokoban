@@ -52,20 +52,6 @@ function prepareGame() {
 }
 
 function doOnOrientationChange() {
-	switch (Math.abs(window.orientation)) {
-		case 90:
-			// alert('landscape');
-			if (!isTablet) {
-				document.getElementById("dPad").innerHTML = ""
-			}
-			break;
-		default:
-			if (!isTablet) {
-				drawNavigation()
-			}
-			// alert('portrait');
-			break;
-	}
 	console.log("rotate")
 	manager.setup()
 }
