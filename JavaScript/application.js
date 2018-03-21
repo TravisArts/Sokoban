@@ -26,21 +26,7 @@ function prepareGame() {
 	window.deviceCheck()
 
 	if (isMobile) {
-
-		switch (Math.abs(window.orientation)) {
-			case 90:
-				// alert('landscape');
-				if (!isTablet) {
-					document.getElementById("dPad").innerHTML = ""
-				}
-				break;
-			default:
-				if (!isTablet) {
-					drawNavigation()
-				}
-				// alert('portrait');
-				break;
-		}
+		drawNavigation()
 	}
 
 	manager = new SokobanManager(KeyboardInputManager, HTMLActuator, LocalStorageManager);
@@ -80,6 +66,7 @@ function doOnOrientationChange() {
 			// alert('portrait');
 			break;
 	}
+	console.log("rotate")
 	manager.setup()
 }
 
@@ -119,7 +106,8 @@ window.deviceCheck = function () {
 
 	isTablet = window.tabletcheck()
 
-	console.log(isTablet)
+	console.log("mobile = " + isMobile)
+	console.log("tablet = " + isTablet)
 
 	console.log(navigator)
 	// console.log("ua: " + navigator.userAgent)
@@ -142,72 +130,8 @@ window.deviceCheck = function () {
 
 function drawNavigation() {
 	console.log("thisIsMobile")
-	// 		< div style= "text-align:center;width:480px;" >
-	// 			<button onclick="moveup()">UP</button> <br><br>
-	// 				<button onclick="moveleft()">LEFT</button>
-	// 				<button onclick="moveright()">RIGHT</button><br><br>
-	// 					<button onclick="movedown()">DOWN</button>
-	//   </div>
 
 	var navigation = document.getElementById("dPad");
-
-	// var navigation = document.createElement("div")
-	var up = document.createElement("button")
-	var down = document.createElement("button")
-	var left = document.createElement("button")
-	var right = document.createElement("button")
-	// navigation.setAttribute("style", "text-align:center;width:480px;bottom: 10px;position: absolute;")
-	up.className = "move-button"
-	up.id = "mvUp"
-	up.innerHTML = '<i class="material-icons navigation-button">up_arrow</i>';
-
-	left.className = "move-button"
-	left.id = "mvLeft"
-	left.innerHTML = '<i class="material-icons navigation-button">left_arrow</i>';
-
-	down.className = "move-button"
-	down.id = "mvDown"
-	down.innerHTML = '<i class="material-icons navigation-button">down_arrow</i>';
-
-	right.className = "move-button"
-	right.id = "mvRight"
-	right.innerHTML = '<i class="material-icons navigation-button">right_arrow</i>';
-
-	console.log(up.attributes);
-
-	// up.setAttribute("onclick", "manager.move(0)")
-	// down.setAttribute("onclick", "manager.move(2)")
-	// left.setAttribute("onclick", "manager.move(3)")
-	// right.setAttribute("onclick", "manager.move(1)")
-
-	// <button class="move-button" id="mvUp">
-	//     <i class="material-icons navigation-button">up_arrow</i>
-	// </button>
-	// <br>
-	// <button class="move-button" id="mvLeft">
-	//     <i class="material-icons navigation-button">left_arrow</i>
-	// </button>
-	// <button class="move-button" id="mvDown">
-	//     <i class="material-icons navigation-button">down_arrow</i>
-	// </button>
-	// <button class="move-button" id="mvRight">
-	//     <i class="material-icons navigation-button">right_arrow</i>
-	// </button>
-	// <br>
-	// <br>
-
-
-	// up.innerText = "⇧"
-	// down.innerText = "⇩"
-	// left.innerText = "⇦"
-	// right.innerText = "⇨"
-	navigation.appendChild(up)
-	navigation.innerHTML += "<br>"
-	navigation.appendChild(left)
-	navigation.appendChild(down)
-	navigation.appendChild(right)
-	// navigation.innerHTML += "<br><br>"
-	// document.body.appendChild(navigation)
 
 	var upBtn = document.getElementById("mvUp");
 	var leftBtn = document.getElementById("mvLeft");
@@ -223,18 +147,6 @@ function drawNavigation() {
 	leftBtn.addEventListener("touchend", buttonUp);
 	downBtn.addEventListener("touchend", buttonUp);
 	rightBtn.addEventListener("touchend", buttonUp);
-
-
-	// upBtn.addEventListener("mousedown", function () { buttonDown("up") });
-	// leftBtn.addEventListener("mousedown", function () { buttonDown("left") });
-	// downBtn.addEventListener("mousedown", function () { buttonDown("down") });
-	// rightBtn.addEventListener("mousedown", function () { buttonDown("right") });
-
-	// upBtn.addEventListener("mouseup", buttonUp);
-	// leftBtn.addEventListener("mouseup", buttonUp);
-	// downBtn.addEventListener("mouseup", buttonUp);
-	// rightBtn.addEventListener("mouseup", buttonUp);
-
 }
 
 

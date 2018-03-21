@@ -385,6 +385,7 @@ SokobanManager.prototype.actuate = function (shouldSave) {
 
     }
 
+    console.log(screen)
 };
 
 SokobanManager.prototype.toggleMute = function () {
