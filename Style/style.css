@@ -654,20 +654,6 @@ button,
     /* font-size:100px; */
 }
 
-#dPad {
-    text-align: center;
-    /* width: 480px; */
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: 0px auto;
-    width: fit-content;
-    height: fit-content;
-    z-index: 10;
-    display: block;
-}
-
 .move-button {
     margin: 5px;
     padding: 10px;
@@ -869,3 +855,54 @@ p [piece]::before {
         display: initial;
     }
 }
+
+
+.unavailable {
+    
+}
+@media (hover: none) and (orientation: portrait) {
+    /* body {
+        background: black;
+    } */
+    #dPad {
+        text-align: center;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0px auto;
+        width: fit-content;
+        height: fit-content;
+        z-index: 10;
+        display: block;
+    }
+}
+
+@media (hover: hover), (orientation: landscape) {
+    #dPad {
+        text-align: center;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0px auto;
+        width: fit-content;
+        height: fit-content;
+        z-index: 10;
+        display: none;
+    }
+}
+
+/* #dPad {
+    text-align: center;
+    /* width: 480px; */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0px auto;
+    width: fit-content;
+    height: fit-content;
+    z-index: 10;
+    display: none;
+} */
