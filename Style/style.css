@@ -485,6 +485,29 @@ button,
 
 .GameBoard {
     /* cursor: crosshair; */
+    animation-iteration-count: infinite;
+}
+
+.GameBoard:hover {
+    /* Start the shake animation and make the animation last for 0.5 seconds */
+    /* animation: shake 0.5s;  */
+    /* When the animation is finished, start again */
+    /* animation-iteration-count: infinite;  */
+}
+
+@keyframes shake {
+    20% {
+        transform: translate3d(-2px, 0, 0);
+    }
+    40% {
+        transform: translate3d(4px, 0, 0);
+    }
+    60% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
 }
 
 [piece="$"],

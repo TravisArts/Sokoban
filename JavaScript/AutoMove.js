@@ -10,9 +10,6 @@ var grabbing = null
 
 function mouseDown(e) {
 	var position = detectCoordinate(e)
-	console.log(position)
-	// position = detectAllCoordinates(e, 30)
-
 
 	var item = theLevel.itemAt(position.x, position.y)
 
@@ -29,6 +26,8 @@ function mouseDown(e) {
 				duration = (fTime - sTime).toFixed(2);
 			if (path.length === 0) {
 				pathFindingEvent("move-failed", duration)
+				animateNoPath()
+
 			} else {
 				pathFindingEvent("move", duration)
 			}
@@ -114,6 +113,18 @@ function dragTreasure(e) {
 	// wrapper.style.fontSize = document.getElementById("GameBoard")[0].style.fontSize
 
 }
+
+
+animateNoPath = function () {
+	var board = document.getElementsByClassName('GameBoard')[0]
+	
+	var time = 410
+	board.style.animation = "shake " + time + "ms cubic-bezier(0.36,0.07,0.19,0.97) both"
+	setTimeout(function () {
+		board.style.animation = ""
+	}, time);
+
+};
 
 
 function reverseRoute(route) {

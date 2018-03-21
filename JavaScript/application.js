@@ -10,6 +10,7 @@ var isMobile = false
 var isTablet = false
 
 function prepareGame() {
+
 	console.log("preparing game at " + (performance ? performance.now() : new Date().getTime()))
 	let qVar = getQueryVariable("level")
 	let last = getCookie("level")
