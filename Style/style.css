@@ -364,7 +364,6 @@ button:disabled {
 
 .button-space {
     float: right;
-    border: 1px solid black;
     margin-bottom: 10px;
     padding: 0;
 }
