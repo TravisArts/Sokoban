@@ -363,19 +363,23 @@ button:disabled {
 }
 
 .button-space {
-    height: 40px;
+    float: right;
+    border: 1px solid black;
     margin-bottom: 10px;
+    padding: 0;
 }
 
 .GameBoard {
-    -webkit-user-select: none;
-    /* Chrome/Safari */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* IE10+ */
     margin-top: 20px;
     height: fit-content;
+    user-select: none;
+    /* Chrome/Safari */
+    -webkit-user-select: none;
+    /* Firefox */
+    -moz-user-select: none;
+    /* IE10+ */
+    -ms-user-select: none;
+    
 }
 
 .gameArea {
@@ -433,8 +437,7 @@ button:disabled {
     /* cursor: pointer; */
 }
 
-button,
-.restart-button {
+button {
     /* display: inline-block; */
     background: #3333CC;
     border-radius: 3px;
@@ -456,12 +459,16 @@ button,
     padding: 0px 10px;
     text-decoration: none;
     height: 40px;
+    /* width: 40px; */
     line-height: 42px;
     cursor: pointer;
     display: block;
     text-align: center;
-    float: right;
+    float: left;
     color: #CCCCFF;
+
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .material-icons {
@@ -471,11 +478,6 @@ button,
     /* size: 20px 20px; */
     /* margin: auto; */
     
-}
-
-.button {
-    margin-left: 10px;
-    margin-bottom: 10px;
 }
 
 .piece {
@@ -619,6 +621,7 @@ button,
     width: 100%;
     bottom: 0;
     z-index: 0;
+    display: inline-block;
     /* background-color: #000000; */
     /* opacity: 0.5; */
     /* background-color: #3CC; */
@@ -640,13 +643,12 @@ button,
     height: 30px;
     width: 30px;
     overflow: hidden;
-    /* margin: 5px; */
     position: static;
     margin: 8px;
     z-index: 10;
     cursor: pointer;
     text-align: center;
-    vertical-align: center;
+    vertical-align: middle;
     /* padding: -0.5em; */
 }
 
@@ -889,7 +891,6 @@ p [piece]::before {
 
 @media (hover: none) and (orientation: landscape) and (max-height: 520px) {
     .button-space {
-        float: right;
         width: 40px;
         margin-bottom: 10px;
     }    

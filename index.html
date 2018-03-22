@@ -11,7 +11,7 @@
             var xmlhttp = new XMLHttpRequest()
             xmlhttp.open("GET", "./Levels.json", true)
             xmlhttp.send()
-            
+
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     allLevels = JSON.parse(this.responseText);
@@ -24,7 +24,7 @@
 
         }
         function preloadError(e) { }
-        
+
     </script>
 
     <meta charset=utf-8 name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
@@ -138,21 +138,23 @@
     <!--style="overflow: hidden;max-width: 3ch;overflow-wrap: break-word;"-->
     <!--<p id="demo">the solution goes here</p>-->
     <div class=gameArea>
-        <div class=button-space>
-            <div class="button restart-button ">
-                <i id=restart-icon class="material-icons ">restart</i>
-            </div>
-            <div class="button mute-button ">
-                <i id=mute-icon class="material-icons ">volume_up</i>
-            </div>
-            <div class="button redo-button ">
-                <i id=redo-icon class="material-icons ">redo</i>
-            </div>
-            <div class="button undo-button ">
-                <i id=undo-icon class="material-icons ">undo</i>
-            </div>
-            <div class="button info-button">
-                <i id=info-icon class="material-icons ">info_outline</i>
+        <div style="display: inline-block; width: 100%">
+            <div class=button-space>
+                <div class="button info-button">
+                    <i id=info-icon class="material-icons ">info_outline</i>
+                </div>
+                <div class="button undo-button ">
+                    <i id=undo-icon class="material-icons ">undo</i>
+                </div>
+                <div class="button redo-button ">
+                    <i id=redo-icon class="material-icons ">redo</i>
+                </div>
+                <div class="button mute-button ">
+                    <i id=mute-icon class="material-icons ">volume_up</i>
+                </div>
+                <div class="button restart-button ">
+                    <i id=restart-icon class="material-icons ">restart</i>
+                </div>
             </div>
         </div>
 
