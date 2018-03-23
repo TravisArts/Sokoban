@@ -138,7 +138,7 @@
     <!--style="overflow: hidden;max-width: 3ch;overflow-wrap: break-word;"-->
     <!--<p id="demo">the solution goes here</p>-->
     <div class=gameArea>
-        <div style="display: inline-block; width: 100%">
+        <div id="block-block" style="display: inline-block; width: 100%">
             <div class=button-space>
                 <div class="button info-button">
                     <i id=info-icon class="material-icons ">info_outline</i>
@@ -158,26 +158,27 @@
             </div>
         </div>
 
-        <div id="main " class=GameBoard onmousedown="mouseDown(event) " onmousemove="mouseMove(event) " onmouseup="mouseUp(event) ">
-            <canvas id="circle" width="500" margin="0" style="position:absolute;">
-            </canvas>
-            <p id="GameBoard "></p>
-            <div class="GameSpace "></div>
-            <div class="WallSpace "></div>
-        </div>
-        <div class="stats" id=score-space>
-            <div class="block1 ">
-                moves:
-                <span class="moves ">0</span> pushes:
-                <span class="pushes ">0</span> saved:
-                <span class="saved ">0</span>
+        <div id="stationary">
+            <div id="main " class=GameBoard onmousedown="mouseDown(event) " onmousemove="mouseMove(event) " onmouseup="mouseUp(event) ">
+                <!-- <canvas id="circle" width="500" margin="0" style="position:absolute;"> -->
+                </canvas>
+                <p id="GameBoard "></p>
+                <div class="GameSpace "></div>
+                <div class="WallSpace "></div>
             </div>
-            <div class="block2 ">
-                Best:
-                <span class="best-moves ">0</span> moves,
-                <span class="best-pushes ">0</span> pushes
-            </div>
-            <div id="console">
+            <div class="stats" id=score-space>
+                <div class="block1 ">moves:
+                    <span class="moves ">0</span> pushes:
+                    <span class="pushes ">0</span> saved:
+                    <span class="saved ">0</span>
+                </div>
+                <div class="block2 ">
+                    Best:
+                    <span class="best-moves ">0</span> moves,
+                    <span class="best-pushes ">0</span> pushes
+                </div>
+                <div id="console">
+                </div>
             </div>
         </div>
     </div>

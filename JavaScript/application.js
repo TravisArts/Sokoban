@@ -124,10 +124,10 @@ function drawNavigation() {
 	var downBtn = document.getElementById("mvDown");
 	var rightBtn = document.getElementById("mvRight");
 
-	upBtn.addEventListener("touchstart", function () { buttonDown("up") });
-	leftBtn.addEventListener("touchstart", function () { buttonDown("left") });
-	downBtn.addEventListener("touchstart", function () { buttonDown("down") });
-	rightBtn.addEventListener("touchstart", function () { buttonDown("right") });
+	upBtn.addEventListener("touchstart", function () { buttonDown("up") }, {passive: true});
+	leftBtn.addEventListener("touchstart", function () { buttonDown("left") }, {passive: true});
+	downBtn.addEventListener("touchstart", function () { buttonDown("down") }, {passive: true});
+	rightBtn.addEventListener("touchstart", function () { buttonDown("right") }, {passive: true});
 
 	upBtn.addEventListener("touchend", buttonUp);
 	leftBtn.addEventListener("touchend", buttonUp);

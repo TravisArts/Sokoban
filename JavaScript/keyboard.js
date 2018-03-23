@@ -179,15 +179,16 @@ KeyboardInputManager.prototype.listen = function () {
 			return; // Ignore if still touching with one or more fingers or input
 		}
 
+		var performedMove = false;
+
 		if (grabbing != null) {
-			var position = detectAllCoordinates(event.changedTouches[0], event.changedTouches[0].radiusX, true)
+			var positions = detectAllCoordinates(event.changedTouches[0], event.changedTouches[0].radiusX, true)
 			// var position = detectCoordinate(event.changedTouches[0])
-			var loop = true;
 			var i = 0
-			while (loop && i < position.length) {
-				var path = findPush(grabbing, position[i])
+			while (!performedMove && i < positions.length) {
+				var path = findPush(grabbing, positions[i])
 				if (path.length != 0) {
-					loop = false;
+					performedMove = true;
 					var route = pathToRoute(path)
 					// console.log(route)
 					performMoves(route, 0)
@@ -216,13 +217,13 @@ KeyboardInputManager.prototype.listen = function () {
 			if (Math.max(absDx, absDy) > 10) {
 				// (right : left) : (down : up)
 				self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+				performedMoved = true;
 			} else {
 				var touch = event.changedTouches[0]
 				var positions = detectAllCoordinates(touch, touch.radiusX)
 
-				var loop = true;
 				var i = 0;
-				while (loop && i < positions.length) {
+				while (!performedMove && i < positions.length) {
 					position = positions[i]
 					var item = theLevel.itemAt(position.x, position.y)
 
@@ -244,7 +245,7 @@ KeyboardInputManager.prototype.listen = function () {
 
 					}
 					if (path.length > 0) {
-						loop = false;
+						performedMove = true;
 						var route = pathToRoute(path)
 						performMoves(route, 0)
 					} else {
@@ -254,10 +255,12 @@ KeyboardInputManager.prototype.listen = function () {
 
 			}
 		}
+		if (performedMove == false) {
+			animateNoPath()
+		}
+		console.log(performedMove)
+
 	});
-
-	
-
 }
 
 KeyboardInputManager.prototype.restart = function (event) {
