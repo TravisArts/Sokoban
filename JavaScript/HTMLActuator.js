@@ -72,7 +72,7 @@ HTMLActuator.prototype.updateSaved = function (saved) {
 
 HTMLActuator.prototype.positionClass = function (position) {
     // position = this.normalizePosition(position)
-    return "piece-position-" + position.x + "-" + position.y
+    return " x-" + position.x + " y-" + position.y
 };
 
 HTMLActuator.prototype.applyClasses = function (element, classes) {

@@ -279,7 +279,7 @@ button:disabled {
     font-variant: normal;
     text-transform: none;
     text-align: left;
-    position: absolute;
+    position: relative;
 }
 
 .soko-room span {

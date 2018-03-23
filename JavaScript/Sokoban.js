@@ -26,6 +26,7 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
 }
 
 SokobanManager.prototype.setup = function () {
+	var sTime = performance ? performance.now() : new Date().getTime();
 
     history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
     setCookie("level", levelNumber)
@@ -101,6 +102,10 @@ SokobanManager.prototype.setup = function () {
     this.actuator.actuateWalls(theLevel)
     this.actuate(true)
 
+    var fTime = performance ? performance.now() : new Date().getTime(),
+        duration = (fTime - sTime).toFixed(2);
+
+    console.log(duration)
     // if (isMobile) {
     //     drawNavigation()
     // }
@@ -166,18 +171,13 @@ SokobanManager.prototype.setStyles = function () {
     var styleString = '.drag {' + size + '}'
     styleString += '.GameBoard {' + size + heightStr + widthStr + '}'
 
-
     for (var x = 0; x < theLevel.columns; x++) {
-        var valueX = pieceWidth * x
-        for (var y = 0; y < theLevel.rows; y++) {
-            var selector = ".piece-position-" + x + "-" + y
-            var valueY = pieceWidth * (y + 0.5)
-
-            styleString += selector + '{transform: translate(' + valueX + 'px, ' + valueY + 'px);}'
-            // styleString += ' -webkit-transform: translate(' + valueX + 'px, ' + valueY + 'px);'
-            // styleString += ' -moz-transform: translate(' + valueX + 'px, ' + valueY + 'px)}'
-        }
+        styleString += '.x-' + x + '{left: ' + (pieceWidth * x) + 'px;}'
     }
+    for (var y = 0; y < theLevel.rows; y++) {
+        styleString += '.y-' + y + '{top: ' + (pieceWidth * (y + 0.5)) + 'px;}'
+    }
+
     style.innerText = styleString
 }
 
