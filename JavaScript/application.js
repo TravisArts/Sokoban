@@ -53,7 +53,8 @@ function prepareGame() {
 
 function doOnOrientationChange() {
 	console.log("rotate")
-	manager.setup()
+	// manager.setup()
+	manager.setStyles()
 }
 
 var resizeTimer

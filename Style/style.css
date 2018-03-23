@@ -828,8 +828,8 @@ p [piece]::before {
         /* margin: 0 auto; */
     }
     .GameBoard {
-        margin-top: 17px;
-        padding: 10px;
+        /* margin-top: 17px;
+        padding: 10px; */
     }
     .desktop {
         display: none;

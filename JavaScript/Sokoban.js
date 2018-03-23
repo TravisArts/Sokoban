@@ -133,7 +133,7 @@ SokobanManager.prototype.setStyles = function () {
     var availableWidth
     if (dPad.offsetParent === null) {
         if (isMobile) {
-            usedHeight = topnav.offsetHeight + stats.offsetHeight + footer.offsetHeight
+            usedHeight = topnav.offsetHeight + stats.offsetHeight
             availableWidth = window.innerWidth - 100
 
         } else {

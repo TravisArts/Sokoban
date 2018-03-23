@@ -107,8 +107,8 @@ KeyboardInputManager.prototype.listen = function () {
 
 	// Respond to swipe events
 	var touchStartClientX, touchStartClientY;
-	var gameContainer = document.getElementsByClassName("gameArea")[0];
-
+	var gameContainer = document.getElementsByClassName("GameBoard")[0];
+	
 	gameContainer.addEventListener(this.eventTouchstart, function (event) {
 		// console.log(event)
 		if ((!window.navigator.msPointerEnabled && event.touches.length > 1)
@@ -184,6 +184,7 @@ KeyboardInputManager.prototype.listen = function () {
 		if (grabbing != null) {
 			var positions = detectAllCoordinates(event.changedTouches[0], event.changedTouches[0].radiusX, true)
 			// var position = detectCoordinate(event.changedTouches[0])
+			console.log(positions)
 			var i = 0
 			while (!performedMove && i < positions.length) {
 				var path = findPush(grabbing, positions[i])
