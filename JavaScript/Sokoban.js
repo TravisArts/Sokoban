@@ -126,24 +126,45 @@ SokobanManager.prototype.setStyles = function () {
     var buttons = document.getElementsByClassName("button-space")[0]
     var stats = document.getElementsByClassName("stats")[0]
     var dPad = document.getElementById("dPad")
+    var footer = document.getElementsByClassName("navigation-footer")[0]
+    
+    console.log(isMobile)
+    var usedHeight
+    var availableWidth
+    if (dPad.offsetParent === null) {
+        if (isMobile) {
+            usedHeight = topnav.offsetHeight + stats.offsetHeight + footer.offsetHeight
+            availableWidth = window.innerWidth - 100
 
+        } else {
+            usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + footer.offsetHeight
+            availableWidth = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect().width
+        }
+    } else {
+        usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + dPad.offsetHeight
+        availableWidth = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect().width
 
-    var usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + dPad.offsetHeight
-    var availableHeight = window.innerHeight /*document.getElementsByClassName("gameArea")[0].offsetHeight*/ - usedHeight - 45
-    var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
+    }
+
+    // console.log(topnav.offsetHeight + ", " + buttons.offsetHeight + ", " + stats.offsetHeight + ", " + dPad.offsetHeight)
+    // console.log(topnav.getBoundingClientRect().height + ", " + buttons.getBoundingClientRect().height + ", " + stats.getBoundingClientRect().height + ", " + dPad.getBoundingClientRect().height)
+    // usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + dPad.offsetHeight
+    var availableHeight = window.innerHeight - usedHeight - 45
+
     // console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
     var height = availableHeight / (theLevel.rows)
-    var width = rect.width / (theLevel.columns)
+    var width = availableWidth / (theLevel.columns)
 
     console.log("width: " + width + " height: " + height)
 
     pieceWidth = (width < height) ? width : height
 
     var size = 'font-size:' + (pieceWidth + 1) + 'px;'
-    var height = 'height:' + pieceWidth * theLevel.rows + 'px;'
+    var heightStr = 'height:' + pieceWidth * theLevel.rows + 'px;'
+    var widthStr = 'width:' + pieceWidth * theLevel.columns + 'px;'
 
     var styleString = '.drag {' + size + '}'
-    styleString += '.GameBoard {' + size + height + '}'
+    styleString += '.GameBoard {' + size + heightStr + widthStr + '}'
 
 
     for (var x = 0; x < theLevel.columns; x++) {
@@ -384,8 +405,17 @@ SokobanManager.prototype.actuate = function (shouldSave) {
 
 
     }
+    if (this.pastStates.length == 1) {
+        document.querySelector(".undo-button").classList.add("unavailable")
+    } else if (this.pastStates.length == 2) {
+        document.querySelector(".undo-button").classList.remove("unavailable")
+    }
 
-    console.log(screen)
+    if (this.nextStates.length == 0) {
+        document.querySelector(".redo-button").classList.add("unavailable")
+    } else if (this.nextStates.length == 1) {
+        document.querySelector(".redo-button").classList.remove("unavailable")
+    }
 };
 
 SokobanManager.prototype.toggleMute = function () {
