@@ -132,6 +132,7 @@ SokobanManager.prototype.setStyles = function () {
     var stats = document.getElementsByClassName("stats")[0]
     var dPad = document.getElementById("dPad")
     var footer = document.getElementsByClassName("navigation-footer")[0]
+    var gameArea = document.getElementsByClassName("gameArea")[0]
     
     console.log(isMobile)
     var usedHeight
@@ -143,11 +144,11 @@ SokobanManager.prototype.setStyles = function () {
 
         } else {
             usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + footer.offsetHeight
-            availableWidth = gameBoard.getBoundingClientRect().width
+            availableWidth = gameArea.getBoundingClientRect().width
         }
     } else {
         usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + dPad.offsetHeight
-        availableWidth = gameBoard.getBoundingClientRect().width
+        availableWidth = gameArea.getBoundingClientRect().width
 
     }
 
@@ -159,8 +160,9 @@ SokobanManager.prototype.setStyles = function () {
     // console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
     var height = availableHeight / (theLevel.rows)
     var width = availableWidth / (theLevel.columns)
-
-    console.log("width: " + width + " height: " + height)
+    console.log("dPad.offsetParent = " + (dPad.offsetParent === null))
+    console.log("width: " + availableWidth + ", height: " + availableHeight)
+    console.log("width: " + width.toFixed(2) + " height: " + height.toFixed(2))
 
     pieceWidth = (width < height) ? width : height
 

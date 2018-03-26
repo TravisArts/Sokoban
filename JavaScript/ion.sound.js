@@ -522,7 +522,8 @@
             this.source.buffer = this.buffer;
             this.source.connect(this.gain);
             this.gain.connect(audio.destination);
-            this.gain.gain.value = this.volume;
+            // this.gain.gain.value = this.volume;
+            this.gain.gain.setTargetAtTime(this.volume, audio.currentTime, 0)
 
             this.source.onended = this.ended.bind(this);
 

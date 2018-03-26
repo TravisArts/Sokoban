@@ -56,12 +56,39 @@ function prepareGame() {
 function doOnOrientationChange() {
 	console.log("rotate")
 	// manager.setup()
-	manager.setStyles()
+	var width = window.innerWidth
+	var height = window.innerHeight
+
+    console.log("width: " + width.toFixed(2) + " height: " + height.toFixed(2))
+	console.log(document.getElementById("dPad").offsetParent)
+	var time = new Date().getTime()
+	
+	// while ((new Date().getTime() - time < 200) && width == window.innerWidth && height == window.innerHeight) {
+	// 	// console.log("width: " + window.innerWidth.toFixed(2) + " height: " + window.innerHeight.toFixed(2))
+	// 	console.log(" ")
+	// }
+	var start = null
+	var wait = function(timestamp) {
+		if (!start) start = timestamp;
+		var progress = timestamp - start;
+		if (progress<100) {
+			// console.log(progress)
+			manager.setStyles()
+			window.requestAnimationFrame(wait)
+		}
+	}
+	window.requestAnimationFrame(wait);
+
+
+	// setTimeout(function () {
+	// 	manager.setStyles()
+	// }, 200)
 }
 
 var resizeTimer
 function windowDidResize(e) {
 	clearTimeout(resizeTimer)
+	console.log("hi")
 	resizeTimer = setTimeout(function () {
 		// run code here, resizing has "stopped"
 	}, 250)
@@ -127,10 +154,10 @@ function drawNavigation() {
 	var downBtn = document.getElementById("mvDown");
 	var rightBtn = document.getElementById("mvRight");
 
-	upBtn.addEventListener("touchstart", function () { buttonDown("up") }, {passive: true});
-	leftBtn.addEventListener("touchstart", function () { buttonDown("left") }, {passive: true});
-	downBtn.addEventListener("touchstart", function () { buttonDown("down") }, {passive: true});
-	rightBtn.addEventListener("touchstart", function () { buttonDown("right") }, {passive: true});
+	upBtn.addEventListener("touchstart", function () { buttonDown("up") }, { passive: true });
+	leftBtn.addEventListener("touchstart", function () { buttonDown("left") }, { passive: true });
+	downBtn.addEventListener("touchstart", function () { buttonDown("down") }, { passive: true });
+	rightBtn.addEventListener("touchstart", function () { buttonDown("right") }, { passive: true });
 
 	upBtn.addEventListener("touchend", buttonUp);
 	leftBtn.addEventListener("touchend", buttonUp);
