@@ -110,18 +110,16 @@ function dragTreasure(e) {
 	// wrapper.style.OTransform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px) translate(-50%, 0)'
 	// wrapper.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px) translate(-50%, 0)'
 
-	// wrapper.style.fontSize = document.getElementById("GameBoard")[0].style.fontSize
+	// wrapper.style.fontSize = gameBoard.style.fontSize
 
 }
 
 
-animateNoPath = function () {
-	var board = document.getElementsByClassName('GameBoard')[0]
-	
+animateNoPath = function () {	
 	var time = 410
-	board.style.animation = "shake " + time + "ms cubic-bezier(0.36,0.07,0.19,0.97) both"
+	gameBoard.style.animation = "shake " + time + "ms cubic-bezier(0.36,0.07,0.19,0.97) both"
 	setTimeout(function () {
-		board.style.animation = ""
+		gameBoard.style.animation = ""
 	}, time);
 
 };
@@ -148,11 +146,11 @@ function reverseOrder(route) {
 }
 
 function setCursor(type) {
-	document.getElementsByClassName('GameBoard')[0].style.cursor = type
+	gameBoard.style.cursor = type
 }
 
 function detectCoordinate(e) {
-	var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
+	var rect = gameBoard.getBoundingClientRect()
 	var x = Math.floor((e.clientX - rect.left) / pieceWidth)
 	var y = Math.floor((e.clientY - rect.top) / pieceWidth)
 
@@ -178,11 +176,12 @@ function drawCircle(X, Y, R) {
 }
 
 function detectAllCoordinates(e, r, backwards) {
-	var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
+	var rect = gameBoard.getBoundingClientRect()
 	var cx = e.clientX - rect.left
 	var cy = e.clientY - rect.top
-
-	if (cx < 0 || cy < 0) {
+	// console.log("{cx,cy}: {" + cx + ", " + cy + "}")
+	if (cx < 0 || cy < 0 || cx > rect.width || cy > rect.height) {
+		console.log("out of bounds")
 		return [{ x: 0, y: 0 }];
 	}
 
@@ -198,6 +197,7 @@ function detectAllCoordinates(e, r, backwards) {
 	// console.log(column + " " + row)
 
 	if (column >= theLevel.columns || row >= theLevel.rows) {
+		console.log("out of bounds")
 		return [{ x: 0, y: 0 }]
 	}
 
@@ -206,11 +206,6 @@ function detectAllCoordinates(e, r, backwards) {
 	var p0 = { x: x - pieceWidth, y: y - pieceWidth, w: arr[0] }; var p1 = { x: x, y: y - pieceWidth, w: arr[1] }; var p2 = { x: x + pieceWidth, y: y - pieceWidth, w: arr[2] }
 	var p3 = { x: x - pieceWidth, y: y, w: arr[3] }; var p4 = { x: x, y: y, w: arr[4] }; var p5 = { x: x + pieceWidth, y: y, w: arr[5] }
 	var p6 = { x: x - pieceWidth, y: y + pieceWidth, w: arr[6] }; var p7 = { x: x, y: y + pieceWidth, w: arr[7] }; var p8 = { x: x + pieceWidth, y: y + pieceWidth, w: arr[8] }
-
-	// OverlapSorter(x, y, cr)
-
-	// var p1 = [x, y, 1, ]
-
 
 	var p = [p0, p1, p2, p3, p4, p5, p6, p7, p8]
 
@@ -243,6 +238,11 @@ function detectAllCoordinates(e, r, backwards) {
 	}
 
 	// var result = { x: Math.floor(best.x / pieceWidth), y: Math.floor(best.y / pieceWidth) }
+	// console.log(result)
+
+	result = result.length ? result : [{ x: 0, y: 0 }]
+
+	// console.log((result.length ? "true?" : "false?"))
 	// console.log(result)
 
 	return result//{ x: best.x, y: best.y }
@@ -1162,31 +1162,3 @@ function pathFindingEvent(action, value) {
 	// 	'value': value
 	// });
 }
-
-
-
-
-
-
-
-// function animateNoPath() {
-//     var graph = document.querySelector(".GameBoard")
-//     var jiggle = function (lim, i) {
-//         if (i >= lim) {
-// 			// graph.removeAttribute("top");
-// 			// graph.removeAttribute("left");
-// 			return;
-// 		}
-// 		console.log("jiggle")
-//         if (!i) i = 0;
-// 		i++;
-// 		graph.setAttribute("top", Math.random() * 30);
-// 		graph.setAttribute("left", Math.random() * 30);
-//         // graph.css("top", Math.random() * 6).css("left", Math.random() * 6);
-//         setTimeout(function () {
-//             jiggle(lim, i);
-//         }, 5);
-// 	};
-// 	console.log("animate path")
-//     jiggle(15);
-// };

@@ -1,5 +1,6 @@
 
 var manager
+var gameBoard
 
 // Wait till the browser is ready to render the game (avoids glitches)
 window.requestAnimationFrame(function () {
@@ -29,6 +30,8 @@ function prepareGame() {
 		drawNavigation()
 	}
 
+	gameBoard = document.getElementsByClassName('GameBoard')[0]
+
 	manager = new SokobanManager(KeyboardInputManager, HTMLActuator, LocalStorageManager);
 
 	console.log("manager is ready")
@@ -46,7 +49,6 @@ function prepareGame() {
 	// 		ga("send", "event", "notice", "closed");
 	// 	});
 	// }
-
 
 	setupInfo()
 }

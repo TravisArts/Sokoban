@@ -107,8 +107,8 @@ KeyboardInputManager.prototype.listen = function () {
 
 	// Respond to swipe events
 	var touchStartClientX, touchStartClientY;
-	var gameContainer = document.getElementsByClassName("GameBoard")[0];
-	
+	var gameContainer = document.getElementsByClassName("gameArea")[0];
+
 	gameContainer.addEventListener(this.eventTouchstart, function (event) {
 		// console.log(event)
 		if ((!window.navigator.msPointerEnabled && event.touches.length > 1)
@@ -119,7 +119,7 @@ KeyboardInputManager.prototype.listen = function () {
 		var touch = event.touches[0]
 		// var radiusX = touch.radiusX
 		// var radiusY = touch.radiusY
-		// var rect = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect()
+		// var rect = gameBoard.getBoundingClientRect()
 		// var point = { clientX: touch.clientX - rect.left, clientY: touch.clientY - rect.top }
 
 		// var position = detectCoordinate(touch)
@@ -163,14 +163,14 @@ KeyboardInputManager.prototype.listen = function () {
 		}
 
 		event.preventDefault();
-	}, {passive: false});
+	}, { passive: false });
 
 	gameContainer.addEventListener(this.eventTouchmove, function (event) {
 		event.preventDefault();
 		if (grabbing != null) {
 			dragTreasure(event)
 		}
-	},{passive: false});
+	}, { passive: false });
 
 	gameContainer.addEventListener(this.eventTouchend, function (event) {
 		if ((!window.navigator.msPointerEnabled && event.touches.length > 0) ||
@@ -181,9 +181,11 @@ KeyboardInputManager.prototype.listen = function () {
 
 		var performedMove = false;
 
+		var touch = event.changedTouches[0]
+
 		if (grabbing != null) {
-			var positions = detectAllCoordinates(event.changedTouches[0], event.changedTouches[0].radiusX, true)
-			// var position = detectCoordinate(event.changedTouches[0])
+			var positions = detectAllCoordinates(touch, touch.radiusX, true)
+			// var position = detectCoordinate(touch)
 			console.log(positions)
 			var i = 0
 			while (!performedMove && i < positions.length) {
@@ -205,8 +207,8 @@ KeyboardInputManager.prototype.listen = function () {
 				touchEndClientX = event.pageX;
 				touchEndClientY = event.pageY;
 			} else {
-				touchEndClientX = event.changedTouches[0].clientX;
-				touchEndClientY = event.changedTouches[0].clientY;
+				touchEndClientX = touch.clientX;
+				touchEndClientY = touch.clientY;
 			}
 
 			var dx = touchEndClientX - touchStartClientX;
@@ -218,9 +220,8 @@ KeyboardInputManager.prototype.listen = function () {
 			if (Math.max(absDx, absDy) > 10) {
 				// (right : left) : (down : up)
 				self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
-				performedMoved = true;
+				performedMove = true;
 			} else {
-				var touch = event.changedTouches[0]
 				var positions = detectAllCoordinates(touch, touch.radiusX)
 
 				var i = 0;
@@ -256,11 +257,12 @@ KeyboardInputManager.prototype.listen = function () {
 
 			}
 		}
+		
 		if (performedMove == false) {
-			animateNoPath()
+			if (event.target.className == "GameBoard") {
+				animateNoPath()
+			}
 		}
-		console.log(performedMove)
-
 	});
 }
 

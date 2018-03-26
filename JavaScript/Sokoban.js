@@ -143,11 +143,11 @@ SokobanManager.prototype.setStyles = function () {
 
         } else {
             usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + footer.offsetHeight
-            availableWidth = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect().width
+            availableWidth = gameBoard.getBoundingClientRect().width
         }
     } else {
         usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + dPad.offsetHeight
-        availableWidth = document.getElementsByClassName('GameBoard')[0].getBoundingClientRect().width
+        availableWidth = gameBoard.getBoundingClientRect().width
 
     }
 
