@@ -33,31 +33,31 @@ function loadSubMenu(type) {
     var startNum, endNum = 0
 
     switch (type) {
-        case "Original Levels":
+        case "Original Levels":     // 49 levels
             startNum = 201
             endNum = 250
             break;
-        case "Boxxle":
+        case "Boxxle":              // 165 levels
             startNum = 480
             endNum = 645
             break;
-        case "Dimitri & Yorick":
+        case "Dimitri & Yorick":    //  60 levels
             startNum = 651
             endNum = 711
             break;
-        case "Extra":
+        case "Extra":               // 39 levels
             startNum = 251
             endNum = 290
             break;
-        case "IQ Carrier":
+        case "IQ Carrier":          // 28 levels
             startNum = 450
             endNum = 478
             break;
-        case "Simple Sokoban":
+        case "Simple Sokoban":      // 60 levels
             startNum = 351
-            endNum = 441
+            endNum = 411
             break;
-        case "Still More":
+        case "Still More":          // 34 levels
             startNum = 301
             endNum = 335
             break;
@@ -89,18 +89,25 @@ function loadSubMenu(type) {
         }
 
 
+        var arr = Base64ToDec(LoadLevelData(i));
+
+        var columns = arr[0]
+
+        var fontSize = Math.floor(140/columns)
+
         var wrapper = '<div class=list>'
-        if (storageManager.getBestScore(i).moves != 0) {
-            wrapper += complete
-        }
         
-        wrapper += '<a href=..?level=' + i + '><span class=soko-room>'
-        wrapper += getString(i)
+        wrapper += '<a href=..?level=' + i + '><span class=soko-room style="font-size:' + fontSize + 'px;line-height:' + fontSize + 'px;">'
+            if (storageManager.getBestScore(i).moves != 0) {
+                wrapper += complete
+            }
+        wrapper += getString(arr)
         wrapper += '</span><div class=levelName>' + levelTitle + '</div></a></div>'
 
         str += wrapper
+
     }
-    container.innerHTML = str
+    container.innerHTML += str
 
     var fTime = performance ? performance.now() : new Date().getTime(),
         duration = (fTime - sTime).toFixed(2);
@@ -111,9 +118,8 @@ function setWindowTitle(type) {
     document.title = "Sokoban - " + type
 }
 
-function getString(i) {
+function getString(arr) {
 
-    var arr = Base64ToDec(LoadLevelData(i));
     // var arr = LoadLevelData(i)
 
     var rows = arr.shift()

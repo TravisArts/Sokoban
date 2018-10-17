@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="../Style/style.css">
     <link rel="preload" href="../Fonts/SokobanColor-Black.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="../Levels.json" type="application/json" crossorigin>
+    <!-- <link rel="preload" href="../Levels.json" type="application/json" crossorigin> -->
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link rel="mask-icon" href="../website_icon.svg" color="red">
     <!-- <link rel="stylesheet" type="text/css" href="../Style/game.css"> -->
@@ -45,13 +45,18 @@
 
     <style>
         [piece="@"]::before {
-            content: attr(piece)"\a";
+            content: attr(piece);
             font-family: "back";
+            position: absolute;
+            z-index: -10;
         }
 
-        [piece="*"]::after {
-            content: "\a"attr(piece);
+        [piece="*"]::before {
+            content: attr(piece);
             font-family: "fore";
+            position: absolute;
+            z-index: 10;
+            color: #999933;
         }
     </style>
 

@@ -251,6 +251,7 @@ button:disabled {
 
 #star {
     margin-top: -1.75em;
+    color: #CECE31;
 }
 
 .list {
@@ -267,11 +268,12 @@ button:disabled {
 
 .soko-room {
     display: inline-block;
-    line-height: 0;
+    /* line-height: 0; */
     width: fit-content;
     overflow: visible;
     white-space: nowrap;
     padding: 0;
+    position: relative;
 }
 
 [piece] {
@@ -289,11 +291,12 @@ button:disabled {
     /* Turn newlines into actual newlines */
     display: inline-block;
     /* So we can set its width */
-    width: 0em;
+    /* width: 0em; */
     /* Compensate for negative letter spacing */
     position: relative;
-    font-size: 1vw;
-    padding: 0.5vw;
+    /* font-size: 1vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw */
 }
 
 [piece="@"] {
