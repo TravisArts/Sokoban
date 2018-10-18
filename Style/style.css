@@ -257,11 +257,14 @@ button:disabled {
 }
 
 .list {
-    width: 320px;
+    width: 280px;
     text-align: center;
     display: inline-block;
     text-align: center;
-    padding: 20;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .list:hover {
@@ -348,6 +351,7 @@ button:disabled {
 }
 
 [piece="."] {
+    color: black;
     z-index: 1;
 }
 

@@ -44,6 +44,16 @@
 
 
     <style>
+        [piece] {
+            z-index: 1;
+        }
+        [piece="+"]::before {
+            content: attr(piece);
+            font-family: "back";
+            position: absolute;
+            z-index: -1;
+        }
+
         [piece="@"]::before {
             content: attr(piece);
             font-family: "back";
