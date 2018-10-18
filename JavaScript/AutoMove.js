@@ -21,15 +21,17 @@ function mouseDown(e) {
 
 		if (item == null || item.value == '.') {
 			var sTime = performance ? performance.now() : new Date().getTime();
+			setCursor('wait')
 			var path = findPath(position, playerPosition)
 			var fTime = performance ? performance.now() : new Date().getTime(),
 				duration = (fTime - sTime).toFixed(2);
 			if (path.length === 0) {
 				pathFindingEvent("move-failed", duration)
 				animateNoPath()
-
+				setCursor('default')
 			} else {
 				pathFindingEvent("move", duration)
+				setCursor('grab')
 			}
 
 			var route = pathToRoute(path)
@@ -77,6 +79,7 @@ function mouseMove(e) {
 
 function mouseUp(e) {
 	if (grabbing != null) {
+		setCursor('wait')
 		var wrapper = document.getElementsByClassName("drag")[0]
 		if (wrapper != null) {
 			wrapper.remove()
@@ -85,13 +88,16 @@ function mouseUp(e) {
 		var position = detectCoordinate(e)
 		var path = findPush(grabbing, position)
 
+		setCursor('grab')
 		if (path.length != 0) {
 			var route = pathToRoute(path)
 			// console.log(route)
 			performMoves(route, 0)
+		} else {
+			animateNoPath()
 		}
 
-		setCursor('grab')
+		
 		grabbing = null
 	}
 }
