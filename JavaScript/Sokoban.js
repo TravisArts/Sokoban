@@ -160,8 +160,7 @@ SokobanManager.prototype.setStyles = function () {
     // console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
     var height = availableHeight / (theLevel.rows)
     var width = availableWidth / (theLevel.columns)
-    console.log("dPad.offsetParent = " + (dPad.offsetParent === null))
-    console.log("width: " + availableWidth + ", height: " + availableHeight)
+    
     console.log("width: " + width.toFixed(2) + " height: " + height.toFixed(2))
 
     pieceWidth = (width < height) ? width : height
