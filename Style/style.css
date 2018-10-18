@@ -48,6 +48,7 @@ body {
     font-feature-settings: "liga", "dlig";
     text-rendering: optimizeLegibility;
     height: 100%;
+    touch-action: manipulation;
 }
 
 button {
@@ -247,6 +248,7 @@ button:disabled {
     border-top: 50px solid #3333CC;
     border-right: 50px solid transparent;
     z-index: 10;
+    position: absolute;
 }
 
 #star {
@@ -502,6 +504,7 @@ button {
 [piece="$"],
 [piece="*"] {
     cursor: grab;
+    /* cursor: -webkit-grab; */
 }
 
 [piece="@"],
@@ -890,6 +893,7 @@ p [piece]::before {
     }
     #block-block {
         float: right;
+        width: unset;
     }
 
     .modal-content {
