@@ -179,6 +179,9 @@ SokobanManager.prototype.setStyles = function () {
         styleString += '.y-' + y + '{top: ' + (pieceWidth * (y + 0.5)) + 'px;}'
     }
 
+    
+    styleString += ".gameArea { top:" + window.getComputedStyle(topnav).height + "; }"
+
     style.innerText = styleString
 }
 

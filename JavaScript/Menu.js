@@ -1,14 +1,5 @@
 function loadMenu(type) {
 
-    // var i
-    // for (i = 0; i < 712; i++) {
-
-    // 	var data = LoadLevelData(i)
-    // 	if (data != null) {
-    // 		allLevels[i].data = Base64ToDec(data);
-    // 	}
-    // }
-
 
     if (type == undefined) {
         let qVar = getQueryVariable("collection")
@@ -115,7 +106,11 @@ function loadSubMenu(type) {
 }
 
 function setWindowTitle(type) {
-    document.title = "Sokoban - " + type
+
+    var winTitle = "Sokoban - " + type
+    
+    document.getElementById("navTitle").innerText = winTitle
+    document.title = winTitle
 }
 
 function getString(arr) {

@@ -1,6 +1,7 @@
 <html lang="en">
 
 <head>
+    <meta charset=utf-8 name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no viewport-fit=cover" />
     <link rel="stylesheet" type="text/css" href="../Style/style.css">
     <link rel="preload" href="../Fonts/SokobanColor-Black.ttf" as="font" type="font/ttf" crossorigin>
     <!-- <link rel="preload" href="../Levels.json" type="application/json" crossorigin> -->
@@ -9,14 +10,6 @@
     <!-- <link rel="stylesheet" type="text/css" href="../Style/game.css"> -->
 
     <script>
-        // document.onreadystatechange = function (e) {
-        //     console.log(document.readyState)
-        //     if (document.readyState === 'complete') {
-        //         //dom is ready, window.onload fires later
-        //         LoadMenuLevels()
-        //     }
-        // };
-
         document.addEventListener("readystatechange", readyStateDidChange)
 
         function readyStateDidChange(e) {
@@ -72,9 +65,10 @@
 
 </head>
 
-<body id='body' class=unselectable style="overflow: scroll;">
+<body id='body' class=unselectable style="overflow: auto; -webkit-overflow-scrolling: touch;">
 
     <div class="topnav" id="myTopnav">
+        <div id="navTitle"></div>
         <div class="navButton" onClick='loadSubMenu("Original Levels")'> Original Levels </div>
         <div class="navButton" onClick='loadSubMenu("Boxxle")'> Boxxle </div>
         <div class="navButton" onClick='loadSubMenu("Dimitri & Yorick")'> Dimitri & Yorick </div>

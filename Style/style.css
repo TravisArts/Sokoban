@@ -37,7 +37,6 @@ body {
     /*font-family: "Sokoban";*/
     font-family: Helvetica;
     /* overflow: scroll; */
-    -khtml-user-select: none;
     -webkit-user-select: none;
     /* Chrome/Safari */
     -moz-user-select: none;
@@ -120,7 +119,6 @@ button:disabled {
 }
 
 .topnav {
-    float: center;
     display: block;
     overflow: hidden;
     background-color: #3333CC;
@@ -183,7 +181,7 @@ button:disabled {
 
 @media screen and (max-width: 800px) {
     .topnav.responsive {
-        position: relative;
+        position: absolute;
     }
     .topnav.responsive .navButton.icon {
         position: absolute;
@@ -374,7 +372,10 @@ button:disabled {
 .button-space {
     float: right;
     margin-bottom: 10px;
-    padding: 0;
+    margin-top: 10px;
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
 }
 
 .GameBoard {
@@ -405,7 +406,7 @@ button:disabled {
     /* padding-top: 20px; */
     position: absolute;
     width: 500px;
-    margin: 60px auto;
+    margin: 0px auto;
     /* min-height: 100%; */
     /* height: 100%; */
     left: 0;
@@ -604,6 +605,10 @@ button {
     color: #CCCCFF;
     font-size: 40px;
     /* float: right; */
+
+    margin-left: max(8px, env(safe-area-inset-left));
+    margin-right: max(8px, env(safe-area-inset-right));
+    margin-bottom: max(8px, env(safe-area-inset-bottom));
 }
 
 .navigation-footer {
@@ -615,6 +620,7 @@ button {
     bottom: 0;
     z-index: 0;
     display: inline-block;
+
     /* background-color: #000000; */
     /* opacity: 0.5; */
     /* background-color: #3CC; */
@@ -637,7 +643,7 @@ button {
     width: 30px;
     overflow: hidden;
     position: static;
-    margin: 8px;
+    /* margin: 8px; */
     z-index: 10;
     cursor: pointer;
     text-align: center;
