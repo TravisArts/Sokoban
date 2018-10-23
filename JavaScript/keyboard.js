@@ -303,7 +303,7 @@ KeyboardInputManager.prototype.info = function (event) {
 KeyboardInputManager.prototype.fullScreen = function (event) {
 	event.preventDefault()
 	// var body = document.getElementsByTagName("body")
-	
+
 	if (document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen) {
 		if (document.exitFullscreen) {
 			document.exitFullscreen();
@@ -312,6 +312,7 @@ KeyboardInputManager.prototype.fullScreen = function (event) {
 		} else if (document.webkitExitFullscreen) {
 			document.webkitExitFullscreen();
 		}
+		document.getElementById("fullscreen-icon").innerHTML = "enter_fullscreen"
 	} else {
 		var element = document.documentElement
 		if (element.requestFullscreen) {
@@ -323,6 +324,7 @@ KeyboardInputManager.prototype.fullScreen = function (event) {
 		} else if (element.msRequestFullscreen) {
 			element.msRequestFullscreen();
 		}
+		document.getElementById("fullscreen-icon").innerHTML = "exit_fullscreen"
 	}
 }
 
