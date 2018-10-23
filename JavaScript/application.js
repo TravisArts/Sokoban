@@ -56,33 +56,17 @@ function prepareGame() {
 function doOnOrientationChange() {
 	console.log("rotate")
 	// manager.setup()
-	var width = window.innerWidth
-	var height = window.innerHeight
 
-    console.log("width: " + width.toFixed(2) + " height: " + height.toFixed(2))
-	console.log(document.getElementById("dPad").offsetParent)
-	var time = new Date().getTime()
-	
-	// while ((new Date().getTime() - time < 200) && width == window.innerWidth && height == window.innerHeight) {
-	// 	// console.log("width: " + window.innerWidth.toFixed(2) + " height: " + window.innerHeight.toFixed(2))
-	// 	console.log(" ")
-	// }
 	var start = null
-	var wait = function(timestamp) {
+	var wait = function (timestamp) {
 		if (!start) start = timestamp;
 		var progress = timestamp - start;
-		if (progress<100) {
-			// console.log(progress)
+		if (progress < 100) {
 			manager.setStyles()
 			window.requestAnimationFrame(wait)
 		}
 	}
 	window.requestAnimationFrame(wait);
-
-
-	// setTimeout(function () {
-	// 	manager.setStyles()
-	// }, 200)
 }
 
 var resizeTimer
@@ -163,6 +147,16 @@ function drawNavigation() {
 	leftBtn.addEventListener("touchend", buttonUp);
 	downBtn.addEventListener("touchend", buttonUp);
 	rightBtn.addEventListener("touchend", buttonUp);
+
+	upBtn.addEventListener("mousedown", function () { buttonDown("up") }, { passive: true });
+	leftBtn.addEventListener("mousedown", function () { buttonDown("left") }, { passive: true });
+	downBtn.addEventListener("mousedown", function () { buttonDown("down") }, { passive: true });
+	rightBtn.addEventListener("mousedown", function () { buttonDown("right") }, { passive: true });
+
+	upBtn.addEventListener("mouseup", buttonUp);
+	leftBtn.addEventListener("mouseup", buttonUp);
+	downBtn.addEventListener("mouseup", buttonUp);
+	rightBtn.addEventListener("mouseup", buttonUp);
 }
 
 

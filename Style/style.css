@@ -483,6 +483,26 @@ button {
     /* margin: auto; */
     
 }
+#fullscreen-icon::before {
+    /* color: white; */
+    content: "enter_fullscreen";
+}
+
+:-webkit-full-screen #fullscreen-icon::before {
+    content: "exit_fullscreen"
+}
+:fullscreen #fullscreen-icon::before  {
+    content: "exit_fullscreen"
+}
+:-moz-full-screen #fullscreen-icon::before  {
+    content: "exit_fullscreen"
+}
+
+/* :fullscreen #fullscreen-icon::before,
+:-webkit-full-screen #fullscreen-icon::before,
+:-moz-full-screen #fullscreen-icon::before {
+    content: "exit_fullscreen";
+} */
 
 .piece {
     -webkit-transition: 100ms linear;

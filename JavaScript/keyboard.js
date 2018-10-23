@@ -103,6 +103,7 @@ KeyboardInputManager.prototype.listen = function () {
 	this.bindButtonPress(".redo-button", this.redo);
 	this.bindButtonPress(".undo-button", this.undo);
 	this.bindButtonPress(".info-button", this.info)
+	this.bindButtonPress(".fullscreen-button", this.fullScreen)
 	// this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
 	// Respond to swipe events
@@ -257,9 +258,11 @@ KeyboardInputManager.prototype.listen = function () {
 
 			}
 		}
-		
+
 		if (performedMove == false) {
-			if (event.target.className == "GameBoard") {
+			var classes = Array.from(event.target.classList)
+			if (classes.includes("wall") || classes.includes("piece") || classes.includes("GameBoard")) {
+				// if (event.target.className == "GameBoard") {
 				animateNoPath()
 			}
 		}
@@ -295,6 +298,32 @@ KeyboardInputManager.prototype.info = function (event) {
 	event.preventDefault()
 	var modal = document.getElementById('info-modal');
 	modal.style.display = "block";
+}
+
+KeyboardInputManager.prototype.fullScreen = function (event) {
+	event.preventDefault()
+	// var body = document.getElementsByTagName("body")
+	
+	if (document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen) {
+		if (document.exitFullscreen) {
+			document.exitFullscreen();
+		} else if (document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		} else if (document.webkitExitFullscreen) {
+			document.webkitExitFullscreen();
+		}
+	} else {
+		var element = document.documentElement
+		if (element.requestFullscreen) {
+			element.requestFullscreen();
+		} else if (element.mozRequestFullScreen) {
+			element.mozRequestFullScreen();
+		} else if (element.webkitRequestFullscreen) {
+			element.webkitRequestFullscreen();
+		} else if (element.msRequestFullscreen) {
+			element.msRequestFullscreen();
+		}
+	}
 }
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
