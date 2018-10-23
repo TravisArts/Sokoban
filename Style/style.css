@@ -23,7 +23,7 @@
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url('../Fonts/SokobanColor-Black.ttf');
+    src: url('../Fonts/SokobanColor-Black.ttf') format('truetype'), url('../Fonts/SokobanColor-Black.woff') format('woff'), url('../Fonts/SokobanColor-Black.woff2') format('woff2');
     /* format('woff2'); */
 }
 
@@ -605,7 +605,7 @@ button {
 /* } */
 
 .material-icons {
-    font-family: 'Material Icons';
+    font-family: 'mid';
     font-weight: normal;
     font-style: normal;
     font-size: 24px;
