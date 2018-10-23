@@ -312,7 +312,7 @@ KeyboardInputManager.prototype.fullScreen = function (event) {
 		} else if (document.webkitExitFullscreen) {
 			document.webkitExitFullscreen();
 		}
-		document.getElementById("fullscreen-icon").innerHTML = "enter_fullscreen"
+		// document.getElementById("fullscreen-icon").innerHTML = "enter_fullscreen"
 	} else {
 		var element = document.documentElement
 		if (element.requestFullscreen) {
@@ -324,7 +324,7 @@ KeyboardInputManager.prototype.fullScreen = function (event) {
 		} else if (element.msRequestFullscreen) {
 			element.msRequestFullscreen();
 		}
-		document.getElementById("fullscreen-icon").innerHTML = "exit_fullscreen"
+		// document.getElementById("fullscreen-icon").innerHTML = "exit_fullscreen"
 	}
 }
 

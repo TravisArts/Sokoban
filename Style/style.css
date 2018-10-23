@@ -483,6 +483,20 @@ button {
     /* margin: auto; */
     
 }
+#fullscreen-icon::before {
+    /* color: white; */
+    content: "enter_fullscreen";
+}
+
+:-webkit-full-screen #fullscreen-icon::before {
+    content: "exit_fullscreen"
+}
+:fullscreen #fullscreen-icon::before  {
+    content: "exit_fullscreen"
+}
+:-moz-full-screen #fullscreen-icon::before  {
+    content: "exit_fullscreen"
+}
 
 /* :fullscreen #fullscreen-icon::before,
 :-webkit-full-screen #fullscreen-icon::before,
@@ -591,7 +605,7 @@ button {
 /* } */
 
 .material-icons {
-    font-family: 'mid';
+    font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
     font-size: 24px;
