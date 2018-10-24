@@ -34,9 +34,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     background-color: #DDDDDD;
-    /*font-family: "Sokoban";*/
-    font-family: Helvetica;
-    /* overflow: scroll; */
+    font-family: 'Trebuchet MS';
     -webkit-user-select: none;
     /* Chrome/Safari */
     -moz-user-select: none;
@@ -163,6 +161,18 @@ button:disabled {
     color: #CCCCFF;
 }
 
+#pageTitle {
+    display: block;
+    margin: 15px;
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bold;
+    color: #33C
+}
+#pageTitle::first-letter {
+    color: #D00;
+}
+
 @media screen and (max-width: 800px) {
     .topnav .navButton:not(:first-child) {
         display: none;
@@ -188,6 +198,10 @@ button:disabled {
         display: block;
         text-align: left;
     }
+    #pageTitle {
+        display: none;
+    }
+    
 }
 
 @media screen and (max-width: 800px) {
@@ -208,6 +222,15 @@ button:disabled {
         float: none;
         display: block;
         text-align: left;
+    }
+    #pageTitle {
+        display: none;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    #pageTitle {
+        display: none;
     }
 }
 
@@ -240,7 +263,7 @@ button:disabled {
     transform: rotate(45deg) translate(-2.828px, -2.828px);
 }
 
-.levels {
+.main {
     margin-top: 40;
     margin-left: 50;
     margin-right: 50;

@@ -108,8 +108,9 @@ function loadSubMenu(type) {
 function setWindowTitle(type) {
 
     var winTitle = "Sokoban - " + type
-    
+
     document.getElementById("navTitle").innerText = winTitle
+    document.getElementById("pageTitle").innerText = winTitle
     document.title = winTitle
 }
 

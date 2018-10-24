@@ -25,10 +25,10 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105778471-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'UA-105778471-1', {'site_speed_sample_rate': 100});
+        gtag('config', 'UA-105778471-1', { 'site_speed_sample_rate': 100 });
     </script>
 
     <script type="text/javascript" src="../JavaScript/Menu.js"></script>
@@ -40,6 +40,7 @@
         [piece] {
             z-index: 1;
         }
+
         [piece="+"]::before {
             content: attr(piece);
             font-family: "back";
@@ -82,7 +83,9 @@
             <div class="bar3"></div>
         </div>
     </div>
-    <div id="levels" class="levels" align="center" cellspacing="20">
+    <div class="main">
+        <div id="pageTitle"></div>
+        <div id="levels" class="levels" align="center" cellspacing="20"></div>
     </div>
 
 </body>
