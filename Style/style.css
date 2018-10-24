@@ -23,7 +23,7 @@
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url('../Fonts/SokobanColor-Black.ttf') format('truetype'), url('../Fonts/SokobanColor-Black.woff') format('woff'), url('../Fonts/SokobanColor-Black.woff2') format('woff2');
+    src: url('../Fonts/SokobanColor-Black.ttf');
     /* format('woff2'); */
 }
 
@@ -466,7 +466,7 @@ button {
     /* width: 40px; */
     line-height: 42px;
     cursor: pointer;
-    display: block;
+    /* display: block; */
     text-align: center;
     float: left;
     color: #CCCCFF;
@@ -871,7 +871,7 @@ p [piece]::before {
 
 @media screen and (max-width: 520px) {
     .gameArea {
-        width: 280px;
+        width: 340px;
         /* margin: 0 auto; */
     }
     .GameBoard {
@@ -918,7 +918,7 @@ p [piece]::before {
 
 @media (hover: none) and (orientation: landscape) and (max-height: 520px) {
     .button-space {
-        width: fit-content;
+        width: 100px;
         margin: 8px;
     }
     .button {
