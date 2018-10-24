@@ -528,8 +528,8 @@ SokobanManager.prototype.showCompletion = function () {
     }
     title.innerText = document.title
 
-    document.getElementById('completion-moves').innerText = theLevel.moves
-    document.getElementById('completion-pushes').innerText = theLevel.pushes
+    document.getElementById('completion-moves').innerText = theLevel.moves + " moves"
+    document.getElementById('completion-pushes').innerText = theLevel.pushes + " pushes"
 
 
     var modal = document.getElementById('completion-modal')

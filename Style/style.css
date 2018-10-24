@@ -760,10 +760,6 @@ button {
     cursor: pointer;
 }
 
-.modal-button {
-    float: none;
-}
-
 .close {
     margin-right: 0;
     margin-left: auto;
