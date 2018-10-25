@@ -519,14 +519,7 @@ SokobanManager.prototype.redo = function () {
 
 SokobanManager.prototype.showCompletion = function () {
 
-    var title = document.getElementById('completion-title')
-
-    var index = document.title.indexOf("•")
-    console.log(document.title)
-    if (index == -1) {
-        document.title += completedStr
-    }
-    title.innerText = document.title
+   setWindowTitle()
 
     document.getElementById('completion-moves').innerText = theLevel.moves + " moves"
     document.getElementById('completion-pushes').innerText = theLevel.pushes + " pushes"
@@ -949,22 +942,27 @@ function getLevelNumber(type) {
 
 function setWindowTitle() {
 
-
     let type = getLevelType()
 
-    levelTitle = type + " Level " + getLevelNumber(type)
+    levelTitle = type //+ " Level " + getLevelNumber(type)
+    var pageTitle = type
 
     if (type == "IQ Carrier" || type == "Dimitri & Yorick") {
         levelTitle += ' "' + theLevel.title + '"'
+        pageTitle += '<br/>"' + theLevel.title + '"'
+    } else {
+        levelTitle += " Level " + getLevelNumber(type)
+        pageTitle += "<br>Level " + getLevelNumber(type)
     }
 
     var winTitle = levelTitle
 
+    document.getElementById("navTitle").innerText = winTitle
+    document.getElementById("pageTitle").innerHTML = pageTitle
+    document.getElementById('completion-title').innerHTML = pageTitle
+
     if (isCompleted)
         winTitle += completedStr
-
-    document.getElementById("navTitle").innerText = winTitle
-    document.getElementById("pageTitle").innerText = winTitle
 
     document.title = winTitle
 

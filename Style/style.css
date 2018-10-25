@@ -80,7 +80,6 @@ button:disabled {
     padding: 0
 }
 
-
 /* .nextContainer {
     margin-top: -45px;
     top: 50%;
@@ -140,8 +139,6 @@ button:disabled {
     /* -webkit-tap-highlight-color: #111111 */
 }
 
-
-
 @media (hover: hover) {
     .topnav .navButton:hover {
         background-color: #111111
@@ -149,9 +146,11 @@ button:disabled {
 }
 
 /* .topnav .navButton:focus, */
+
 .topnav .navButton:active {
     background-color: #111111
 }
+
 .topnav .icon {
     display: none;
 }
@@ -169,6 +168,7 @@ button:disabled {
     font-weight: bold;
     color: #33C
 }
+
 #pageTitle::first-letter {
     color: #D00;
 }
@@ -201,7 +201,6 @@ button:disabled {
     #pageTitle {
         display: none;
     }
-    
 }
 
 @media screen and (max-width: 800px) {
@@ -422,7 +421,6 @@ button:disabled {
     -moz-user-select: none;
     /* IE10+ */
     -ms-user-select: none;
-    
 }
 
 .gameArea {
@@ -455,14 +453,12 @@ button:disabled {
 .stats {
     white-space: nowrap;
     cursor: default;
-    
 }
 
 .stats>div {
     width: fit-content;
     margin: auto;
 }
-
 
 button {
     /* display: inline-block; */
@@ -493,7 +489,6 @@ button {
     text-align: center;
     float: left;
     color: #CCCCFF;
-
     margin-left: 10px;
     margin-bottom: 10px;
 }
@@ -504,8 +499,8 @@ button {
     /* padding: 10px 10px; */
     /* size: 20px 20px; */
     /* margin: auto; */
-    
 }
+
 #fullscreen-icon::before {
     /* color: white; */
     content: "enter_fullscreen";
@@ -514,10 +509,12 @@ button {
 :-webkit-full-screen #fullscreen-icon::before {
     content: "exit_fullscreen"
 }
-:fullscreen #fullscreen-icon::before  {
+
+:fullscreen #fullscreen-icon::before {
     content: "exit_fullscreen"
 }
-:-moz-full-screen #fullscreen-icon::before  {
+
+:-moz-full-screen #fullscreen-icon::before {
     content: "exit_fullscreen"
 }
 
@@ -607,11 +604,9 @@ button {
     padding: 0;
 }
 
-
 /* [piece="@"] {
     vertical-align: -100px;
 } */
-
 
 /* .drag {
     font-family: "mid";
@@ -621,9 +616,7 @@ button {
     float: center;
     position: absolute; */
 
-
 /* text-align: center; */
-
 
 /* } */
 
@@ -659,7 +652,6 @@ button {
     color: #CCCCFF;
     font-size: 40px;
     /* float: right; */
-
     margin-left: max(8px, env(safe-area-inset-left));
     margin-right: max(8px, env(safe-area-inset-right));
     margin-bottom: max(8px, env(safe-area-inset-bottom));
@@ -674,7 +666,6 @@ button {
     bottom: 0;
     z-index: 0;
     display: inline-block;
-
     /* background-color: #000000; */
     /* opacity: 0.5; */
     /* background-color: #3CC; */
@@ -722,7 +713,6 @@ button {
     vertical-align: center;
 }
 
-
 /* The Modal (background) */
 
 .modal {
@@ -745,13 +735,9 @@ button {
     /* Black w/ opacity */
 }
 
-
 /* Modal Content/Box */
 
-
 /* The Close Button */
-
-
 
 .close:hover,
 .close:focus {
@@ -766,10 +752,6 @@ button {
     display: block;
 }
 
-.modal-header {
-    border-radius: 5px 5px 0 0;
-}
-
 .modal-body {
     /* max-height: 80%; */
     padding: 2px 16px;
@@ -779,6 +761,7 @@ button {
 
 .modal-footer {
     border-radius: 0 0 5px 5px;
+    height: fit-content;
 }
 
 .modal-header,
@@ -786,10 +769,23 @@ button {
     padding: 2px 16px;
     background-color: #CCCCFF;
     color: white;
-    height: fit-content;
     width: calc(100% - 2 * 16px);
     flex: 0 1 auto;
 }
+
+.modal-header {
+    border-radius: 5px 5px 0 0;
+    height: 100px;
+    justify-content: center;
+}
+.modal-header div {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.modal-header * * {
+    vertical-align: middle;
+    display: inline-block;}
 
 /* Modal Content */
 
@@ -807,9 +803,7 @@ button {
     margin-top: 10%;
     margin-bottom: 10%;
     padding: 0;
-
     /* margin: 10% auto 10% auto; */
-
     width: 80%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border: 1px solid #888;
@@ -832,7 +826,6 @@ p {
     /* text-align: center; */
     /* font-size: 1.5vw; */
 }
-
 
 /* Add Animation */
 
@@ -905,8 +898,7 @@ p [piece]::before {
     }
 }
 
-
-.unavailable  {
+.unavailable {
     /* color: rgb(125, 125, 255); */
     /* color: #CCCCFF; */
     color: rgba(204, 204, 255, 0.6);
@@ -942,7 +934,7 @@ p [piece]::before {
     }
     .button {
         margin-left: 0;
-        float:none;
+        float: none;
     }
     .gameArea {
         width: 100%;
@@ -955,14 +947,13 @@ p [piece]::before {
         float: right;
         width: unset;
     }
-
     .modal-content {
         margin: 5% auto;
     }
 }
 
-
-@media (hover: hover), (orientation: landscape) and (max-height: 520px) {
+@media (hover: hover),
+(orientation: landscape) and (max-height: 520px) {
     #dPad {
         display: none;
     }
