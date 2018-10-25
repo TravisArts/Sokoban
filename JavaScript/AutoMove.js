@@ -79,26 +79,37 @@ function mouseMove(e) {
 
 function mouseUp(e) {
 	if (grabbing != null) {
-		setCursor('wait')
-		var wrapper = document.getElementsByClassName("drag")[0]
-		if (wrapper != null) {
-			wrapper.remove()
-		}
 
-		var position = detectCoordinate(e)
-		var path = findPush(grabbing, position)
+		setCursor('progress')
 
-		setCursor('grab')
-		if (path.length != 0) {
-			var route = pathToRoute(path)
-			// console.log(route)
-			performMoves(route, 0)
-		} else {
-			animateNoPath()
-		}
+		setTimeout( function() {
+			var wrapper = document.getElementsByClassName("drag")[0]
+			if (wrapper != null) {
+				wrapper.remove()
+			}
+
+			var position = detectCoordinate(e)
+			// console.log(grabbing)
+			var path = findPush(grabbing, position)
+
+			setTimeout(setCursor('grab'), 0)
+			// document.body.style.cursor = 'progress';
+			if (path.length != 0) {
+				var route = pathToRoute(path)
+				// console.log(route)
+				performMoves(route, 0)
+			} else {
+				animateNoPath()
+			}
+			grabbing = null
+		}, 25)
+
+		// setTimeout(next, 0)
 
 		
-		grabbing = null
+		
+
+		// next(e)
 	}
 }
 
@@ -121,7 +132,7 @@ function dragTreasure(e) {
 }
 
 
-animateNoPath = function () {	
+animateNoPath = function () {
 	var time = 410
 	gameBoard.style.animation = "shake " + time + "ms cubic-bezier(0.36,0.07,0.19,0.97) both"
 	setTimeout(function () {
