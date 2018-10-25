@@ -945,14 +945,14 @@ function setWindowTitle() {
     let type = getLevelType()
 
     levelTitle = type //+ " Level " + getLevelNumber(type)
-    var pageTitle = type
+    var pageTitle = type + '<br>'
 
     if (type == "IQ Carrier" || type == "Dimitri & Yorick") {
         levelTitle += ' "' + theLevel.title + '"'
-        pageTitle += '<br/>"' + theLevel.title + '"'
+        pageTitle += '"' + theLevel.title + '"'
     } else {
         levelTitle += " Level " + getLevelNumber(type)
-        pageTitle += "<br>Level " + getLevelNumber(type)
+        pageTitle += "Level " + getLevelNumber(type)
     }
 
     var winTitle = levelTitle
