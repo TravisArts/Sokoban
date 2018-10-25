@@ -1,0 +1,116 @@
+
+@media screen and (max-width: 800px) {
+    .topnav .navButton:not(:first-child) {
+        display: none;
+    }
+    .topnav .navButton {
+        /* float: none;
+        text-align: left; */
+        padding: 16px;
+        float: left;
+        display: inline;
+        text-align: left;
+    }
+    .topnav .navButton.icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+        float: right;
+        display: block;
+    }
+    .topnav #navTitle {
+        float: left;
+        padding: 16px;
+        display: block;
+        text-align: left;
+    }
+    #pageTitle {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .topnav.responsive {
+        /* position: absolute; */
+    }
+    .topnav.responsive .navButton.icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .topnav.responsive .navButton {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .topnav #navTitle {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    #pageTitle {
+        display: none;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    #pageTitle {
+        display: none;
+    }
+    .modal-content {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .gameArea {
+        width: 340px;
+        /* margin: 0 auto; */
+    }
+    .GameBoard {
+        /* margin-top: 17px;
+        padding: 10px; */
+    }
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: initial;
+    }
+}
+
+
+@media (hover: none) and (orientation: portrait) {
+    /* body {
+        background: black;
+    } */
+    #dPad {
+        display: block;
+    }
+}
+
+@media (hover: none) and (orientation: landscape) and (max-height: 520px) {
+    .button-space {
+        width: 100px;
+        margin: 8px;
+    }
+    .button {
+        margin-left: 0;
+        float: none;
+    }
+    .gameArea {
+        width: 100%;
+    }
+    #stationary {
+        margin: auto;
+        width: fit-content;
+    }
+    #block-block {
+        float: right;
+        width: unset;
+    }
+    .modal-content {
+        margin: 5% auto;
+    }
+}

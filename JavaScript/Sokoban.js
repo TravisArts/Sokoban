@@ -878,13 +878,11 @@ function loadLevel(level) {
 
     isCompleted = (bestMoves != 0)
     // console.log(listCookies())
-    // levelTitle = theLevel.title
     setWindowTitle()
 }
 
 
 var isCompleted = false
-var levelTitle
 var eventLabel
 
 function getLevelType() {
@@ -944,9 +942,13 @@ function setWindowTitle() {
 
     let type = getLevelType()
 
-    levelTitle = type //+ " Level " + getLevelNumber(type)
-    var pageTitle = type + '<br>'
+    var levelTitle = type //+ " Level " + getLevelNumber(type)
+    var pageTitle = type
 
+    if (type != "") {
+        levelTitle += " "
+        pageTitle += '<br>'
+    }
     if (type == "IQ Carrier" || type == "Dimitri & Yorick") {
         levelTitle += ' "' + theLevel.title + '"'
         pageTitle += '"' + theLevel.title + '"'
