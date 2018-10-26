@@ -392,9 +392,9 @@ function buttonDown(direction) {
 function buttonUp() {
 	clearTimeout(keyRepeatTimout);
 	clearInterval(intervalId);
-	var key = event.key;
-	var keyCode = event.keyCode;
-	event = new KeyboardEvent("keyup", { "key": key, "code": key, "keyCode": keyCode, "which": keyCode })
-	document.dispatchEvent(event);
+	// var key = event.key;
+	// var keyCode = event.keyCode;
+	// event = new KeyboardEvent("keyup", { "key": key, "code": key, "keyCode": keyCode, "which": keyCode })
+	// document.dispatchEvent(event);
 }
 
