@@ -84,9 +84,9 @@ function loadSubMenu(type) {
 
         var arr = Base64ToDec(LoadLevelData(i));
 
-        var columns = arr[0]
+        var columns = arr[1]
 
-        var fontSize = Math.floor(140/columns)
+        var fontSize = Math.floor(280/columns)
 
         var wrapper = '<div class=list>'
         
