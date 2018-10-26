@@ -17,6 +17,8 @@ function loadMenu(type) {
 
 function loadSubMenu(type) {
 
+    document.getElementById("menustate").checked = false
+
     setWindowTitle(type)
 
     history.pushState(0, "" + type, "?collection=" + type)

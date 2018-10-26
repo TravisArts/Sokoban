@@ -192,9 +192,9 @@ function LoadLevelName(ID) {
 
 
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
-function toggleResponse(e) {
+function toggleResponse() {
     console.log("click")
-    e.classList.toggle("change");
+    document.getElementById("expand").classList.toggle("change");
     var x = document.getElementById("myTopnav");
     if (x.className === "topnav") {
         x.className += " responsive";

@@ -123,6 +123,7 @@
 </head>
 
 <body>
+    <input type="checkbox" id="menustate" class="menustate" tabindex="-1" style="display:none;">
     <div class="topnav" id="myTopnav">
         <div id="navTitle"></div>
         <div class="navButton" onClick='loadMenu("Original Levels")'> Original Levels </div>
@@ -132,11 +133,11 @@
         <div class="navButton" onClick='loadMenu("IQ Carrier")'> IQ Carrier </div>
         <div class="navButton" onClick='loadMenu("Simple Sokoban")'> Simple Sokoban </div>
         <div class="navButton" onClick='loadMenu("Still More")'> Still More </div>
-        <div class="navButton icon" onclick="toggleResponse(this)">
+        <label class="navButton icon" id="expand" for="menustate">
             <div class="bar1"></div>
             <div class="bar2"></div>
             <div class="bar3"></div>
-        </div>
+        </label>
     </div>
     <!--style="overflow: hidden;max-width: 3ch;overflow-wrap: break-word;"-->
     <!--<p id="demo">the solution goes here</p>-->
@@ -167,7 +168,7 @@
 
         <div id="stationary">
             <div class="GameBoard" id=GameBoard onmousedown="mouseDown(event) " onmousemove="mouseMove(event) "
-                onmouseup="mouseUp(event) ">
+                onmouseup="mouseUp() ">
                 <!-- <canvas id="circle" width="500" margin="0" style="position:absolute;"> -->
                 </canvas>
                 <div class="GameSpace "></div>

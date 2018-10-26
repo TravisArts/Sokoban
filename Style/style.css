@@ -178,30 +178,6 @@ button:disabled {
     cursor: pointer;
 }
 
-.bar1,
-.bar2,
-.bar3 {
-    width: 16px;
-    height: 2px;
-    background-color: #DDD;
-    margin: 2px 0;
-    transition: 0.4s;
-}
-
-.change .bar1 {
-    -webkit-transform: rotate(-45deg) translate(-2.828px, 2.828px);
-    transform: rotate(-45deg) translate(-2.828px, 2.828px);
-}
-
-.change .bar2 {
-    opacity: 0;
-}
-
-.change .bar3 {
-    -webkit-transform: rotate(45deg) translate(-2.828px, -2.828px);
-    transform: rotate(45deg) translate(-2.828px, -2.828px);
-}
-
 .main {
     margin-top: 40px;
     margin-left: 50px;

@@ -69,6 +69,7 @@
 
 <body id='body' class=unselectable style="overflow: auto; -webkit-overflow-scrolling: touch;">
 
+    <input type="checkbox" id="menustate" class="menustate" tabindex="-1" style="display:none;">
     <div class="topnav" id="myTopnav">
         <div id="navTitle"></div>
         <div class="navButton" onClick='loadSubMenu("Original Levels")'> Original Levels </div>
@@ -78,11 +79,11 @@
         <div class="navButton" onClick='loadSubMenu("IQ Carrier")'> IQ Carrier </div>
         <div class="navButton" onClick='loadSubMenu("Simple Sokoban")'> Simple Sokoban </div>
         <div class="navButton" onClick='loadSubMenu("Still More")'> Still More </div>
-        <div class="navButton icon" onclick="toggleResponse(this)">
+        <label class="navButton icon" id="expand" for="menustate">
             <div class="bar1"></div>
             <div class="bar2"></div>
             <div class="bar3"></div>
-        </div>
+        </label>
     </div>
     <div class="main">
         <div id="pageTitle"></div>
