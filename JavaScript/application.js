@@ -122,10 +122,6 @@ window.deviceCheck = function () {
 			check = true;
 		}
 	})(navigator.userAgent || navigator.vendor || window.opera);
-
-
-
-
 }
 
 function drawNavigation() {
@@ -148,15 +144,15 @@ function drawNavigation() {
 	downBtn.addEventListener("touchend", buttonUp);
 	rightBtn.addEventListener("touchend", buttonUp);
 
-	upBtn.addEventListener("mousedown", function () { buttonDown("up") }, { passive: true });
-	leftBtn.addEventListener("mousedown", function () { buttonDown("left") }, { passive: true });
-	downBtn.addEventListener("mousedown", function () { buttonDown("down") }, { passive: true });
-	rightBtn.addEventListener("mousedown", function () { buttonDown("right") }, { passive: true });
+	// upBtn.addEventListener("mousedown", function () { buttonDown("up") }, { passive: true });
+	// leftBtn.addEventListener("mousedown", function () { buttonDown("left") }, { passive: true });
+	// downBtn.addEventListener("mousedown", function () { buttonDown("down") }, { passive: true });
+	// rightBtn.addEventListener("mousedown", function () { buttonDown("right") }, { passive: true });
 
-	upBtn.addEventListener("mouseup", buttonUp);
-	leftBtn.addEventListener("mouseup", buttonUp);
-	downBtn.addEventListener("mouseup", buttonUp);
-	rightBtn.addEventListener("mouseup", buttonUp);
+	// upBtn.addEventListener("mouseup", buttonUp);
+	// leftBtn.addEventListener("mouseup", buttonUp);
+	// downBtn.addEventListener("mouseup", buttonUp);
+	// rightBtn.addEventListener("mouseup", buttonUp);
 }
 
 
