@@ -10,26 +10,13 @@
     <link rel="mask-icon" href="../../website_icon.svg" color="red">
     <!-- <link rel="stylesheet" type="text/css" href="../../Style/game.css"> -->
 
-    <script>
-        document.addEventListener("readystatechange", readyStateDidChange)
-
-        function readyStateDidChange(e) {
-            console.log(document.readyState)
-            if (document.readyState === "interactive") {
-                //dom is ready, window.onload fires later
-                document.removeEventListener("readystatechange", readyStateDidChange)
-                // LoadMenuLevels()
-            }
-        }
-    </script>
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105778471-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'UA-105778471-1', { 'site_speed_sample_rate': 100 });
+        gtag('config', 'UA-105778471-1');
     </script>
 
     <script type="text/javascript" src="../../JavaScript/Menu.js"></script>
@@ -74,7 +61,7 @@
             <a class="navButton" href="./"> <img src="../../website_icon.png"/></a>
         </div>
     <div class="main">
-        <div id="pageTitle">Sokoban</div>
+        <div id="pageTitle">Sokoban Main Menu</div>
         <div id="levels" class="levels" align="center" cellspacing="20">
 
             <div class="list">
