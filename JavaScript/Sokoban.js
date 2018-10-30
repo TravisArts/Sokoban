@@ -28,7 +28,7 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
 SokobanManager.prototype.setup = function () {
 	var sTime = performance ? performance.now() : new Date().getTime();
 
-    history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
+    // history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
     setCookie("level", levelNumber)
 
     var previousState = this.storageManager.getGameState(levelNumber);
@@ -813,18 +813,6 @@ function previousLevel() {
 
     var runLoop = true
 
-    // while (runLoop) {
-
-    //     levelNumber--
-
-    //     var lvl = LoadLevelData(levelNumber)
-
-
-    //     if (typeof lvl != "undefined") {
-    //         runLoop = false;
-    //     }
-
-    // }
     var lvl = null
 
     while (lvl == null) {
@@ -834,6 +822,8 @@ function previousLevel() {
         lvl = LoadLevelData(levelNumber)
 
     }
+    history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
+
     manager.clearStyle()
     manager.setup()
 }
