@@ -6,12 +6,87 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
+
 <url>
   <loc>https://travisarts.github.io/Sokoban/</loc>
-  <lastmod>2018-01-05T19:01:00+00:00</lastmod>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://travisarts.github.io/Sokoban/?level=475</loc>
-  <lastmod>2018-01-05T19:01:00+00:00</lastmod>
+  <loc>https://travisarts.github.io/Sokoban/Menu/Main/</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/?collection=Original%20Levels</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/?collection=Boxxle</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/?collection=Dimitri%20&amp;%20Yorick</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/?collection=Extra</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/?collection=IQ%20Carrier</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/?collection=Simple%20Sokoban</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/?collection=Still%20More</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/Main/..?collection=Original%20Levels</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/Main/..?collection=Boxxle</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/Main/..?collection=Dimitri%20&amp;%20Yorick</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/Main/..?collection=Extra</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/Main/..?collection=IQ%20Carrier</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/Main/..?collection=Simple%20Sokoban</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://travisarts.github.io/Sokoban/Menu/Main/..?collection=Still%20More</loc>
+  <lastmod>2018-10-30T18:25:42+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
 </urlset>
