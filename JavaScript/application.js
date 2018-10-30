@@ -1,6 +1,7 @@
 
 var manager
 var gameBoard
+var loadSpinner
 
 // Wait till the browser is ready to render the game (avoids glitches)
 window.requestAnimationFrame(function () {
@@ -31,6 +32,8 @@ function prepareGame() {
 	}
 
 	gameBoard = document.getElementsByClassName('GameBoard')[0]
+
+	loadSpinner = document.getElementById('loader')
 
 	manager = new SokobanManager(KeyboardInputManager, HTMLActuator, LocalStorageManager);
 

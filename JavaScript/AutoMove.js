@@ -77,10 +77,28 @@ function mouseMove(e) {
 	}
 }
 
+var thinking = false;
+
+
+function setThinking(state) {
+	thinking = state
+	if (thinking == true) {
+		if (isMobile) {
+			loadSpinner.style.display = 'initial'
+		} else {
+			setCursor('progress')
+		}
+	} else {
+		setCursor(null)
+		loadSpinner.style.display = 'none'
+	}
+}
+ 
+
 function mouseUp(e) {
 	if (grabbing != null) {
-
-		setCursor('progress')
+		
+		setThinking(true)
 
 		setTimeout( function() {
 			var wrapper = document.getElementsByClassName("drag")[0]
@@ -89,10 +107,10 @@ function mouseUp(e) {
 			}
 
 			var position = detectCoordinate(e)
-			// console.log(grabbing)
 			var path = findPush(grabbing, position)
 
-			setTimeout(setCursor('grab'), 0)
+			setThinking(false)
+			// setTimeout(setCursor('grab'), 0)
 			// document.body.style.cursor = 'progress';
 			if (path.length != 0) {
 				var route = pathToRoute(path)

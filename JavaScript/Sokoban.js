@@ -953,7 +953,7 @@ function setWindowTitle() {
         levelTitle += ' "' + theLevel.title + '"'
         pageTitle += '"' + theLevel.title + '"'
     } else {
-        levelTitle += " Level " + getLevelNumber(type)
+        levelTitle += "Level " + getLevelNumber(type)
         pageTitle += "Level " + getLevelNumber(type)
     }
 
@@ -962,6 +962,8 @@ function setWindowTitle() {
     document.getElementById("navTitle").innerText = winTitle
     document.getElementById("pageTitle").innerHTML = pageTitle
     document.getElementById('completion-title').innerHTML = pageTitle
+
+    document.querySelector('meta[property="og:title"]').setAttribute("content", levelTitle);
 
     if (isCompleted)
         winTitle += completedStr

@@ -144,7 +144,7 @@
     <!--<p id="demo">the solution goes here</p>-->
     <div class=gameArea>
         <div id="pageTitle"></div>
-        <div id="block-block" style="display: inline-block; width: 100%">
+        <div id="block-block" style="display: inline-block; width: 100%;position: relative; z-index: 100;">
             <div class=button-space>
                 <div class="button fullscreen-button">
                     <i id=fullscreen-icon class="material-icons "></i>
@@ -166,12 +166,15 @@
                 </div>
             </div>
         </div>
+        <div id="loader" style="display: none;">
+                <div id="spinner"></div>
+        </div>
 
         <div id="stationary">
             <div class="GameBoard" id=GameBoard onmousedown="mouseDown(event) " onmousemove="mouseMove(event) "
                 onmouseup="mouseUp(event)">
-                <!-- <canvas id="circle" width="500" margin="0" style="position:absolute;"> -->
-                </canvas>
+                <!-- <canvas id="circle" width="500" margin="0" style="position:absolute;">
+                </canvas> -->
                 <div class="GameSpace "></div>
                 <div class="WallSpace "></div>
             </div>
