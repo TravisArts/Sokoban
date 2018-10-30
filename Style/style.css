@@ -137,6 +137,7 @@ button:disabled {
     text-align: center;
     padding: 8px;
     height: 40px;
+    text-decoration: none;
     /* -webkit-tap-highlight-color: #111111 */
 }
 

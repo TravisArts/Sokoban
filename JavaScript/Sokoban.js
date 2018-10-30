@@ -963,7 +963,7 @@ function setWindowTitle() {
     document.getElementById("pageTitle").innerHTML = pageTitle
     document.getElementById('completion-title').innerHTML = pageTitle
 
-    document.querySelector('meta[property="og:title"]').setAttribute("content", levelTitle);
+    // document.querySelector('meta[property="og:title"]').setAttribute("content", levelTitle);
 
     if (isCompleted)
         winTitle += completedStr
