@@ -125,6 +125,17 @@ window.deviceCheck = function () {
 			check = true;
 		}
 	})(navigator.userAgent || navigator.vendor || window.opera);
+
+	console.log("look here")
+	console.log(typeof document.fullscreen == "undefined")
+	if (typeof document.fullscreen == "undefined"
+	 && typeof document.mozFullScreen == "undefined"
+	 && typeof document.webkitIsFullScreen == "undefined") { 
+		// safe to use the function
+		console.log("removing")
+		document.getElementById('fullscreen').style.display = 'none'
+	}
+
 }
 
 function drawNavigation() {

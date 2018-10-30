@@ -304,6 +304,8 @@ KeyboardInputManager.prototype.fullScreen = function (event) {
 	event.preventDefault()
 	// var body = document.getElementsByTagName("body")
 
+	console.log(typeof document.mozFullScreen)
+
 	if (document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen) {
 		if (document.exitFullscreen) {
 			document.exitFullscreen();
