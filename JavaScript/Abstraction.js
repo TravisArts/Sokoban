@@ -40,7 +40,7 @@ Space.prototype.classify = function() {
     }
 }
 
-
+/*
 
 function Room ( ) {
     this.spaces = []
@@ -64,7 +64,7 @@ function assign(space, assignment) {
     space.assignment = assignment
     assignment.spaces.push(spaces)
 }
-
+*/
 function beginAbstraction() {
     document.getElementById("score-space").style.color = "#ff0000";
     
