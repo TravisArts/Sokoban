@@ -77,24 +77,25 @@ function beginAbstraction() {
     
     var potentialRooms = []
     var potentialTunnels = []
-/*    // itterate for theoretical classification
+    // itterate for theoretical classification
 //    var objArr = theLevel.objArr
     for (var x = 0; x < theLevel.columns; x++) {
 //        console.log(objArr[x])
         for (var y = 0; y < theLevel.rows; y++) {
-            var value = theLevel.itemAt(x, y)
+            var item = theLevel.itemAt(x, y)
+            var value = item.value
             var space = new Space(x, y, (value != null) )
-            space.classify()
+            //space.classify()
             if (space.type == types.ROOM) {
                 potentialRooms.push(space)
             } else if (space.type == types.ROOM) {
                 potentialTunnels.push(space)
             }
+            var drawType(space)
         }
     }
-    drawType()
     // itterate rooms
-    */
+    
 }
 
 
