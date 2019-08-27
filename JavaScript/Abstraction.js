@@ -102,7 +102,7 @@ function drawType(space) {
         var R = pieceWidth/3
         
         var ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+//        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         ctx.beginPath();
         ctx.arc(x, y, R, 0, 2 * Math.PI, false);
