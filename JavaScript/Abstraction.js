@@ -76,6 +76,7 @@ function beginAbstraction() {
     // itterate for theoretical classification
     var objArr = theLevel.objArr
     for (var x = 0; x < theLevel.columns; x++) {
+        console.log(objArr[x])
         for (var y = 0; y < theLevel.rows; y++) {
             var value = objArr[x][y]
             var space = new Space(x, y, (value != null) )
