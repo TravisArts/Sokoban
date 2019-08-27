@@ -33,7 +33,7 @@ Space.prototype.classify = function() {
         isWall = !pieceArr.includes(item.value)
     }
     if ( isWall ) {
-        this.type = types.wall
+        this.type = types.WALL
     } else {
     /*    var uv = false
         var dv = false
@@ -101,7 +101,7 @@ function assign(space, assignment) {
 }
 */
 function beginAbstraction() {
-    document.getElementById("score-space").style.color = "#ffff00";
+    document.getElementById("score-space").style.color = "#00ff00";
     
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
