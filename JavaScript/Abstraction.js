@@ -66,6 +66,9 @@ function assign(space, assignment) {
 }
 
 function beginAbstraction() {
+    var canvas = document.getElementById('circle');
+    canvas.height = pieceWidth * theLevel.rows
+    
     var potentialRooms = []
     var potentialTunnels = []
     // itterate for theoretical classification
@@ -94,7 +97,8 @@ function beginAbstraction() {
 
 function drawType(space) {
     var canvas = document.getElementById('circle');
-    if (canvas.getContext && (space.type != types.WALL)) {
+//    if (canvas.getContext && (space.type != types.WALL)) {
+    if (space.type != types.WALL) {
         var rect = gameBoard.getBoundingClientRect()
         
         var x = (space.x + 0.5) * pieceWidth
