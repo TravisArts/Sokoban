@@ -22,10 +22,12 @@ function Space (x, y, vacant) {
 
 Space.prototype.classify = function() {
 //    var objArr = theLevel.objArr
+    
+    var item = theLevel.itemAt(this.x, this.y)
+    
     if (item) {
-        var item = theLevel.itemAt(this.x, this.y)
-    }
     window.alert(item.value)
+    }
     if ( item && item.value == "#" ) {
         this.type = types.wall
     } else {
