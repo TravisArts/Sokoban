@@ -84,7 +84,7 @@ function beginAbstraction() {
         for (var y = 0; y < theLevel.rows; y++) {
             var item = theLevel.itemAt(x, y)
             var value = item.value
-            var space = new Space(x, y, (value != null) )
+            var space = new Space(x, y, (value == undefined) )
             //space.classify()
             if (space.type == types.ROOM) {
                 potentialRooms.push(space)
