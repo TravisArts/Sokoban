@@ -101,7 +101,7 @@ function assign(space, assignment) {
 }
 */
 function beginAbstraction() {
-    document.getElementById("score-space").style.color = "#00ff00";
+    document.getElementById("score-space").style.color = "#ffff00";
     
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
