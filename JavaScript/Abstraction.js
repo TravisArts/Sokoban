@@ -35,7 +35,10 @@ Space.prototype.classify = function() {
     if ( item.isWall ) {
         this.type = types.wall
     } else {
-        var uv, dv, rv, lv
+        var uv = false
+        var dv = false
+        var rv = false
+        var lv = false
       
         var u = theLevel.itemAt(this.x, this.y-1)
         var d = theLevel.itemAt(this.x, this.y+1)
