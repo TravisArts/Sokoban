@@ -26,31 +26,45 @@ Space.prototype.classify = function() {
     var item = theLevel.itemAt(this.x, this.y)
     
     var isWall = false
+    var pieceArr = ['$', '.', '@', '+', '?']
     
     if (item) {
 //    window.alert(item.value)
-        var pieceArr = ['$', '.', '@', '+', '*', '?']
         isWall = !pieceArr.includes(item.value)
     }
-    if ( item && item.value == "#" ) {
+    if ( item.isWall ) {
         this.type = types.wall
     } else {
+        var uv, dv, rv, lv
+      
         var u = theLevel.itemAt(this.x, this.y-1)
         var d = theLevel.itemAt(this.x, this.y+1)
         var r = theLevel.itemAt(this.x-1, this.y)
         var l = theLevel.itemAt(this.x+1, this.y)
+        if (u) {
+            uv = !pieceArr.includes(u.value)
+        }
+        if (d) {
+            dv =  !pieceArr.includes(d.value)
+        }
+        if (r) {
+            rv = !pieceArr.includes(r.value)
+        }
+        if (l) {
+            lv = !pieceArr.includes(l.value)
+        }
         
-        var uv = (u && u.value == "#")
-        var dv = (d && d.value == "#")
-        var rv = (r && r.value == "#")
-        var lv = (l && l.value == "#")
+//        var uv = (u && u.value == "#")
+  //      var dv = (d && d.value == "#")
+    //    var rv = (r && r.value == "#")
+      //  var lv = (l && l.value == "#")
 //        var u = objArr[x][y-1].value == "#"
 //        var d = objArr[x][y+1].value == "#"
   //      var r = objArr[x-1][y].value == "#"
     //    var l = objArr[x+1][y].value == "#"
         
         var dirs = uv + dv + rv + lv
-        if (dirs > 2) {
+        if (dirs <= 2) {
             this.type = types.ROOM
         } else {
             this.type = types.TUNNEL
