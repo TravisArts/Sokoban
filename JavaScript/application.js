@@ -54,6 +54,7 @@ function prepareGame() {
 	// }
 
 	setupInfo()
+	beginAbstraction()
 }
 
 function doOnOrientationChange() {
