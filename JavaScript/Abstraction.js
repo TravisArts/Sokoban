@@ -21,15 +21,19 @@ function Space (x, y, vacant) {
 }
 
 Space.prototype.classify = function() {
-    var objArr = theLevel.objArr
-    var value = objArr[x][y].value
+//    var objArr = theLevel.objArr
+    var value = theLevel.itemAt(x, y).value
     if ( value == "#" ) {
         this.type = types.wall
     } else {
-        var u = objArr[x][y-1].value == "#"
-        var d = objArr[x][y+1].value == "#"
-        var r = objArr[x-1][y].value == "#"
-        var l = objArr[x+1][y].value == "#"
+        var u = theLevel.itemAt(x, y).value == "#"
+        var d = theLevel.itemAt(x, y).value == "#"
+        var r = theLevel.itemAt(x, y).value == "#"
+        var l = theLevel.itemAt(x, y).value == "#"
+//        var u = objArr[x][y-1].value == "#"
+//        var d = objArr[x][y+1].value == "#"
+  //      var r = objArr[x-1][y].value == "#"
+    //    var l = objArr[x+1][y].value == "#"
         
         var dirs = u + d + r + l
         if (dirs > 2) {
@@ -74,11 +78,11 @@ function beginAbstraction() {
     var potentialRooms = []
     var potentialTunnels = []
     // itterate for theoretical classification
-    var objArr = theLevel.objArr
+//    var objArr = theLevel.objArr
     for (var x = 0; x < theLevel.columns; x++) {
-        console.log(objArr[x])
+//        console.log(objArr[x])
         for (var y = 0; y < theLevel.rows; y++) {
-            var value = objArr[x][y]
+            var value = theLevel.itemAt(x, y)
             var space = new Space(x, y, (value != null) )
             space.classify()
             if (space.type == types.ROOM) {
