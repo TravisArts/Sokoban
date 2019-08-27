@@ -22,20 +22,25 @@ function Space (x, y, vacant) {
 
 Space.prototype.classify = function() {
 //    var objArr = theLevel.objArr
-    var value = theLevel.itemAt(x, y).value
-    if ( value == "#" ) {
+    var item = theLevel.itemAt(this.x, this.y)
+    if ( item && item.value == "#" ) {
         this.type = types.wall
     } else {
-        var u = theLevel.itemAt(x, y).value == "#"
-        var d = theLevel.itemAt(x, y).value == "#"
-        var r = theLevel.itemAt(x, y).value == "#"
-        var l = theLevel.itemAt(x, y).value == "#"
+        var u = theLevel.itemAt(this.x, this.y-1)
+        var d = theLevel.itemAt(this.x, this.y+1)
+        var r = theLevel.itemAt(this.x-1, this.y)
+        var l = theLevel.itemAt(this.x+1, this.y)
+        
+        var uv = (u && u.value == "#")
+        var dv = (d && d.value == "#")
+        var rv = (r && r.value == "#")
+        var lv = (l && l.value == "#")
 //        var u = objArr[x][y-1].value == "#"
 //        var d = objArr[x][y+1].value == "#"
   //      var r = objArr[x-1][y].value == "#"
     //    var l = objArr[x+1][y].value == "#"
         
-        var dirs = u + d + r + l
+        var dirs = uv + dv + rv + lv
         if (dirs > 2) {
             this.type = types.ROOM
         } else {
@@ -85,12 +90,12 @@ function beginAbstraction() {
             var item = theLevel.itemAt(x, y)
 //            var value = item.value
             var space = new Space(x, y, true)//(value == undefined) )
-            //space.classify()
-//            if (space.type == types.ROOM) {
-  //              potentialRooms.push(space)
-    //        } else if (space.type == types.ROOM) {
-      //          potentialTunnels.push(space)
-        //    }
+            space.classify()
+            if (space.type == types.ROOM) {
+                potentialRooms.push(space)
+            } else if (space.type == types.ROOM) {
+                potentialTunnels.push(space)
+            }
             drawType(space)
         }
     }
