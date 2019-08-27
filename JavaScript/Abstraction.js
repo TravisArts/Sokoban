@@ -77,7 +77,7 @@ function beginAbstraction() {
     
     var potentialRooms = []
     var potentialTunnels = []
-    // itterate for theoretical classification
+/*    // itterate for theoretical classification
 //    var objArr = theLevel.objArr
     for (var x = 0; x < theLevel.columns; x++) {
 //        console.log(objArr[x])
@@ -94,7 +94,7 @@ function beginAbstraction() {
     }
     drawType()
     // itterate rooms
-    
+    */
 }
 
 
