@@ -75,7 +75,7 @@ function assign(space, assignment) {
 }
 */
 function beginAbstraction() {
-    document.getElementById("score-space").style.color = "#ff0000";
+    document.getElementById("score-space").style.color = "#ffff00";
     
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
@@ -93,7 +93,7 @@ function beginAbstraction() {
             space.classify()
             if (space.type == types.ROOM) {
                 potentialRooms.push(space)
-            } else if (space.type == types.ROOM) {
+            } else if (space.type == types.TUNNEL) {
                 potentialTunnels.push(space)
             }
             drawType(space)
@@ -116,7 +116,7 @@ function drawType(space) {
         
         var x = (space.x + 0.5) * pieceWidth
         var y = (space.y + 0.5) * pieceWidth
-        var R = pieceWidth/3
+        var R = pieceWidth/4
         
         var ctx = canvas.getContext('2d');
 //        ctx.clearRect(0, 0, canvas.width, canvas.height);
