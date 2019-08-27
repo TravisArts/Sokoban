@@ -54,7 +54,6 @@ function prepareGame() {
 	// }
 
 	setupInfo()
-	document.getElementById("score-space").style.color = "#ff00ff";
 	beginAbstraction()
 }
 
