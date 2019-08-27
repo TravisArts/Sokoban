@@ -32,7 +32,7 @@ Space.prototype.classify = function() {
 //    window.alert(item.value)
         isWall = !pieceArr.includes(item.value)
     }
-    if ( item.isWall ) {
+    if ( isWall ) {
         this.type = types.wall
     } else {
     /*    var uv = false
