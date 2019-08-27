@@ -79,6 +79,7 @@ function beginAbstraction() {
     
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
+    canvas.style.zIndex = "1";
     
     var potentialRooms = []
     var potentialTunnels = []
