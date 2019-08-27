@@ -69,6 +69,8 @@ function beginAbstraction() {
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
     
+    document.getElementById("score-space").style.color = "#ff0000";
+    
     var potentialRooms = []
     var potentialTunnels = []
     // itterate for theoretical classification
