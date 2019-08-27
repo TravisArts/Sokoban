@@ -35,7 +35,7 @@ Space.prototype.classify = function() {
     if ( item.isWall ) {
         this.type = types.wall
     } else {
-        var uv = false
+    /*    var uv = false
         var dv = false
         var rv = false
         var lv = false
@@ -71,7 +71,7 @@ Space.prototype.classify = function() {
             this.type = types.ROOM
         } else {
             this.type = types.TUNNEL
-        }
+        }*/
     }
 }
 
