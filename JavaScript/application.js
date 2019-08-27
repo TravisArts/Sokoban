@@ -54,10 +54,6 @@ function prepareGame() {
 	// }
 
 	setupInfo()
-	document.getElementById("score-space").style.color = "#ff00FF";
-	var canvas = document.getElementById('circle');
-	canvas.height = pieceWidth * theLevel.rows
-	beginAbstraction()
 }
 
 function doOnOrientationChange() {
