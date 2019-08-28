@@ -75,12 +75,12 @@ Space.prototype.classify = function() {
     }
 }
 
-/*
+
 
 function Room ( number ) {
     this.spaces = []
     this.egress = []
-    this.neighbors []
+    this.neighbors = []
     this.number = number
 }
 
@@ -103,7 +103,7 @@ function assign(space, assignment) {
 }
 
 function beginAbstraction() {
-    document.getElementById("score-space").style.color = "#0000ff";
+    document.getElementById("score-space").style.color = "#ff00ff";
     
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
