@@ -75,14 +75,16 @@ Space.prototype.classify = function() {
     }
 }
 
-/*
 
-function Room ( ) {
+
+function Room ( number ) {
     this.spaces = []
     this.egress = []
     this.neighbors []
+    this.number = number
 }
 
+/*
 
 function Tunnel ( ) {
     this.spaces = []
@@ -94,14 +96,14 @@ function Tunnel ( ) {
 //
 // functions
 //
-
+*/
 function assign(space, assignment) {
     space.assignment = assignment
     assignment.spaces.push(spaces)
 }
-*/
+
 function beginAbstraction() {
-    document.getElementById("score-space").style.color = "#ffffff";
+    document.getElementById("score-space").style.color = "#000000";
     
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
@@ -111,8 +113,10 @@ function beginAbstraction() {
     var potentialTunnels = []
     // itterate for theoretical classification
 //    var objArr = theLevel.objArr
+    var allSpaces = []
     for (var x = 0; x < theLevel.columns; x++) {
 //        console.log(objArr[x])
+        var xSpaces = []
         for (var y = 0; y < theLevel.rows; y++) {
             var item = theLevel.itemAt(x, y)
 //            var value = item.value
@@ -123,10 +127,50 @@ function beginAbstraction() {
             } else if (space.type == types.TUNNEL) {
                 potentialTunnels.push(space)
             }
+            xSpaces.push(space)
             drawType(space)
         }
+        allSpaces.push(xSpaces)
     }
+    
+    var rooms = []
+    
     // itterate rooms
+    for (var i = 0; i < potentialRooms.length; i++) {
+        var space = potentialRooms[i]
+        var x = space.x
+        var y = space.y
+        
+        var u = allSpaces[x][y-1]
+        var d = allSpaces[x][y+1]
+        var r = allSpaces[x+1][y]
+        var l = allSpaces[x-1][y]
+        var neighbors = [u, d, r, l]
+        
+        var room
+        
+        if (rooms.lengths == 0) {
+            room = new Room(0)
+            assign(space, room)
+            rooms.push(room)
+        } else {
+            for (j = 0; j < 4; j++) {
+                var spot = neighbors[j]
+                if (spot && potentialRooms.includes(spot)) {
+                    if (spot.assignment) {
+                        assign(space, spot.assignment)
+                        break;
+                    }
+                }
+            }
+            if (space.assignment == null) {
+                room = new Room(rooms.length + 1)
+                rooms.push(room)
+                assign(space, room)
+            }
+        }
+    }
+    window.alert(rooms.length)
     
 }
 
