@@ -159,7 +159,7 @@ function beginAbstraction() {
                 if (spot && potentialRooms.includes(spot)) {
                     if (spot.assignment) {
                         assign(space, spot.assignment)
-                        break;
+                        
                     }
                 }
             }
