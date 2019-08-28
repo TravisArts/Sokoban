@@ -96,7 +96,7 @@ SokobanManager.prototype.setup = function () {
 
     this.setStyles()
 
-    beginAbstraction()
+//    beginAbstraction()
     setupPathFinding()
 
     // Update the actuator
