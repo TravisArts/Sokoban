@@ -103,7 +103,7 @@ function assign(space, assignment) {
 }
 
 function beginAbstraction() {
-    document.getElementById("score-space").style.color = "#ff00ff";
+    document.getElementById("score-space").style.color = "#ff0000";
     
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
@@ -156,8 +156,8 @@ function beginAbstraction() {
         } else {
             for (j = 0; j < 4; j++) {
                 var spot = neighbors[j]
-                if (spot && potentialRooms.includes(spot)) {
-                    if (spot.assignment) {
+                if (spot) {
+                    if (potentialRooms.includes(spot) && spot.assignment) {
                         assign(space, spot.assignment)
                         
                     }
