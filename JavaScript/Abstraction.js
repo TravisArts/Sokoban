@@ -67,7 +67,7 @@ Space.prototype.classify = function() {
     //    var l = objArr[x+1][y].value == "#"
         
         var dirs = uv + dv + rv + lv
-        if (dirs <= 3) {
+        if (dirs <= 1) {
             this.type = types.ROOM
         } else {
             this.type = types.TUNNEL
