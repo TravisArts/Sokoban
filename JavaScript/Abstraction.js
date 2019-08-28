@@ -67,7 +67,7 @@ Space.prototype.classify = function() {
     //    var l = objArr[x+1][y].value == "#"
         
         var dirs = uv + dv + rv + lv
-        if (dirs <= 2) {
+        if (dirs >= 2) {
             this.type = types.ROOM
         } else {
             this.type = types.TUNNEL
@@ -101,7 +101,7 @@ function assign(space, assignment) {
 }
 */
 function beginAbstraction() {
-    document.getElementById("score-space").style.color = "#00ffff";
+    document.getElementById("score-space").style.color = "#ffffff";
     
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
