@@ -26,7 +26,7 @@ Space.prototype.classify = function() {
     var item = theLevel.itemAt(this.x, this.y)
     
     var isWall = false
-    var pieceArr = ['$', '.', '@', '+', '?']
+    var pieceArr = ['$', '.', '@', '+', '?', '*']
     
     if (item) {
 //    window.alert(item.value)
