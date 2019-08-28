@@ -134,7 +134,7 @@ function beginAbstraction() {
     }
     
     var rooms = []
-    /*
+    
     // itterate rooms
     for (var i = 0; i < potentialRooms.length; i++) {
         var space = potentialRooms[i]
@@ -169,7 +169,7 @@ function beginAbstraction() {
                 assign(space, room)
             }
         }
-    }*/
+    }
     window.alert(rooms.length)
     
 }
