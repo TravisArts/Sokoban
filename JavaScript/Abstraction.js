@@ -96,14 +96,14 @@ function Tunnel ( ) {
 //
 // functions
 //
-*/
+
 function assign(space, assignment) {
     space.assignment = assignment
     assignment.spaces.push(spaces)
-}
+}*/
 
 function beginAbstraction() {
-    document.getElementById("score-space").style.color = "#000000";
+    document.getElementById("score-space").style.color = "#0000ff";
     
     var canvas = document.getElementById('circle');
     canvas.height = pieceWidth * theLevel.rows
