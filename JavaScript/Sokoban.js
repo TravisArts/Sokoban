@@ -110,6 +110,19 @@ SokobanManager.prototype.setup = function () {
     // if (isMobile) {
     //     drawNavigation()
     // }
+    domtoimage.toPng(gameboard)
+    .then(function (dataUrl) {
+        var img = new Image();
+        img.src = dataUrl;
+        document.body.appendChild(img);
+        $('#myId').click(function () {
+            window.location = dataUrl;
+        });
+    })
+    .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+    });
+    
 }
 
 SokobanManager.prototype.clearStyle = function () {
