@@ -110,8 +110,8 @@ SokobanManager.prototype.setup = function () {
     // if (isMobile) {
     //     drawNavigation()
     // }
-    alert("time to creating the png")
-    domtoimage.toPng(gameboard)
+    alert("time to creating the svg")
+    domtoimage.toSvg(gameboard)
     .then(function (dataUrl) {
 	alert(dataUrl)
         var img = new Image();
