@@ -26,7 +26,7 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
 }
 
 SokobanManager.prototype.setup = function () {
-	var sTime = performance ? performance.now() : new Date().getTime();
+    var sTime = performance ? performance.now() : new Date().getTime();
 
     // history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
     setCookie("level", levelNumber)
@@ -110,23 +110,19 @@ SokobanManager.prototype.setup = function () {
     // if (isMobile) {
     //     drawNavigation()
     // }
-    alert("time to creating the svg")
-    domtoimage.toSvg(gameboard)
-    .then(function (dataUrl) {
-	alert(dataUrl)
+    alert("time to creating the canvas")
+    html2canvas(gameboard).then(canvasElm => {
+		var dataURL = canvasElm.toDataURL()
+		alert(dataUrl)
         var img = new Image();
         img.src = dataUrl;
         document.body.appendChild(img);
-	document.getElementById('score-space').addEventListener('click', function() {
-	    window.location = dataUrl;
-	    //location.href = 'http://your-url.com'
-	}, false);
-    })
-    .catch(function (error) {
-	alert("oops, something went wrong!")
-	alert(error)
-        console.error('oops, something went wrong!', error);
-    });
+		document.getElementById('score-space').addEventListener('click', function() {
+			window.location = dataUrl;
+			//location.href = 'http://your-url.com'
+		}, false);
+		document.body.appendChild(canvasElm);
+	});
     
 }
 
