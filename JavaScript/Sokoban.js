@@ -115,9 +115,10 @@ SokobanManager.prototype.setup = function () {
         var img = new Image();
         img.src = dataUrl;
         document.body.appendChild(img);
-        $('#myId').click(function () {
-            window.location = dataUrl;
-        });
+	document.getElementById('score-space').addEventListener('click', function() {
+	    window.location = dataUrl;
+	    //location.href = 'http://your-url.com'
+	}, false);
     })
     .catch(function (error) {
         console.error('oops, something went wrong!', error);
