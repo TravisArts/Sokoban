@@ -110,6 +110,7 @@ SokobanManager.prototype.setup = function () {
     // if (isMobile) {
     //     drawNavigation()
     // }
+	/*
     alert("time to creating the canvas")
     html2canvas(gameboard).then(canvasElm => {
 		var dataURL = canvasElm.toDataURL()
@@ -122,7 +123,7 @@ SokobanManager.prototype.setup = function () {
 			//location.href = 'http://your-url.com'
 		}, false);
 		document.body.appendChild(canvasElm);
-	});
+	});*/
     
 }
 
