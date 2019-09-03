@@ -110,8 +110,10 @@ SokobanManager.prototype.setup = function () {
     // if (isMobile) {
     //     drawNavigation()
     // }
+    alert("time to creating the png")
     domtoimage.toPng(gameboard)
     .then(function (dataUrl) {
+	alert(dataUrl)
         var img = new Image();
         img.src = dataUrl;
         document.body.appendChild(img);
@@ -121,6 +123,8 @@ SokobanManager.prototype.setup = function () {
 	}, false);
     })
     .catch(function (error) {
+	alert("oops, something went wrong!")
+	alert(error)
         console.error('oops, something went wrong!', error);
     });
     
