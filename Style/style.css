@@ -350,15 +350,18 @@ button:disabled {
 
 .button-space {
     float: right;
-    /* margin-bottom: 10px;
-    margin-top: 10px; */
+    margin-bottom: 10px;
+    margin-top: 10px;
     padding-left: max(0px, env(safe-area-inset-left));
     padding-right: max(0px, env(safe-area-inset-right));
     /* padding-bottom: max(0px, env(safe-area-inset-bottom)); */
 }
 
 .GameBoard {
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
     height: fit-content;
     user-select: none;
     /* Chrome/Safari */
@@ -599,7 +602,8 @@ button {
     color: #C6C9FE;
     font-size: 40px;
     /* float: right; */
-    
+    margin-left: max(8px, env(safe-area-inset-left));
+    margin-right: max(8px, env(safe-area-inset-right));
 }
 
 .navigation-footer {
@@ -614,8 +618,6 @@ button {
     /* background-color: #000000; */
     /* opacity: 0.5; */
     /* background-color: #3CC; */
-    margin-left: max(8px, env(safe-area-inset-left));
-    margin-right: max(8px, env(safe-area-inset-right));
     margin-bottom: max(8px, env(safe-area-inset-bottom));
 }
 
@@ -849,12 +851,12 @@ p [piece]::before {
     z-index: 10;
 }
 
-/* @media (hover: hover),
+@media (hover: hover),
 (orientation: landscape) and (max-height: 520px) {
     #dPad {
         display: none;
     }
-} */
+}
 
 
 #loader {
