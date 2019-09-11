@@ -285,7 +285,7 @@ button:disabled {
 }
 
 [piece="$"] {
-    color: #999933;
+    color: #CBB43A;
 }
 
 [piece="*"] {
@@ -293,7 +293,7 @@ button:disabled {
 }
 
 [piece="*"]::after {
-    color: #999933;
+    color: #CBB43A;
 }
 
 [piece="$"]::before,
@@ -306,9 +306,29 @@ button:disabled {
     z-index: 10;
 }
 
+[piece="$"]::before {
+    color: #FCFA82;
+}
+
+
+
+
 [piece="."] {
-    color: black;
-    z-index: 1;
+    /* color: black; */
+    color: #424242;
+    /* opacity: 0.25; */
+    /* z-index: 1; */
+}
+
+[piece="."]::before {
+    color: #FFFFFF;
+    z-index: 10;
+    opacity:1;
+}
+
+[piece="."]::after {
+    color: #cccccc;
+    z-index: 10;
 }
 
 [piece="#"] {
@@ -324,7 +344,8 @@ button:disabled {
 }
 
 .wall::after {
-    color: #3333CC;
+    /* color: #3333CC; */
+    color: #454BD9;
 }
 
 .button-space {

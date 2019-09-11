@@ -11,6 +11,8 @@ var grabbing = null
 function mouseDown(e) {
 	var position = detectCoordinate(e)
 
+	getAbstractionPoint(position)
+
 	var item = theLevel.itemAt(position.x, position.y)
 
 	if (item != null && (item.value == '$' || item.value == '*')) {

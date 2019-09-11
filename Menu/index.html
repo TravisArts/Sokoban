@@ -59,12 +59,29 @@
         }
 
         [piece="*"]::before {
-            content: attr(piece);
-            font-family: "fore";
+            /* content: attr(piece); */
+            content: "$";
+            font-family: "mid";
             position: absolute;
             z-index: 10;
-            color: #999933;
+            color: #CBB43A;
         }
+        /* .soko-room span {
+            font-family: "back";
+        } */
+        .soko-room [piece="*"],
+        .soko-room [piece="."] {
+            font-family: "back";
+        }
+        /* [piece="*"]::after,
+        [piece="."]::after {
+            content: ".";
+            font-family: "back";
+            position: absolute;
+            z-index: 10;
+            color: #FFFFFF;
+            transform: translate(-1em, 0)
+        } */
     </style>
 
 </head>

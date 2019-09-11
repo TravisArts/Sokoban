@@ -164,8 +164,8 @@ function getString(arr) {
 
 
 function formatChar(s) {
-    if (s == "*") {
-        return '<span piece=' + s + '>' + "." + '</span>'
+    if (s == ".") {
+        return '<span piece=' + s + '>' + "*" + '</span>'
     }
     return '<span piece=' + s + '>' + s + '</span>'
 }
