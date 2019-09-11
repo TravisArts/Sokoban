@@ -350,11 +350,11 @@ button:disabled {
 
 .button-space {
     float: right;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    /* margin-bottom: 10px;
+    margin-top: 10px; */
     padding-left: max(0px, env(safe-area-inset-left));
     padding-right: max(0px, env(safe-area-inset-right));
-    padding-bottom: max(0px, env(safe-area-inset-bottom));
+    /* padding-bottom: max(0px, env(safe-area-inset-bottom)); */
 }
 
 .GameBoard {
@@ -848,12 +848,12 @@ p [piece]::before {
     z-index: 10;
 }
 
-@media (hover: hover),
+/* @media (hover: hover),
 (orientation: landscape) and (max-height: 520px) {
     #dPad {
         display: none;
     }
-}
+} */
 
 
 #loader {

@@ -151,6 +151,7 @@ SokobanManager.prototype.setStyles = function () {
     var gameArea = document.getElementsByClassName("gameArea")[0]
     
     console.log(isMobile)
+    console.log(dPad.offsetParent)
     var usedHeight
     var availableWidth
     if (dPad.offsetParent === null) {
@@ -171,7 +172,7 @@ SokobanManager.prototype.setStyles = function () {
     // console.log(topnav.offsetHeight + ", " + buttons.offsetHeight + ", " + stats.offsetHeight + ", " + dPad.offsetHeight)
     // console.log(topnav.getBoundingClientRect().height + ", " + buttons.getBoundingClientRect().height + ", " + stats.getBoundingClientRect().height + ", " + dPad.getBoundingClientRect().height)
     // usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + dPad.offsetHeight
-    var availableHeight = window.innerHeight - usedHeight - 45
+    var availableHeight = window.innerHeight - usedHeight - 45 - 100
 
     // console.log("body: " + document.getElementsByClassName("gameArea")[0].offsetHeight + ", available: " + availableHeight)
     var height = availableHeight / (theLevel.rows)
