@@ -599,9 +599,7 @@ button {
     color: #C6C9FE;
     font-size: 40px;
     /* float: right; */
-    margin-left: max(8px, env(safe-area-inset-left));
-    margin-right: max(8px, env(safe-area-inset-right));
-    margin-bottom: max(8px, env(safe-area-inset-bottom));
+    
 }
 
 .navigation-footer {
@@ -616,6 +614,9 @@ button {
     /* background-color: #000000; */
     /* opacity: 0.5; */
     /* background-color: #3CC; */
+    margin-left: max(8px, env(safe-area-inset-left));
+    margin-right: max(8px, env(safe-area-inset-right));
+    margin-bottom: max(8px, env(safe-area-inset-bottom));
 }
 
 .back {
