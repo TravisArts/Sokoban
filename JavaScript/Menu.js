@@ -23,8 +23,15 @@ function loadSubMenu(type) {
 
     history.pushState(0, "" + type, "?collection=" + type)
 
-    var startNum, endNum = 0
+    var startNum, endNum, signatureNum = 0
 
+    var collection = collectionDetails.filter(obj => {
+        return obj.name === type
+    })[0]
+    startNum = collection.start
+    endNum = collection.end
+    signatureNum = collection.signature
+    /*
     switch (type) {
         case "Original Levels":     // 49 levels
             startNum = 201
@@ -56,7 +63,7 @@ function loadSubMenu(type) {
             break;
         default:
             return;
-    }
+    }*/
 
     var storageManager = new LocalStorageManager
 
@@ -67,44 +74,49 @@ function loadSubMenu(type) {
 
     var str = ""
 
-    var complete = '<div class="completion-star"><i class="material-icons" id="star">star</i></div>'
     var i, levelTitle
 
-    var hasName = (type == "IQ Carrier" || type == "Dimitri & Yorick")
+    // var hasName = (type == "IQ Carrier" || type == "Dimitri & Yorick")
 
+    if (signatureNum != 0 && !(startNum <= signatureNum && signatureNum <= endNum)) {
+        str += createLevelStr(signatureNum, startNum, storageManager)
+    }
 
     for (i = startNum; i <= endNum; i++) {
-
-        if (hasName) {
-            levelTitle = LoadLevelName(i)
-        } else {
-            levelTitle = "Level " + (i - startNum + 1)
-        }
-
-
-        var arr = Base64ToDec(LoadLevelData(i));
-
-        var columns = arr[1]
-
-        var fontSize = Math.floor(280/columns)
-
-        var wrapper = '<div class=list>'
-        
-        wrapper += '<a href=..?level=' + i + '><span class=soko-room style="font-size:' + fontSize + 'px;line-height:' + fontSize + 'px;">'
-            if (storageManager.getBestScore(i).moves != 0) {
-                wrapper += complete
-            }
-        wrapper += getString(arr)
-        wrapper += '</span><div class=levelName>' + levelTitle + '</div></a></div>'
-
-        str += wrapper
-
+        str += createLevelStr(i, startNum, storageManager)
     }
     container.innerHTML += str
 
     var fTime = performance ? performance.now() : new Date().getTime(),
         duration = (fTime - sTime).toFixed(2);
     console.log("loading menu took " + duration + "ms")
+}
+
+var complete = '<div class="completion-star"><i class="material-icons" id="star">star</i></div>'
+
+function createLevelStr(num, startNum, storageManager) {
+    var i = num
+
+    levelTitle = LoadLevelName(i)
+    if (levelTitle == "") {
+        levelTitle = "Level " + (i - startNum + 1)
+    }
+
+    var arr = Base64ToDec(LoadLevelData(i));
+
+    var columns = arr[1]
+
+    var fontSize = Math.floor(280/columns)
+
+    var wrapper = '<div class=list>'
+    
+    wrapper += '<a href=..?level=' + i + '><span class=soko-room style="font-size:' + fontSize + 'px;line-height:' + fontSize + 'px;">'
+    if (storageManager.getBestScore(i).moves != 0) {
+        wrapper += complete
+    }
+    wrapper += getString(arr)
+    wrapper += '</span><div class=levelName>' + levelTitle + '</div></a></div>'
+    return wrapper
 }
 
 function setWindowTitle(type) {
@@ -160,12 +172,79 @@ function getString(arr) {
     return text
 }
 
-
-
-
 function formatChar(s) {
-    if (s == ".") {
-        return '<span piece=' + s + '>' + "*" + '</span>'
+    if (characterArr.includes(s)) {
+        if (s == ".") {
+            return '<span piece=' + s + '>' + "*" + '</span>'
+        }
+        return '<span piece=' + s + '>' + s + '</span>'
     }
-    return '<span piece=' + s + '>' + s + '</span>'
+    return '<span piece=' + s + ' class="wall">' + s + '</span>'
+}
+
+var loaded = false
+function loadMainMenu() {
+    if (loaded == true) {
+        return
+    }
+    loaded = true
+    var container = document.getElementById("levels")
+
+    var sTime = performance ? performance.now() : new Date().getTime();
+
+    var str = ""
+    for (let i = 0; i < collectionDetails.length; i++) {
+        const collection = collectionDetails[i];
+        var num = (collection.signature == 0) ? collection.start : collection.signature
+        var name = collection.name
+
+        var arr = Base64ToDec(LoadLevelData(num));
+        var columns = arr[1]
+        var fontSize = Math.floor(280/columns)
+
+        console.log(encodeURIComponent(name))
+        
+        var wrapper = '<div class=list>'
+        wrapper += '<a href=..?collection=' + encodeURIComponent(name) + '><span class=soko-room style="font-size:' + fontSize + 'px;line-height:' + fontSize + 'px;">'
+
+        var lvl = new LevelStruct(arr, name)
+        unpackLevel(lvl)
+        lvl.cleanWalls()
+
+        wrapper += getMainString(lvl)
+        wrapper += '</span><div class=levelName>' + name + '</div></a></div>'
+        str += wrapper
+    }
+    console.log(str)
+
+    container.innerHTML += str
+
+
+    var fTime = performance ? performance.now() : new Date().getTime(),
+        duration = (fTime - sTime).toFixed(2);
+    console.log("loading menu took " + duration + "ms")
+}
+
+function getMainString(lvl) {
+    var i = 0
+
+    var x, y, lx = lvl.columns
+    var ly = lvl.rows
+
+    var text = ""
+    for (y = 0; y < ly; y++) {
+        for (x = 0; x < lx; x++) {
+
+            var piece = lvl.itemAt(x, y) //getPiece(i, arr)
+            var pieceChar = " "  //getChar(piece.value)
+            if (piece != null) {
+                pieceChar = piece.value
+            }
+            var value = formatChar(pieceChar)
+            text += value
+        }
+        text += "<br/>";
+    }
+
+    return text
 }

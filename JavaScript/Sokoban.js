@@ -892,62 +892,61 @@ function loadLevel(level) {
 var isCompleted = false
 var eventLabel
 
-function getLevelType() {
-    let num = levelNumber
+// function getLevelType() {
+//     let num = levelNumber
 
-    if (201 <= num && num <= 250)
-        return "" //Original Levels"
-    if (251 <= num && num <= 290)
-        return "Extra"
-    if (301 <= num && num <= 335)
-        return "Still More!"
-    if (351 <= num && num <= 411)
-        return "Simple Sokoban"
-    if (450 <= num && num <= 478)
-        return "IQ Carrier"
-    if (480 <= num && num <= 645)
-        return "Boxxle"
-    if (651 <= num && num <= 711)
-        return "Dimitri & Yorick"
+//     if (201 <= num && num <= 250)
+//         return "" //Original Levels"
+//     if (251 <= num && num <= 290)
+//         return "Extra"
+//     if (301 <= num && num <= 335)
+//         return "Still More!"
+//     if (351 <= num && num <= 411)
+//         return "Simple Sokoban"
+//     if (450 <= num && num <= 478)
+//         return "IQ Carrier"
+//     if (480 <= num && num <= 645)
+//         return "Boxxle"
+//     if (651 <= num && num <= 711)
+//         return "Dimitri & Yorick"
 
+//     return ""
+// }
 
-    return ""
-}
+// function getLevelNumber(type) {
+//     var number = levelNumber
 
-function getLevelNumber(type) {
-    var number = levelNumber
+//     switch (type) {
+//         case "":
+//             number -= 200
+//             break;
+//         case "Extra":
+//             number -= 250
+//             break;
+//         case "Still More!":
+//             number -= 300
+//             break;
+//         case "Simple Sokoban":
+//             number -= 350
+//             break;
+//         case "IQ Carrier":
+//             number -= 449
+//             break;
+//         case "Boxxle":
+//             number -= 479
+//             break;
+//         case "Dimitri & Yorick":
+//             number -= 650
+//             break;
+//     }
 
-    switch (type) {
-        case "":
-            number -= 200
-            break;
-        case "Extra":
-            number -= 250
-            break;
-        case "Still More!":
-            number -= 300
-            break;
-        case "Simple Sokoban":
-            number -= 350
-            break;
-        case "IQ Carrier":
-            number -= 449
-            break;
-        case "Boxxle":
-            number -= 479
-            break;
-        case "Dimitri & Yorick":
-            number -= 650
-            break;
-    }
-
-    return number
-}
+//     return number
+// }
 
 
 function setWindowTitle() {
 
-    let type = getLevelType()
+    let type = getLevelType(levelNumber)
 
     var levelTitle = type //+ " Level " + getLevelNumber(type)
     var pageTitle = type
@@ -956,12 +955,14 @@ function setWindowTitle() {
         levelTitle += " "
         pageTitle += '<br>'
     }
-    if (type == "IQ Carrier" || type == "Dimitri & Yorick") {
+
+    if (theLevel.title == "") {
+        theLevel.title = "Level " + getLevelNumber(type, levelNumber)
+        levelTitle += theLevel.title
+        pageTitle += theLevel.title
+    } else {
         levelTitle += ' "' + theLevel.title + '"'
         pageTitle += '"' + theLevel.title + '"'
-    } else {
-        levelTitle += "Level " + getLevelNumber(type)
-        pageTitle += "Level " + getLevelNumber(type)
     }
 
     var winTitle = levelTitle

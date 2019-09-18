@@ -1,3 +1,7 @@
+let characterArr = ["@","+",".","$","*"," ","#"]
+function getChar(v) {
+    return characterArr[v]
+}
 
 function swap(x) {
     return x & 3;
@@ -142,55 +146,6 @@ function unpackLevel(lvl) {
 
 }
 
-let characterArr = ["@","+",".","$","*"," ","#"]
-function getChar(v) {
-    return characterArr[v]
-}
-
-var allLevels
-
-function LoadAllLevels() {
-    var response = "";
-    var xmlhttp = new XMLHttpRequest()
-    xmlhttp.overrideMimeType("application/json");
-    xmlhttp.open("GET", "./Levels.json", true)
-    xmlhttp.send()
-
-
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            allLevels = JSON.parse(this.responseText);
-            prepareGame()
-            xmlhttp.abort()
-        }
-    }
-}
-
-function LoadMenuLevels(type) {
-    var response = "";
-    var xmlhttp = new XMLHttpRequest()
-    xmlhttp.overrideMimeType("application/json");
-    xmlhttp.open("GET", "../Levels.json", true)
-    xmlhttp.send()
-
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            allLevels = JSON.parse(this.responseText);
-            loadMenu(type)
-            xmlhttp.abort()
-        }
-    }
-}
-
-function LoadLevelData(ID) {
-    return allLevels[ID] ? allLevels[ID].data : null
-}
-
-function LoadLevelName(ID) {
-    return allLevels[ID] ? allLevels[ID].name : null
-}
-
-
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
 function toggleResponse() {
     console.log("click")
@@ -252,5 +207,75 @@ function getQueryVariable(variable) {
     return (false);
 }
 
+function handleResponse(responseText) {
+    var json = JSON.parse(responseText);
+    allLevels = json.allLevels//["allLevels"]
+    collectionDetails = json["collectionDetails"]
+    prepareGame()
+    xmlhttp.abort()
+}
 
 
+var allLevels
+var collectionDetails
+
+function LoadAllLevels() {
+    var response = "";
+    var xmlhttp = new XMLHttpRequest()
+    xmlhttp.overrideMimeType("application/json");
+    xmlhttp.open("GET", "./Levels.json", true)
+    xmlhttp.send()
+
+
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            handleResponse(this.responseText)
+        }
+    }
+}
+
+function LoadMenuLevels(type) {
+    var response = "";
+    var xmlhttp = new XMLHttpRequest()
+    xmlhttp.overrideMimeType("application/json");
+    xmlhttp.open("GET", "../Levels.json", true)
+    xmlhttp.send()
+
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var json = JSON.parse(this.responseText);
+            allLevels = json["allLevels"]
+            collectionDetails = json["collectionDetails"]
+            loadMenu(type)
+            xmlhttp.abort()
+        }
+    }
+}
+
+function LoadLevelData(ID) {
+    return allLevels[ID] ? allLevels[ID].data : null
+}
+
+function LoadLevelName(ID) {
+    return allLevels[ID] ? allLevels[ID].name : null
+}
+
+function getLevelType(ID) {
+    var num = ID
+    for (let i = 0; i < collectionDetails.length; i++) {
+        const collection = collectionDetails[i];
+
+        if ((collection.start <= num && num <= collection.end) || num == collection.signature) {
+            return collection.name
+        }
+    }
+    return ""
+}
+
+function getLevelNumber(type, num) {
+    var start = collectionDetails.filter(obj => {
+        return obj.name === type
+    })[0].start
+    console.log(num - start)
+    return num - start + 1
+}

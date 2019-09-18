@@ -19,11 +19,32 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-105778471-1');
+        
+        document.addEventListener("readystatechange", loadLevels)
+
+        function loadLevels() {
+            var xmlhttp = new XMLHttpRequest()
+            xmlhttp.overrideMimeType("application/json");
+            xmlhttp.open("GET", "../../Levels.json", true)
+            xmlhttp.send()
+
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var json = JSON.parse(this.responseText);
+                    allLevels = json["allLevels"]
+                    collectionDetails = json["collectionDetails"]
+                    loadMainMenu()
+                    xmlhttp.abort()
+                }
+            }
+        }
+        
     </script>
 
     <script type="text/javascript" src="../../JavaScript/Menu.js"></script>
     <script type="text/javascript" src="../../JavaScript/StorageManager.js"></script>
     <script type="text/javascript" src="../../JavaScript/hex.js"></script>
+    <script type="text/javascript" src="../../JavaScript/LevelStruct.js"></script>
 
 
     <style>
@@ -46,11 +67,65 @@
         }
 
         [piece="*"]::before {
+            /* content: attr(piece); */
+            content: "$";
+            font-family: "mid";
+            position: absolute;
+            z-index: 10;
+            color: #CBB43A;
+        }
+        [piece="$"]::after,
+        [piece="*"]::after {
+            /* content: attr(piece); */
+            content: "$";
+            font-family: "back";
+            position: absolute;
+            z-index: -1;
+            color: #FCFA82;
+            transform: translate(-1em, 0)
+        }
+        .soko-room [piece="*"],
+        .soko-room [piece="."] {
+            font-family: "back";
+        }
+
+        .wall::before {
+            content: attr(piece);
+            font-family: "back";
+            position: absolute;
+            color: #FFFFFF;
+        }
+
+        .wall {
+            color: #C6C9FE;
+        }
+
+        .wall::after {
             content: attr(piece);
             font-family: "fore";
             position: absolute;
-            z-index: 10;
-            color: #999933;
+            color: #454BD9;
+            transform: translate(-1em, 0)
+        }
+
+        #titleItem {
+            width:auto
+        }
+        #titleItem .soko-room {
+            font-size:20px;
+            line-height:20px;
+        }
+        @media screen and (max-width: 1060px) {
+            #titleItem .soko-room {
+                font-size:15px;
+                line-height:15px;
+            }
+        }
+        @media screen and (max-width: 640px) {
+            #titleItem .soko-room {
+                font-size:10px;
+                line-height:10px;
+            }
         }
     </style>
 
@@ -66,34 +141,33 @@
         <div id="pageTitle">Sokoban Main Menu</div>
         <div id="levels" class="levels" align="center" cellspacing="20">
 
-            <div class="list">
-                <a href="../..?level=350">
-                    <span class="soko-room" style="font-size:10px;line-height:10px;">
-                        <span piece="#">############################</span><br>
-                        <span piece="#">#<span piece=".">..........................</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span>#  <span piece="$">$$</span>   <span piece="$">$$</span>  <span piece="$">$</span>  <span piece="$">$</span>   <span piece="$">$$</span>  #<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span># <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span> <span piece="$">$</span>   <span piece="$">$</span>  <span piece="$">$</span> #<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span>#  <span piece="$">$</span>   <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$$</span>    <span piece="$">$</span>  <span piece="$">$</span> #<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span>#   <span piece="$">$</span>  <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span> <span piece="$">$</span>   <span piece="$">$</span>  <span piece="$">$</span> #<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span># <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$</span>  <span piece="$">$</span>  <span piece="$">$</span> #<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span>#  <span piece="$">$$</span>   <span piece="$">$$</span>  <span piece="$">$</span>   <span piece="$">$</span>  <span piece="$">$$</span>  #<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span>##<span piece="">                    </span>##<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span>#### <span piece="$">$$$</span>   <span piece="$">$$</span>  <span piece="$">$</span>  <span piece="$">$</span> ####<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span>## # <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$</span> # ##<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span>#  # <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$$</span> <span piece="$">$</span> #  #<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">.</span>## # <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$$$$</span> <span piece="$">$</span> <span piece="$">$$</span> # ##<span piece=".">.</span>#</span><br>
-                        <span piece="#">#<span piece=".">..</span>### <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$</span> ###<span piece=".">..</span>#</span><br>
-                        <span piece="#">#<span piece=".">.....</span> <span piece="$">$$$</span>  <span piece="$">$</span>  <span piece="$">$</span> <span piece="$">$</span>  <span piece="$">$</span> <span piece=".">.....</span>#</span><br>
-                        <span piece="#">#<span piece="+">+</span><span piece=".">.........................</span>#</span><br>
-                        <span piece="#">############################</span><br>
+            <div class="list" id="titleItem">
+                <a href="../..?level=349">
+                    <span class="soko-room">
+                        <span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┏" class="wall">┏</span><span piece="━" class="wall">━</span><span piece="━" class="wall">━</span><span piece="┲" class="wall">┲</span><span piece="┱" class="wall">┱</span><span piece="━" class="wall">━</span><span piece="━" class="wall">━</span><span piece="━" class="wall">━</span><span piece="┓" class="wall">┓</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece="╚" class="wall">╚</span><span piece="╝" class="wall">╝</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=".">*</span><span piece=".">*</span><span piece="$">$</span><span piece=""> </span><span piece=""> </span><span piece="╻" class="wall">╻</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=".">*</span><span piece=".">*</span><span piece=""> </span><span piece=""> </span><span piece="╺" class="wall">╺</span><span piece="┫" class="wall">┫</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┗" class="wall">┗</span><span piece="┳" class="wall">┳</span><span piece="━" class="wall">━</span><span piece="╸" class="wall">╸</span><span piece=""> </span><span piece=""> </span><span piece="╹" class="wall">╹</span><span piece="$">$</span><span piece="┗" class="wall">┗</span><span piece="┓" class="wall">┓</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece="@">@</span><span piece="$">$</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="$">$</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┗" class="wall">┗</span><span piece="━" class="wall">━</span><span piece="━" class="wall">━</span><span piece="━" class="wall">━</span><span piece="━" class="wall">━</span><span piece="━" class="wall">━</span><span piece="━" class="wall">━</span><span piece="━" class="wall">━</span><span piece="┛" class="wall">┛</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece="┏" class="wall">┏</span><span piece="━" class="wall">━</span><span piece="╸" class="wall">╸</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="╻" class="wall">╻</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="╻" class="wall">╻</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="╺" class="wall">╺</span><span piece="━" class="wall">━</span><span piece="┓" class="wall">┓</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece=""> </span><br>
+                        <span piece="┗" class="wall">┗</span><span piece="━" class="wall">━</span><span piece="┓" class="wall">┓</span><span piece=""> </span><span piece="┏" class="wall">┏</span><span piece="━" class="wall">━</span><span piece="┓" class="wall">┓</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="╻" class="wall">╻</span><span piece=""> </span><span piece="┏" class="wall">┏</span><span piece="━" class="wall">━</span><span piece="┓" class="wall">┓</span><span piece=""> </span><span piece="┣" class="wall">┣</span><span piece="━" class="wall">━</span><span piece="┓" class="wall">┓</span><span piece=""> </span><span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┏" class="wall">┏</span><span piece="━" class="wall">━</span><span piece="┓" class="wall">┓</span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┣" class="wall">┣</span><span piece="━" class="wall">━</span><span piece="┫" class="wall">┫</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┏" class="wall">┏</span><span piece="━" class="wall">━</span><span piece="┫" class="wall">┫</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><br>
+                        <span piece=""> </span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><span piece=""> </span><span piece="┃" class="wall">┃</span><br>
+                        <span piece="╺" class="wall">╺</span><span piece="━" class="wall">━</span><span piece="┛" class="wall">┛</span><span piece=""> </span><span piece="┗" class="wall">┗</span><span piece="━" class="wall">━</span><span piece="┛" class="wall">┛</span><span piece=""> </span><span piece="╹" class="wall">╹</span><span piece=""> </span><span piece="╹" class="wall">╹</span><span piece=""> </span><span piece="┗" class="wall">┗</span><span piece="━" class="wall">━</span><span piece="┛" class="wall">┛</span><span piece=""> </span><span piece="┗" class="wall">┗</span><span piece="━" class="wall">━</span><span piece="┛" class="wall">┛</span><span piece=""> </span><span piece="┗" class="wall">┗</span><span piece="━" class="wall">━</span><span piece="┛" class="wall">┛</span><span piece=""> </span><span piece="╹" class="wall">╹</span><span piece=""> </span><span piece="╹" class="wall">╹</span><br>
                     </span>
                     <div class="levelName">Sokoban</div>
                 </a>
             </div>
 
             <br>
-
-            <div class="list">
+            
+            <!-- <div class="list">
                 <a href="..?collection=Original%20Levels">
                     <span class="soko-room" style="font-size:14px;line-height:14px;">
                         <span piece="#">    #####          </span><br>
@@ -236,7 +310,7 @@
                     </span>
                     <div class="levelName">Still More</div>
                 </a>
-            </div>
+            </div> -->
 
 
         </div>
