@@ -157,6 +157,16 @@
     }
 }
 
+@media (hover: none) and (min-width: 1000px) {
+    #dPad {
+        top: 33%;
+        bottom: 67%;
+        right: 0;
+        margin: auto 0;
+        left: auto;
+    }
+}
+
 @media (hover: none) and (orientation: landscape) and (max-height: 520px) {
     .button-space {
         width: 100px;
