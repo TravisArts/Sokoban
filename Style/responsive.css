@@ -215,3 +215,48 @@
     -webkit-transform: rotate(45deg) translate(-2.828px, -2.828px);
     transform: rotate(45deg) translate(-2.828px, -2.828px);
 }
+
+@media (prefers-color-scheme: dark) {
+    body { 
+        background-color: #222;
+        color: #B6B9EE;
+    }
+    .wall::before {
+        color: #B6B9EE;
+    }
+    
+    [piece="#"],
+    .wall {
+        /* color: #C6C9FE; */
+        color: #454BD9;
+    }
+    
+    .wall::after {
+        /* color: #161679; */
+        color: rgb(31, 33, 95);
+    }
+    [piece="."] {
+        color: #000;
+    }
+    [piece="."]::before {
+        color: #888;
+        z-index: 10;
+    }
+    [piece="."]::after {
+        color: #444;
+        z-index: 10;
+    }
+
+
+
+
+    .topnav,
+    .button,
+    .back,
+    .forward {
+        background-color: #2424c0;
+    }
+    a:any-link {
+        color: #B6B9EE;
+    }
+}

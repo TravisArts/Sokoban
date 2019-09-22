@@ -66,22 +66,16 @@
             z-index: 10;
             color: #CBB43A;
         }
-        /* .soko-room span {
-            font-family: "back";
-        } */
         .soko-room [piece="*"],
         .soko-room [piece="."] {
             font-family: "back";
         }
-        /* [piece="*"]::after,
-        [piece="."]::after {
-            content: ".";
-            font-family: "back";
-            position: absolute;
-            z-index: 10;
-            color: #FFFFFF;
-            transform: translate(-1em, 0)
-        } */
+        @media (prefers-color-scheme: dark) {
+            .soko-room [piece="*"],
+            [piece="."] {
+                color: #888;
+            }
+        }
     </style>
 
 </head>
