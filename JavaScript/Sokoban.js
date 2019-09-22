@@ -969,6 +969,7 @@ function setWindowTitle() {
 
     document.getElementById("navTitle").innerText = winTitle
     document.getElementById("pageTitle").innerHTML = pageTitle
+    document.getElementById("pageTitle").href = "Menu/?collection=" + type
     document.getElementById('completion-title').innerHTML = pageTitle
 
     // document.querySelector('meta[property="og:title"]').setAttribute("content", levelTitle);
