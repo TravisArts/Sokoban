@@ -263,7 +263,7 @@
         color: #B6B9EE;
     }
     .modal-header h2,
-    .modal-header span{
+    .modal-header div span{
         color: #C6C9FE;
     }
     .modal-body,
@@ -273,4 +273,8 @@
     .modal-button {
         background-color: rgb(31, 33, 95);
     }
+    h1 {
+        color: #cc3333;
+    }
+
 }
