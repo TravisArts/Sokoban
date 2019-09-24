@@ -536,7 +536,7 @@ SokobanManager.prototype.redo = function () {
 
 SokobanManager.prototype.showCompletion = function () {
 
-   setWindowTitle()
+//   setWindowTitle()
 
     document.getElementById('completion-moves').innerText = theLevel.moves + " moves"
     document.getElementById('completion-pushes').innerText = theLevel.pushes + " pushes"
