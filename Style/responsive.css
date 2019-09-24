@@ -263,7 +263,7 @@
         color: #B6B9EE;
     }
     .modal-header h2,
-    .modal-header div span{
+    #completion-title {
         color: #C6C9FE;
     }
     .modal-body,
