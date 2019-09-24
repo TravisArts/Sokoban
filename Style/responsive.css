@@ -262,13 +262,13 @@
     a:any-link {
         color: #B6B9EE;
     }
-    .modal-header *,
-    .modal-footer *{
+    .modal-header h2,
+    .modal-header span{
         color: #C6C9FE;
     }
     .modal-body,
     .modal-content {
-        background-color: #B6B9EE;
+        background-color: #222;
     }
     .modal-button {
         background-color: rgb(31, 33, 95);
