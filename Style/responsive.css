@@ -256,17 +256,21 @@
     .button,
     .back,
     .forward {
-        background-color: #2424c0;
+/*        background-color: #2424c0;*/
+        background-color: #454BD9;
     }
     a:any-link {
         color: #B6B9EE;
     }
-    .modal-header,
-    .modal-footer {
-        color: #C6C9FE
+    .modal-header *,
+    .modal-footer *{
+        color: #C6C9FE;
     }
     .modal-body,
     .modal-content {
-        background-color: #010101
+        background-color: #B6B9EE;
+    }
+    .modal-button {
+        background-color: rgb(31, 33, 95);
     }
 }
