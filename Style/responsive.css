@@ -250,6 +250,8 @@
 
 
 
+    .modal-header,
+    .modal-footer,
     .topnav,
     .button,
     .back,
@@ -258,5 +260,13 @@
     }
     a:any-link {
         color: #B6B9EE;
+    }
+    .modal-header,
+    .modal-footer {
+        color: #C6C9FE
+    }
+    .modal-body,
+    .modal-content {
+        background-color: #010101
     }
 }
