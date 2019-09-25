@@ -27,9 +27,9 @@ function prepareGame() {
 
 	window.deviceCheck()
 
-	if (isMobile) {
+	// if (isMobile) {
 		drawNavigation()
-	}
+	// }
 
 	gameBoard = document.getElementsByClassName('GameBoard')[0]
 
