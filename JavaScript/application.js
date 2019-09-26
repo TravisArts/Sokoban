@@ -138,7 +138,7 @@ window.deviceCheck = function () {
 
 }
 
-var pressedBtn
+var pressedBtn = ""
 
 function drawNavigation() {
 	console.log("thisIsMobile")
@@ -171,7 +171,7 @@ function drawNavigation() {
 			element = element.parentElement
 		}
 		if (element.classList.contains("move-button")) {
-			pressedBtn = element
+			pressedBtn = element.id
 			if (element == upBtn) {
 				buttonDown("up")
 			} else if (element == leftBtn) {
@@ -195,27 +195,31 @@ function drawNavigation() {
 			element = element.parentElement
 		}
 		if (element.classList.contains("move-button")) {
-			if (pressedBtn != element) {
-				pressedBtn = element
+			if (pressedBtn != element.id) {
+				pressedBtn = element.id
 				buttonUp()
-				if (element == upBtn) {
-					buttonDown("up")
-				} else if (element == leftBtn) {
-					buttonDown("left")
-				} else if (element == downBtn) {
-					buttonDown("down")
-				} else if (element == rightBtn) {
-					buttonDown("right")
-				}
+				setTimeout(function () {
+					if (element == upBtn) {
+						buttonDown("up")
+					} else if (element == leftBtn) {
+						buttonDown("left")
+					} else if (element == downBtn) {
+						buttonDown("down")
+					} else if (element == rightBtn) {
+						buttonDown("right")
+					}
+				}, 83)
+				
+
 			}
 		} else {
-			pressedBtn = null
+			pressedBtn = ""
 			buttonUp()
 		}
 	})
 	
 	navigation.addEventListener("touchend", function(event) {
-		pressedBtn = null
+		pressedBtn = ""
 		buttonUp()
 	});
 	
