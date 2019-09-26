@@ -180,10 +180,7 @@ function drawNavigation() {
 		var element = document.elementFromPoint(touch.clientX, touch.clientY)
 		
 		if (element.tagName == "i") {
-			var old = element
-			old.style.display = "none"
-			element = document.elementFromPoint(touch.clientX, touch.clientY)
-			old.style.display = null
+			element = element.parentElement
 		}
 		
 		if (element == upBtn) {
