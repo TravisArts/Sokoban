@@ -194,17 +194,19 @@ function drawNavigation() {
 		if (element.classList.contains("material-icons")) {
 			element = element.parentElement
 		}
-		if (element.classList.contains("move-button") && pressedBtn != element) {
-			pressedBtn = element
-			buttonUp()
-			if (element == upBtn) {
-				buttonDown("up")
-			} else if (element == leftBtn) {
-				buttonDown("left")
-			} else if (element == downBtn) {
-				buttonDown("down")
-			} else if (element == rightBtn) {
-				buttonDown("right")
+		if (element.classList.contains("move-button")) {
+			if (pressedBtn != element) {
+				pressedBtn = element
+				buttonUp()
+				if (element == upBtn) {
+					buttonDown("up")
+				} else if (element == leftBtn) {
+					buttonDown("left")
+				} else if (element == downBtn) {
+					buttonDown("down")
+				} else if (element == rightBtn) {
+					buttonDown("right")
+				}
 			}
 		} else {
 			pressedBtn = null
