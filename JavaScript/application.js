@@ -138,6 +138,8 @@ window.deviceCheck = function () {
 
 }
 
+var pressedBtn
+
 function drawNavigation() {
 	console.log("thisIsMobile")
 
@@ -159,7 +161,7 @@ function drawNavigation() {
 	rightBtn.addEventListener("touchend", buttonUp);
 	*/
 	// new methods for testing
-	var pressedBtn
+	
 	
 	navigation.addEventListener("touchstart", function (event) {
 		let touch = event.touches[0]
@@ -222,7 +224,10 @@ function drawNavigation() {
 		}
 	})
 	
-	navigation.addEventListener("touchend", buttonUp);
+	navigation.addEventListener("touchend", function(event) {
+		pressedBtn = null
+		buttonUp()
+	});
 	
 	// end new methods
 
