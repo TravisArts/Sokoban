@@ -177,7 +177,14 @@ function drawNavigation() {
 			alert("no direction buttons were pressed")
 		}
 		*/
-		let element = document.elementFromPoint(touch.clientX, touch.clientY)
+		var element = document.elementFromPoint(touch.clientX, touch.clientY)
+		
+		if (element.tagName == "i") {
+			var old = element
+			old.style.display = "none"
+			element = document.elementFromPoint(touch.clientX, touch.clientY)
+			old.style.display = null
+		}
 		
 		if (element == upBtn) {
 			buttonDown("up")
@@ -187,8 +194,6 @@ function drawNavigation() {
 			buttonDown("down")
 		} else if (element == rightBtn) {
 			buttonDown("right")
-		} else  {
-			alert("no direction buttons were pressed")
 		}
 		
 	});
