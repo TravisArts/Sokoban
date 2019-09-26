@@ -159,6 +159,7 @@ function drawNavigation() {
 	rightBtn.addEventListener("touchend", buttonUp);
 	*/
 	// new methods for testing
+	var pressedBtn
 	
 	navigation.addEventListener("touchstart", function (event) {
 		let touch = event.touches[0]
@@ -182,18 +183,44 @@ function drawNavigation() {
 		if (element.classList.contains("material-icons")) {
 			element = element.parentElement
 		}
-		
-		if (element == upBtn) {
-			buttonDown("up")
-		} else if (element == leftBtn) {
-			buttonDown("left")
-		} else if (element == downBtn) {
-			buttonDown("down")
-		} else if (element == rightBtn) {
-			buttonDown("right")
+		if (element.classList.contains("move-button")) {
+			pressedBtn = element
+			if (element == upBtn) {
+				buttonDown("up")
+			} else if (element == leftBtn) {
+				buttonDown("left")
+			} else if (element == downBtn) {
+				buttonDown("down")
+			} else if (element == rightBtn) {
+				buttonDown("right")
+			}
 		}
 		
+		
+		
 	});
+	
+	navigation.addEventListener("touchmove", function (event) {
+		var element = document.elementFromPoint(touch.clientX, touch.clientY)
+		
+		if (element.classList.contains("material-icons")) {
+			element = element.parentElement
+		}
+		if (element.classList.contains("move-button") && pressedBtn != element) {
+			pressedBtn = element
+			if (element == upBtn) {
+				buttonDown("up")
+			} else if (element == leftBtn) {
+				buttonDown("left")
+			} else if (element == downBtn) {
+				buttonDown("down")
+			} else if (element == rightBtn) {
+				buttonDown("right")
+			}
+		} else {
+			buttonUp()
+		}
+	})
 	
 	navigation.addEventListener("touchend", buttonUp);
 	
