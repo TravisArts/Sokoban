@@ -162,7 +162,7 @@ function drawNavigation() {
 	
 	navigation.addEventListener("touchstart", function (event) {
 		let touch = event.touches[0]
-		
+		/*
 		let elements = getAllElementsFromPoint(touch.clientX, touch.clientY)
 		
 		if (elements.includes(upBtn)) {
@@ -175,7 +175,21 @@ function drawNavigation() {
 			buttonDown("right")
 		} else  {
 			alert("no direction buttons were pressed")
-		} 
+		}
+		*/
+		let element = document.elementFromPoint(touch.clientX, touch.clientY)
+		
+		if (element == upBtn) {
+			buttonDown("up")
+		} else if (element == leftBtn) {
+			buttonDown("left")
+		} else if (element == downBtn) {
+			buttonDown("down")
+		} else if (element == rightBtn) {
+			buttonDown("right")
+		} else  {
+			alert("no direction buttons were pressed")
+		}
 		
 	});
 	
