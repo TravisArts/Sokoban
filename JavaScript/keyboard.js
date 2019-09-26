@@ -381,6 +381,10 @@ function buttonDown(direction) {
 	}
 	event = new KeyboardEvent("keydown", { "key": key, "code": key, "keyCode": keyCode, "which": keyCode })
 	// console.log(event)
+	
+	clearTimeout(keyRepeatTimout);
+	clearInterval(intervalId);
+	
 	document.dispatchEvent(event)
 
 	keyRepeatTimout = setTimeout(function () {
