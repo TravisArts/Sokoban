@@ -165,21 +165,6 @@ function drawNavigation() {
 	
 	navigation.addEventListener("touchstart", function (event) {
 		let touch = event.touches[0]
-		/*
-		let elements = getAllElementsFromPoint(touch.clientX, touch.clientY)
-		
-		if (elements.includes(upBtn)) {
-			buttonDown("up")
-		} else if (elements.includes(leftBtn)) {
-			buttonDown("left")
-		} else if (elements.includes(downBtn)) {
-			buttonDown("down")
-		} else if (elements.includes(rightBtn)) {
-			buttonDown("right")
-		} else  {
-			alert("no direction buttons were pressed")
-		}
-		*/
 		var element = document.elementFromPoint(touch.clientX, touch.clientY)
 		
 		if (element.classList.contains("material-icons")) {
@@ -203,6 +188,7 @@ function drawNavigation() {
 	});
 	
 	navigation.addEventListener("touchmove", function (event) {
+		let touch = event.touches[0]
 		var element = document.elementFromPoint(touch.clientX, touch.clientY)
 		
 		if (element.classList.contains("material-icons")) {
