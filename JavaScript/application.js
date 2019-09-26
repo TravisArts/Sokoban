@@ -179,7 +179,7 @@ function drawNavigation() {
 		*/
 		var element = document.elementFromPoint(touch.clientX, touch.clientY)
 		
-		if (element.tagName == "i") {
+		if (element.classList.contains("material-icons")) {
 			element = element.parentElement
 		}
 		
@@ -209,6 +209,7 @@ function drawNavigation() {
 	// downBtn.addEventListener("mouseup", buttonUp);
 	// rightBtn.addEventListener("mouseup", buttonUp);
 }
+
 
 function getAllElementsFromPoint(x, y) {
     var elements = [];
