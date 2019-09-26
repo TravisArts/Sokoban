@@ -147,7 +147,7 @@ function drawNavigation() {
 	var leftBtn = document.getElementById("mvLeft");
 	var downBtn = document.getElementById("mvDown");
 	var rightBtn = document.getElementById("mvRight");
-
+	/*
 	upBtn.addEventListener("touchstart", function () { buttonDown("up") }, { passive: true });
 	leftBtn.addEventListener("touchstart", function () { buttonDown("left") }, { passive: true });
 	downBtn.addEventListener("touchstart", function () { buttonDown("down") }, { passive: true });
@@ -157,6 +157,31 @@ function drawNavigation() {
 	leftBtn.addEventListener("touchend", buttonUp);
 	downBtn.addEventListener("touchend", buttonUp);
 	rightBtn.addEventListener("touchend", buttonUp);
+	*/
+	// new methods for testing
+	
+	navigation.addEventListener("touchstart", function (event) {
+		let touch = event.touches[0]
+		
+		let elements = getAllElementsFromPoint(touch.clientX, touch.clientY)
+		
+		if (elements.includes(upBtn)) {
+			buttonDown("up")
+		} else if (elements.includes(leftBtn)) {
+			buttonDown("left")
+		} else if (elements.includes(downBtn)) {
+			buttonDown("down")
+		} else if (elements.includes(rightBtn)) {
+			buttonDown("right")
+		} else  {
+			alert("no direction buttons were pressed")
+		} 
+		
+	});
+	
+	navigation.addEventListener("touchend", buttonUp);
+	
+	// end new methods
 
 	// upBtn.addEventListener("mousedown", function () { buttonDown("up") }, { passive: true });
 	// leftBtn.addEventListener("mousedown", function () { buttonDown("left") }, { passive: true });
@@ -167,6 +192,23 @@ function drawNavigation() {
 	// leftBtn.addEventListener("mouseup", buttonUp);
 	// downBtn.addEventListener("mouseup", buttonUp);
 	// rightBtn.addEventListener("mouseup", buttonUp);
+}
+
+function getAllElementsFromPoint(x, y) {
+    var elements = [];
+    var display = [];
+    var item = document.elementFromPoint(x, y);
+    while (item && item !== document.body && item !== window && item !== document && item !== document.documentElement) {
+        elements.push(item);
+        display.push(item.style.display);
+        item.style.display = "none";
+        item = document.elementFromPoint(x, y);
+    }
+    // restore display property
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = display[i];
+    }
+    return elements;
 }
 
 
