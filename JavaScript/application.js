@@ -196,6 +196,7 @@ function drawNavigation() {
 		}
 		if (element.classList.contains("move-button") && pressedBtn != element) {
 			pressedBtn = element
+			buttonUp()
 			if (element == upBtn) {
 				buttonDown("up")
 			} else if (element == leftBtn) {
@@ -206,6 +207,7 @@ function drawNavigation() {
 				buttonDown("right")
 			}
 		} else {
+			pressedBtn = null
 			buttonUp()
 		}
 	})
