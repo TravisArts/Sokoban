@@ -899,3 +899,7 @@ a {
     font-weight:bold;
     color: #33C;
 }
+
+.menuScore {
+    white-space: pre;
+}

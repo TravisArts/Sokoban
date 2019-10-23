@@ -111,11 +111,15 @@ function createLevelStr(num, startNum, storageManager) {
     var wrapper = '<div class=list>'
     
     wrapper += '<a href=..?level=' + i + '><span class=soko-room style="font-size:' + fontSize + 'px;line-height:' + fontSize + 'px;">'
-    if (storageManager.getBestScore(i).moves != 0) {
+    var highScore = storageManager.getBestScore(i)
+    var scoreString = '<div class=menuScore> </div>'
+    if (highScore.moves != 0) {
         wrapper += complete
+        scoreString = '<div class=menuScore>' + highScore.moves + ' moves, ' + highScore.pushes + ' pushes</div>'
     }
     wrapper += getString(arr)
-    wrapper += '</span><div class=levelName>' + levelTitle + '</div></a></div>'
+    wrapper += '</span><div class=levelName>' + levelTitle + '</div>'
+    wrapper += scoreString + '</a></div>'
     return wrapper
 }
 
