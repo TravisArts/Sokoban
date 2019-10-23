@@ -271,6 +271,17 @@ function getLevelType(ID) {
     }
     return ""
 }
+function getCollectionDetails(ID) {
+    var num = ID
+    for (let i = 0; i < collectionDetails.length; i++) {
+        const collection = collectionDetails[i];
+
+        if ((collection.start <= num && num <= collection.end) || num == collection.signature) {
+            return collection
+        }
+    }
+    return {}
+}
 
 function getLevelNumber(type, num) {
     var start = collectionDetails.filter(obj => {

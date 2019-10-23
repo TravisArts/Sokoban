@@ -648,6 +648,7 @@ button {
 
 .navigation-button {
     font-size: 30px;
+    display: block;
     /* font-size:100px; */
 }
 

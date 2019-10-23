@@ -200,6 +200,31 @@ SokobanManager.prototype.setStyles = function () {
     styleString += ".gameArea { top:" + window.getComputedStyle(topnav).height + "; }"
 
     style.innerText = styleString
+
+
+
+
+    var nextD = document.getElementById('completion-nextD')
+    var nextM = document.getElementById('completion-nextM')
+    var nextButton = document.getElementById('nextButton')
+    var prevButton = document.getElementById('prevButton')
+
+    var collection = getCollectionDetails(levelNumber)
+    if (levelNumber == collection.end) {
+        nextD.innerText = "Go To Main Menu"
+        nextM.innerText = "Main Menu"
+        nextButton.innerText = "view_list"
+    } else {
+        nextD.innerText = "Go To Next Level"
+        nextM.innerText = "Next"
+        nextButton.innerText = "chevron_right"
+    }
+    if (levelNumber == collection.start) {
+        prevButton.innerText = "view_list"
+    } else {
+        prevButton.innerText = "chevron_left"
+    }
+
 }
 
 
@@ -828,6 +853,17 @@ function countSavedPackets() {
 
 function previousLevel() {
 
+    var collection = getCollectionDetails(levelNumber)
+    if (levelNumber == collection.start) {
+        window.location.href = './Menu/Main';
+    } else {
+        levelNumber--
+        history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
+        manager.clearStyle()
+        manager.setup()
+    }
+
+    /*
     var runLoop = true
 
     var lvl = null
@@ -843,10 +879,21 @@ function previousLevel() {
 
     manager.clearStyle()
     manager.setup()
+    */
 }
 
 function nextLevel() {
 
+    var collection = getCollectionDetails(levelNumber)
+    if (levelNumber == collection.end) {
+        window.location.href = './Menu/Main';
+    } else {
+        levelNumber++
+        history.pushState(0, "" + levelNumber, "?level=" + levelNumber)
+        manager.clearStyle()
+        manager.setup()
+    }
+/*
     var runLoop = true
 
 
@@ -867,6 +914,7 @@ function nextLevel() {
     // setCookie("level", levelNumber)
     manager.clearStyle()
     manager.setup()
+    */
 }
 
 function gotoLevel(num) {
