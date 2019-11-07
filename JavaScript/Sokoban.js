@@ -417,9 +417,7 @@ SokobanManager.prototype.actuate = function (shouldSave) {
         // console.log(serial)
         if (theLevel.moves > 0) {
             this.storageManager.setGameState(serial, levelNumber);
-        } else {
-            this.storageManager.clearGameState(levelNumber)
-	}
+        }
 	if (this.currentState != null) {
             this.pastStates.push(this.currentState)
 	}
@@ -528,7 +526,9 @@ SokobanManager.prototype.undo = function () {
         isCompleted = (bestMoves != 0)
 	if (theLevel.moves > 0) {
             this.storageManager.setGameState(undoState, levelNumber);
-        }
+        } else {
+            this.storageManager.clearGameState(levelNumber)
+	}
 	this.currentState = undoState
 	    
         this.actuate(false)
