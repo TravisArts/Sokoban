@@ -231,6 +231,10 @@ SokobanManager.prototype.setStyles = function () {
 // Move tiles on the grid in the specified direction
 SokobanManager.prototype.move = function (direction, shouldSave) {
     
+    if (theLevel.savedPacks == theLevel.packs) {
+        return
+    }
+	
     var self = this;
 
     var cell, tile;
@@ -483,9 +487,9 @@ SokobanManager.prototype.toggleMute = function () {
 SokobanManager.prototype.undo = function () {
     console.log("undo")
     // console.log("undo " + performance.now().toFixed(2) + "ms")
+    var currentState = this.pastStates.pop()
+    this.nextStates.push(currentState)
     var previousState = this.pastStates.pop()
-    this.nextStates.push(previousState)
-    previousState = this.pastStates.pop()
     // console.log(previousState)
     if (previousState) {
         theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], previousState.title)
