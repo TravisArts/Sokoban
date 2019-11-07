@@ -59,7 +59,7 @@ KeyboardInputManager.prototype.listen = function () {
 
 		// console.log("keyDown = " + event.which)
 
-		var modifiers = event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+		var modifiers = event.altKey || event.ctrlKey || event.metaKey
 		var mapped = map[event.which];
 
 		// Ignore the event if it's happening in a text field
@@ -82,11 +82,17 @@ KeyboardInputManager.prototype.listen = function () {
 		// Z key undoes last move
 		if (modifiers && event.which === 90) {
 			event.preventDefault();
-			self.undo.call(self, event);
+			event.stopPropagation();
+			if (event.shiftKey) {
+				self.redo.call(self, event);	
+			} else {
+				self.undo.call(self, event);
+			}
 		}
 		// Y key redoes last move
 		if (modifiers && event.which === 89) {
 			event.preventDefault();
+                        event.stopPropagation();
 			self.redo.call(self, event);
 		}
 		// M key mutes/unmutes game
@@ -285,14 +291,14 @@ KeyboardInputManager.prototype.toggleMute = function (event) {
 };
 
 KeyboardInputManager.prototype.undo = function (event) {
-	event.stopPropagation()
 	event.preventDefault()
+	event.stopPropagation()
 	this.emit("undo")
 }
 
 KeyboardInputManager.prototype.redo = function (event) {
-	event.stopPropagation()
 	event.preventDefault()
+	event.stopPropagation()
 	this.emit("redo")
 }
 
