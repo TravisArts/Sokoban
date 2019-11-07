@@ -14,7 +14,7 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
     this.mute = false
     this.pastStates = new Array()
     this.nextStates = new Array()
-    this.currentState
+    this.currentState = null
     this.inputManager.on("move", this.move.bind(this));
     this.inputManager.on("restart", this.restart.bind(this));
     this.inputManager.on("toggleMute", this.toggleMute.bind(this))
@@ -90,7 +90,7 @@ SokobanManager.prototype.setup = function () {
 
     this.pastStates = []
     this.nextStates = []
-    this.currentState = {}
+    this.currentState = null
     this.actuator.clearContainer(this.actuator.gameContainer)
     this.actuator.clearContainer(this.actuator.wallContainer)
 
@@ -418,7 +418,7 @@ SokobanManager.prototype.actuate = function (shouldSave) {
         if (theLevel.moves > 0) {
             this.storageManager.setGameState(serial, levelNumber);
         }
-	if (this.currentState != {}) {
+	if (this.currentState != null) {
             this.pastStates.push(this.currentState)
 	}
 	this.currentState = serial
