@@ -285,11 +285,13 @@ KeyboardInputManager.prototype.toggleMute = function (event) {
 };
 
 KeyboardInputManager.prototype.undo = function (event) {
+	event.stopPropagation()
 	event.preventDefault()
 	this.emit("undo")
 }
 
 KeyboardInputManager.prototype.redo = function (event) {
+	event.stopPropagation()
 	event.preventDefault()
 	this.emit("redo")
 }
