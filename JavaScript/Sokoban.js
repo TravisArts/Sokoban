@@ -14,7 +14,7 @@ function SokobanManager(InputManager, Actuator, StorageManager) {
     this.mute = false
     this.pastStates = new Array()
     this.nextStates = new Array()
-
+    this.currentState
     this.inputManager.on("move", this.move.bind(this));
     this.inputManager.on("restart", this.restart.bind(this));
     this.inputManager.on("toggleMute", this.toggleMute.bind(this))
@@ -418,7 +418,8 @@ SokobanManager.prototype.actuate = function (shouldSave) {
         if (theLevel.moves > 0) {
             this.storageManager.setGameState(serial, levelNumber);
         }
-        this.pastStates.push(serial)
+        this.pastStates.push(this.currentState)
+	this.currentState = serial
     }
 
     this.actuator.actuate(theLevel)
@@ -455,9 +456,9 @@ SokobanManager.prototype.actuate = function (shouldSave) {
 
 
     }
-    if (this.pastStates.length == 1) {
+    if (this.pastStates.length == 0) {
         document.querySelector(".undo-button").classList.add("unavailable")
-    } else if (this.pastStates.length == 2) {
+    } else if (this.pastStates.length == 1) {
         document.querySelector(".undo-button").classList.remove("unavailable")
     }
 
@@ -487,29 +488,29 @@ SokobanManager.prototype.toggleMute = function () {
 SokobanManager.prototype.undo = function () {
     console.log("undo")
     // console.log("undo " + performance.now().toFixed(2) + "ms")
-    var currentState = this.pastStates.pop()
-    this.nextStates.push(currentState)
-    var previousState = this.pastStates.pop()
+    //var currentState = this.pastStates.pop()
+    this.nextStates.push(this.currentState)
+    var undoState = this.pastStates.pop()
     // console.log(previousState)
-    if (previousState) {
-        theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], previousState.title)
-        theLevel.rows = previousState.rows
-        theLevel.columns = previousState.columns
-        theLevel.packs = previousState.packs
-        theLevel.savedPacks = previousState.savedPacks
-        theLevel.playerV = previousState.playerV
-        theLevel.playerH = previousState.playerH
-        // theLevel.rawData = previousState.rawData
+    if (undoState) {
+        theLevel = new LevelStruct([0, 0, 0, 0, 0, 0, 0], undoState.title)
+        theLevel.rows = undoState.rows
+        theLevel.columns = undoState.columns
+        theLevel.packs = undoState.packs
+        theLevel.savedPacks = undoState.savedPacks
+        theLevel.playerV = undoState.playerV
+        theLevel.playerH = undoState.playerH
+        // theLevel.rawData = undoState.rawData
 
-        theLevel.pushes = previousState.pushes
-        theLevel.moves = previousState.moves
+        theLevel.pushes = undoState.pushes
+        theLevel.moves = undoState.moves
 
         // theLevel.objArr = previousState.objArr
         theLevel.objArr = theLevel.empty()
 
         for (var x = 0; x < theLevel.columns; x++) {
             for (var y = 0; y < theLevel.rows; y++) {
-                var value = previousState.objArr[x][y]
+                var value = undoState.objArr[x][y]
                 if (value != null) {
                     theLevel.addItem(new SokoPiece({ x: x, y: y }, value))
                 }
@@ -521,7 +522,12 @@ SokobanManager.prototype.undo = function () {
 
         setupPathFinding()
         isCompleted = (bestMoves != 0)
-        this.actuate(true)
+	if (theLevel.moves > 0) {
+            this.storageManager.setGameState(undoState, levelNumber);
+        }
+	this.currentState = undoState
+	    
+        this.actuate(false)
     }
 
 }
