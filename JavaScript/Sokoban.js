@@ -418,7 +418,9 @@ SokobanManager.prototype.actuate = function (shouldSave) {
         if (theLevel.moves > 0) {
             this.storageManager.setGameState(serial, levelNumber);
         }
-        this.pastStates.push(this.currentState)
+	if (this.currentState != {}) {
+            this.pastStates.push(this.currentState)
+	}
 	this.currentState = serial
     }
 
