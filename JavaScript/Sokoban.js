@@ -90,7 +90,7 @@ SokobanManager.prototype.setup = function () {
 
     this.pastStates = []
     this.nextStates = []
-
+    this.currentState = {}
     this.actuator.clearContainer(this.actuator.gameContainer)
     this.actuator.clearContainer(this.actuator.wallContainer)
 
