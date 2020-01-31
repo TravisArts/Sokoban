@@ -140,7 +140,7 @@ function Dimension(el) {
         elHeight = getComputedStyle(el, '').getPropertyValue('height')
         elMargin = getComputedStyle(el, '').getPropertyValue('margin-top') + getComputedStyle(el, '').getPropertyValue('margin-bottom')
     }
-	alert("Height=" + elmHeight + "\nMargin=" + elmMargin);
+    //alert("Height=" + elmHeight + "\nMargin=" + elmMargin);
     return (elHeight+elMargin);
 }
 
@@ -166,7 +166,8 @@ SokobanManager.prototype.setStyles = function () {
     var dPadHeight = 0
     
     if (dPad.display !== 'none' && getComputedStyle(dpad).bottom == 0) {
-	    dPadHeight = Dimension(dPad)//dPad.offsetHeight + 20
+	    dPadHeight = dPad.offsetHeight + 20
+	    //dPadHeight = Dimension(dPad)
     }
     
     console.log(isMobile)
