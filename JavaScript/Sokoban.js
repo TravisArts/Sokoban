@@ -140,6 +140,7 @@ function Dimension(el) {
         elHeight = getComputedStyle(el, '').getPropertyValue('height')
         elMargin = getComputedStyle(el, '').getPropertyValue('margin-top') + getComputedStyle(el, '').getPropertyValue('margin-bottom')
     }
+	alert("Height=" + elmHeight + "\nMargin=" + elmMargin);
     return (elHeight+elMargin);
 }
 
