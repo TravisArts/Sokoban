@@ -131,7 +131,7 @@ SokobanManager.prototype.clearStyle = function () {
     document.getElementById("dynamicStyle").innerText = ""
 }
 
-function Dimension(el) {
+/*function Dimension(el) {
     var elHeight, elMargin
     if(document.all) {// IE
         elHeight = el.currentStyle.height;
@@ -142,7 +142,7 @@ function Dimension(el) {
     }
     //alert("Height=" + elmHeight + "\nMargin=" + elmMargin);
     return (elHeight+elMargin);
-}
+}*/
 
 SokobanManager.prototype.setStyles = function () {
 
@@ -165,9 +165,9 @@ SokobanManager.prototype.setStyles = function () {
     
     var dPadHeight = 0
     
-    if (dPad.display !== 'none' || getComputedStyle(dpad).bottom == 0) {
-	    //dPadHeight = dPad.offsetHeight + 20
-	    dPadHeight = Dimension(dPad)
+    if (dPad.display !== 'none' && getComputedStyle(dpad).bottom == 0) {
+	    dPadHeight = dPad.offsetHeight + 20
+	    //dPadHeight = Dimension(dPad)
     }
     
     console.log(isMobile)
