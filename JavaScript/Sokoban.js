@@ -165,7 +165,7 @@ SokobanManager.prototype.setStyles = function () {
     
     var dPadHeight = 0
     
-    if (dPad.display !== 'none' && getComputedStyle(dpad).bottom == 0) {
+    if (dPad.display !== 'none' || getComputedStyle(dpad).bottom == 0) {
 	    dPadHeight = dPad.offsetHeight + 20
 	    //dPadHeight = Dimension(dPad)
     }
