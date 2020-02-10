@@ -179,6 +179,9 @@
     .gameArea {
         width: 100%;
     }
+    .GameBoard {
+        margin: 8px;
+    }
     #stationary {
         margin: auto;
         width: fit-content;

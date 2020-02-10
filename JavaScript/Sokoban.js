@@ -131,18 +131,19 @@ SokobanManager.prototype.clearStyle = function () {
     document.getElementById("dynamicStyle").innerText = ""
 }
 
-/*function Dimension(el) {
+function Dimension(el) {
     var elHeight, elMargin
     if(document.all) {// IE
         elHeight = el.currentStyle.height;
         elMargin = parseInt(el.currentStyle.marginTop, 10) + parseInt(el.currentStyle.marginBottom, 10);
     } else {// Mozilla
-        elHeight = getComputedStyle(el, '').getPropertyValue('height')
-        elMargin = getComputedStyle(el, '').getPropertyValue('margin-top') + getComputedStyle(el, '').getPropertyValue('margin-bottom')
+        var style = getComputedStyle(el, '')
+        elHeight = parseInt(style.getPropertyValue('height'))
+        elMargin = parseInt(style.getPropertyValue('margin-top')) + parseInt(style.getPropertyValue('margin-bottom'))
     }
     //alert("Height=" + elmHeight + "\nMargin=" + elmMargin);
     return (elHeight+elMargin);
-}*/
+}
 
 SokobanManager.prototype.setStyles = function () {
 
@@ -158,37 +159,63 @@ SokobanManager.prototype.setStyles = function () {
 
     var topnav = document.getElementById("myTopnav")
     var buttons = document.getElementsByClassName("button-space")[0]
+    // var buttons = document.getElementById("block-block")
     var stats = document.getElementsByClassName("stats")[0]
     var dPad = document.getElementById("dPad")
     var footer = document.getElementsByClassName("navigation-footer")[0]
     var gameArea = document.getElementsByClassName("gameArea")[0]
+    var title = document.getElementById("pageTitle")
     
     var dPadHeight = 0
-    
-    if (dPad.display !== 'none' || getComputedStyle(dpad).bottom == 0) {
-	    dPadHeight = dPad.offsetHeight + 20
-	    //dPadHeight = Dimension(dPad)
-    }
-    
-    console.log(isMobile)
-    console.log(dPad.offsetParent)
-    var usedHeight
+    var statHeight = 0
+    var fnavHeight = 0
+    var titlHeight = 0
+    var btnsHeight = 0
     var availableWidth
-    if (dPad.display === 'none') {
-        if (isMobile) {
-            usedHeight = topnav.offsetHeight + stats.offsetHeight
-            availableWidth = window.innerWidth - 100
 
-        } else {
-            usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + footer.offsetHeight +100
-            availableWidth = gameArea.getBoundingClientRect().width
-        }
+    
+    if (getComputedStyle(dPad).display !== 'none' && parseInt(getComputedStyle(dPad).bottom) == 0) {
+        // dPadHeight = dPad.offsetHeight + 20
+        dPadHeight = Dimension(dPad)
+        statHeight = Dimension(stats)
     } else {
-        usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + 100
-        availableWidth = gameArea.getBoundingClientRect().width
-
+        fnavHeight = Dimension(footer)
     }
-	usedHeight += dPadHeight
+    if (getComputedStyle(title).display !== 'none') {
+        titlHeight = Dimension(title)
+    }
+    if (parseInt(getComputedStyle(buttons).margin) != 8) {
+        btnsHeight = Dimension(buttons)// - 50
+        availableWidth = gameArea.getBoundingClientRect().width
+    } else {
+        btnsHeight = 8
+        availableWidth = window.innerWidth - 100
+    }
+
+    // console.log(isMobile)
+    // console.log(dPad.offsetParent)
+
+    // console.log("titlHeight = " + titlHeight + "\nbtnsHeight = " + btnsHeight + "\nstatHeight = " + statHeight + "\ndPadHeight = " + dPadHeight + "\nfnavHeight = " + fnavHeight)
+    
+
+    
+
+
+    var usedHeight
+    // if (dPad.display === 'none') {
+    //     if (isMobile) {
+    //         // usedHeight = topnav.offsetHeight + stats.offsetHeight
+    //         availableWidth = window.innerWidth - 100
+
+    //     } else {
+    //         // usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + footer.offsetHeight +100
+    //         availableWidth = gameArea.getBoundingClientRect().width
+    //     }
+    // } else {
+    //     // usedHeight = topnav.offsetHeight + buttons.offsetHeight + stats.offsetHeight + 100
+    //     availableWidth = gameArea.getBoundingClientRect().width
+    // }
+	usedHeight = dPadHeight + statHeight + fnavHeight + titlHeight + btnsHeight
 
     // console.log(topnav.offsetHeight + ", " + buttons.offsetHeight + ", " + stats.offsetHeight + ", " + dPad.offsetHeight)
     // console.log(topnav.getBoundingClientRect().height + ", " + buttons.getBoundingClientRect().height + ", " + stats.getBoundingClientRect().height + ", " + dPad.getBoundingClientRect().height)
@@ -200,8 +227,8 @@ SokobanManager.prototype.setStyles = function () {
     var width = availableWidth / (theLevel.columns)
     
     console.log("width: " + width.toFixed(2) + " height: " + height.toFixed(2))
-
-    pieceWidth = (width < height) ? width : height
+    
+    pieceWidth = Math.min(width, height)// (width < height) ? width : height
 
     var size = 'font-size:' + (pieceWidth + 1) + 'px;'
     var heightStr = 'height:' + pieceWidth * theLevel.rows + 'px;'

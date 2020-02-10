@@ -359,7 +359,7 @@ button:disabled {
 
 .GameBoard {
     /* margin-top: 20px; */
-    margin-top: 5px;
+    /* margin-top: 5px; */
     margin-left: auto;
     margin-right: auto;
     height: fit-content;
