@@ -27,6 +27,15 @@
     /* format('woff2'); */
 }
 
+#facebookShareButton {
+    /* background: #365899;
+    border-color: #365899; */
+    /* border-radius: 4px; */
+    /* font-family: Helvetica; */
+    color: #FFF;
+    float: left;
+}
+
 html,
 body {
     overflow: hidden;

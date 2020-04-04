@@ -123,7 +123,28 @@ SokobanManager.prototype.setup = function () {
 			//location.href = 'http://your-url.com'
 		}, false);
 		document.body.appendChild(canvasElm);
-	});*/
+    });*/
+    
+    var node = document.getElementById('GameBoard');
+    node.style.backgroundColor = getComputedStyle(document.body).backgroundColor
+    setTimeout(() => {
+        html2canvas(node).then(canvas => {
+            // document.body.appendChild(canvas)
+            var img = canvas.toDataURL();
+            document.getElementById('ogimage').src = img
+            // var img2 = new Image();
+            // img2.src = img
+            // document.body.appendChild(img2);
+        });
+    }, 100);
+    var sharebutton = document.getElementById("FB-Button")
+
+    // var FBlocation = window.location.href.replace(":","%3A").replace("/","%2F").replace("?","%3f").replace("=","%3d")
+    // var FBlocation = "http%3A%2F%2Ftravisarts.github.io%2FSokoban%2F" + window.location.search.replace(":","%3A").replace("/","%2F").replace("?","%3f").replace("=","%3d")
+    // console.log(FBlocation)
+    // var srcstring = "https://www.facebook.com/plugins/share_button.php?href=" + FBlocation + "&layout=button&size=large&mobile_iframe=true&appId=1889667454690145&width=73&height=28"
+    // sharebutton.setAttribute("src", srcstring)
+    // document.getElementsByClassName('fb-share-button')[0].setAttribute('data-href', window.location.href)
     
 }
 
@@ -446,6 +467,8 @@ SokobanManager.prototype.getVector = function (direction) {
     return map[direction];
 };
 
+var allmoves = 0
+var allpushes = 0
 
 // Sends the updated grid to the actuator
 SokobanManager.prototype.actuate = function (shouldSave) {
@@ -495,6 +518,8 @@ SokobanManager.prototype.actuate = function (shouldSave) {
                 var moves = newBestMoves ? theLevel.moves : bestMoves
                 var pushes = newBestPushes ? theLevel.pushes : bestPushes
                 self.storageManager.setBestScore(theLevel.moves, theLevel.pushes, levelNumber)
+                allmoves = moves
+                allpushes = pushes
             }
             self.storageManager.clearGameState(levelNumber)
 

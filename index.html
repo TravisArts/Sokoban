@@ -112,6 +112,88 @@
     <script type="text/javascript" src="JavaScript/StorageManager.js"></script>
     <script type="text/javascript" src="JavaScript/LevelStruct.js"></script>
     <script type="text/javascript" src="JavaScript/AutoMove.js"></script>
+    <script type="text/javascript" src="JavaScript/dom-to-image.min.js"></script>
+    <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script>
+    <!-- <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=1889667454690145&autoLogAppEvents=1"></script> -->
+    <div id="fb-root"></div>
+    <script>
+
+        function facebookLogin() {
+            FB.login(function (response) {
+                if (response.authResponse) {
+                    console.log('Welcome!  Fetching your information.... ');
+                    FB.api('/me', function (response) {
+                        console.log('Good to see you, ' + response.name + '.');
+                    });
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            });
+            // }, {scope: 'user_friends'});
+        }
+        function checkLoginState() {
+            // FB.getLoginStatus(function (response) {
+            //     // statusChangeCallback(response);
+            //     if (response.status === 'connected') {
+            //         // The user is logged in and has authenticated your
+            //         // app, and response.authResponse supplies
+            //         // the user's ID, a valid access token, a signed
+            //         // request, and the time the access token 
+            //         // and signed request each expire.
+            //         var uid = response.authResponse.userID;
+            //         var accessToken = response.authResponse.accessToken;
+            //         document.getElementById("facebookLoginButton").style.display = 'none'
+            //     } else {
+            //         document.getElementById("facebookLoginButton").style.display = 'inline-block'
+            //     }
+            //     console.log(response)
+            // });
+        }
+
+        function facebookShare() {
+            var dificultyName
+            
+            var title = 'Sokoban ' + theLevel.title
+            // var description = "I completed level " + theLevel.title + " using " + allmoves + " moves, and " + allpushes + " pushes.  How can you do?"
+            var description = "I completed this level using " + allmoves + " moves, and " + allpushes + " pushes.  How can you do?"
+            // var description = "I made it to level " + glob45 + " on " + dificultyName + ".\nI scored " + glob31 + " points." 
+            var ogimage = document.getElementById('ogimage').src
+            FB.ui({
+                method: 'share_open_graph',
+                action_type: 'og.shares',
+                action_properties: JSON.stringify({
+                    object: {
+                        'og:url': window.location.href,
+                        'og:title': title,
+                        'og:description': description,
+                        'og:image': ogimage
+                    }
+                })
+            })
+        }
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1922117394546392',
+                xfbml: true,
+                version: 'v3.2'
+            });
+            // FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        FBInstant.initializeAsync()
+            .then(function () {
+                // Start loading game assets here
+            });
+    </script>
 
     <title>Sokoban</title>
 
@@ -328,6 +410,27 @@
                 </p>
             </div>
             <div class="modal-footer">
+                <!-- <div class="fb-share-button" data-href="http://travisarts.github.io/Sokoban/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div> -->
+                <!-- <iframe id="FB-Button" src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftravisarts.github.io%2FSokoban%2F&layout=button&size=large&mobile_iframe=true&appId=1922117394546392&width=73&height=28"
+                    width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                    allowTransparency="true" allow="encrypted-media"></iframe> -->
+                <button id="facebookShareButton" class="modal-button" onclick="facebookShare()">
+                    <span class="FBLogo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="_1pbq" style="width: 16px; height: 16px;"
+                            color="#ffffff">
+                            <path fill="#ffffff" fill-rule="evenodd" d="M8 14H3.667C2.733 13.9 2 13.167 2 12.233V3.667A1.65 1.65 0 0 1
+                            3.667 2h8.666A1.65 1.65 0 0 1 14 3.667v8.566c0 .934-.733
+                            1.667-1.667
+                            1.767H10v-3.967h1.3l.7-2.066h-2V6.933c0-.466.167-.9.867-.9H12v-1.8c.033
+                            0-.933-.266-1.533-.266-1.267 0-2.434.7-2.467
+                            2.133v1.867H6v2.066h2V14z"></path>
+                        </svg>
+                        <!-- <img class="_1pbs inlineBlock img" src="https://static.xx.fbcdn.net/rsrc.php/v3/yP/r/Wq8eKb91kes.png" style="display:none;" alt="" width="16" height="16"> -->
+                    </span>
+                    <span class="FBLogo">
+                        Share with Facebook
+                    </span>
+                </button>
                 <button class="modal-button desktop" id="completion-nextD">Go To Next Level</button>
                 <button class="modal-button desktop" id="completion-closeD">Admire My Work</button>
                 <button class="modal-button mobile" id="completion-nextM">Next</button>
@@ -335,6 +438,7 @@
             </div>
         </div>
     </div>
+    <img id="ogimage" style="display:none;">
 
 
 </body>
